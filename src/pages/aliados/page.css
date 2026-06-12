@@ -1,0 +1,119 @@
+.aliados {
+  padding: 120px 32px 80px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .aliados {
+    padding: 100px 20px 60px;
+  }
+
+  .aliados__titulo {
+    letter-spacing: -0.5px;
+    max-width: 100%;
+  }
+
+  .aliados__filtros {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  .aliados__filtros .app-btn {
+    font-size: 13px !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .aliados {
+    padding: 88px 16px 48px;
+  }
+}
+
+.aliados__badge {
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #3B82F6 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+.aliados__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 3.5vw, 44px);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  color: #0a0a0f;
+}
+
+.aliados__titulo-acento {
+  background: linear-gradient(135deg, #3B82F6 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.aliados__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+@media (max-width: 1100px) {
+  .aliados__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .aliados__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .aliados__grid { grid-template-columns: 1fr; }
+}
+
+.aliados__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 48px;
+}
+
+.aliados__filtros .app-btn {
+  height: 36px !important;
+  padding: 0 18px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 14px !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+
+.aliados__filtros .app-btn--naranja {
+  box-shadow: 0 2px 10px rgba(245, 166, 35, 0.25) !important;
+}
+
+.aliados__descripcion {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(14px, 1.5vw, 16px);
+  color: rgba(10, 10, 15, 0.55);
+  max-width: 480px;
+  margin: 16px auto 0;
+  line-height: 1.7;
+}

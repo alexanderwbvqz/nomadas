@@ -1,0 +1,113 @@
+.tarjeta-aliado {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+}
+
+.tarjeta-aliado:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Logo */
+.tarjeta-aliado__logo-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+}
+
+.tarjeta-aliado__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Info */
+.tarjeta-aliado__nombre {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #0a0a0f;
+  line-height: 1.2;
+}
+
+.tarjeta-aliado__descripcion {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: rgba(10, 10, 15, 0.55);
+  line-height: 1.65;
+  height: calc(12px * 1.65 * 3);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Badge */
+.tarjeta-aliado__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.tarjeta-aliado__badge--mentoria {
+  background: rgba(245, 166, 35, 0.12);
+  color: #d4860a;
+}
+
+.tarjeta-aliado__badge--red {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.tarjeta-aliado__badge--financiamiento {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+}
+
+.tarjeta-aliado__badge--educacion {
+  background: rgba(168, 85, 247, 0.1);
+  color: #7c3aed;
+}
+
+/* Link */
+.tarjeta-aliado__link {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #3B82F6 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tarjeta-aliado__link:hover {
+  opacity: 0.75;
+}
