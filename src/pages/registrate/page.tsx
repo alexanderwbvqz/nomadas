@@ -1,10 +1,14 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { BulbOutlined, SettingOutlined, LineChartOutlined } from '@ant-design/icons'
 import AppButton from '../../components/ui/boton/boton'
 import CampoTexto from '../../components/ui/campoTexto/campoTexto'
 import './page.css'
 
 export default function RegistratePage() {
+  const navigate = useNavigate()
+  const [aceptado, setAceptado] = useState(false)
+
   return (
     <div className="registro">
       <div className="registro__orbe" />
@@ -40,13 +44,21 @@ export default function RegistratePage() {
           />
 
           <label className="registro__terminos">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={aceptado}
+              onChange={(e) => setAceptado(e.target.checked)}
+            />
             <span className="registro__terminos-texto">
               Acepto los Términos y Condiciones
             </span>
           </label>
 
-          <AppButton label="Regístrate aquí" />
+          <AppButton
+            label="Regístrate aquí"
+            disabled={!aceptado}
+            onClick={() => navigate('/onboarding')}
+          />
         </div>
       </div>
 
