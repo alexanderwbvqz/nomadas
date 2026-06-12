@@ -1,0 +1,36 @@
+.badge-sel {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  background: #F3F4F6;
+  color: #374151;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s, opacity 0.18s, transform 0.12s;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.badge-sel:hover:not(:disabled) {
+  background: #E5E7EB;
+  transform: translateY(-1px);
+}
+
+.badge-sel--activo {
+  background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.badge-sel--activo:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+}
+
+.badge-sel--deshabilitado {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
