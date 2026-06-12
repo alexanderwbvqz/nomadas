@@ -1,0 +1,88 @@
+.paso1__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.paso1__label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.paso1__label span {
+  color: #3B82F6;
+}
+
+.paso1__input {
+  height: 44px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.paso1__input:focus {
+  border-color: #3B82F6;
+}
+
+.paso1__input::placeholder {
+  color: #D1D5DB;
+}
+
+.paso1__foto-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.paso1__foto-preview {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #E5E7EB;
+  flex-shrink: 0;
+}
+
+.paso1__foto-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #F3F4F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9CA3AF;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.paso1__foto-btn {
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1.5px solid #E5E7EB;
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: border-color 0.18s;
+}
+
+.paso1__foto-btn:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+}
+
+.paso1__foto-input {
+  display: none;
+}
