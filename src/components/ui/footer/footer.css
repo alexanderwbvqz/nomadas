@@ -64,9 +64,28 @@
 }
 
 @media (max-width: 600px) {
+  .footer {
+    padding: 20px 24px;
+  }
+
   .footer__inner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .footer__marca {
+    align-items: center;
+  }
+
+  .footer__links {
     gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer__link {
+    font-size: 12px;
   }
 }
