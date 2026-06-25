@@ -14,7 +14,7 @@ export function useMetricas(): Metricas {
 
   useEffect(() => {
     Promise.all([
-      supabase.from('perfiles_datos').select('*', { count: 'exact', head: true }),
+      supabase.from('perfiles_datos').select('*', { count: 'exact', head: true }).eq('aprobado', true),
       supabase.from('aliados').select('*', { count: 'exact', head: true }).eq('activo', true),
     ]).then(([perfiles, aliadosRes]) => {
       setNomadas(perfiles.count ?? 0)
