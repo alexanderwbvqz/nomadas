@@ -227,11 +227,8 @@
 }
 
 @media (max-width: 480px) {
-  /* Ocultar también Tipo y Visibilidad */
   .admin-aliados__tabla th:nth-child(3),
-  .admin-aliados__tabla td:nth-child(3),
-  .admin-aliados__tabla th:nth-child(6),
-  .admin-aliados__tabla td:nth-child(6) {
+  .admin-aliados__tabla td:nth-child(3) {
     display: none;
   }
 }
