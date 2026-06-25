@@ -231,4 +231,16 @@
   .admin-aliados__tabla td:nth-child(3) {
     display: none;
   }
+
+  .admin-aliados__nombre {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-aliados__tabla th:nth-child(6),
+  .admin-aliados__tabla td:nth-child(6) {
+    text-align: center;
+  }
 }
