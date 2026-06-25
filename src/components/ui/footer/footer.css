@@ -88,4 +88,8 @@
   .footer__link {
     font-size: 12px;
   }
+
+  .footer__admin {
+    display: none;
+  }
 }
