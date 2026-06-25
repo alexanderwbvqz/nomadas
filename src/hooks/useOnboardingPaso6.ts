@@ -5,7 +5,7 @@ export type CampoPaso6 = 'millonDolares' | 'problemaResolver' | 'fraseRepresenta
 
 const MIN = 15
 
-function validarCampo(campo: CampoPaso6, valor: string): string {
+function validarCampo(_campo: CampoPaso6, valor: string): string {
   if (!valor.trim()) return 'Este campo es requerido'
   if (valor.trim().length < MIN) return `Mínimo ${MIN} caracteres (${valor.trim().length}/${MIN})`
   return ''

@@ -49,10 +49,10 @@ export function useInscritos() {
       superpoderesPorId[perfil_id].push(superpoder)
     })
 
-    const prefPorId: Record<string, typeof preferencias[0]> = {}
+    const prefPorId: Record<string, NonNullable<typeof preferencias>[number]> = {}
     preferencias?.forEach((p) => { prefPorId[p.perfil_id] = p })
 
-    const tinderPorId: Record<string, typeof tinder[0]> = {}
+    const tinderPorId: Record<string, NonNullable<typeof tinder>[number]> = {}
     tinder?.forEach((t) => { tinderPorId[t.perfil_id] = t })
 
     setInscritos(
