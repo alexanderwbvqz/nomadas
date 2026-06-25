@@ -13,14 +13,17 @@ export function useMetricas(): Metricas {
   const [cargando, setCargando] = useState(true)
 
   useEffect(() => {
-    Promise.all([
-      supabase.from('perfiles_datos').select('id').eq('aprobado', true),
-      supabase.from('aliados').select('id').eq('activo', true),
-    ]).then(([perfiles, aliadosRes]) => {
+    async function cargar() {
+      await supabase.auth.getSession()
+      const [perfiles, aliadosRes] = await Promise.all([
+        supabase.from('perfiles_datos').select('id').eq('aprobado', true),
+        supabase.from('aliados').select('id').eq('activo', true),
+      ])
       setNomadas(perfiles.data?.length ?? 0)
       setAliados(aliadosRes.data?.length ?? 0)
       setCargando(false)
-    })
+    }
+    cargar()
   }, [])
 
   return { nomadas, aliados, cargando }
