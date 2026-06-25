@@ -14,11 +14,11 @@ export function useMetricas(): Metricas {
 
   useEffect(() => {
     Promise.all([
-      supabase.from('perfiles_datos').select('*', { count: 'exact', head: true }).eq('aprobado', true),
-      supabase.from('aliados').select('*', { count: 'exact', head: true }).eq('activo', true),
+      supabase.from('perfiles_datos').select('id').eq('aprobado', true),
+      supabase.from('aliados').select('id').eq('activo', true),
     ]).then(([perfiles, aliadosRes]) => {
-      setNomadas(perfiles.count ?? 0)
-      setAliados(aliadosRes.count ?? 0)
+      setNomadas(perfiles.data?.length ?? 0)
+      setAliados(aliadosRes.data?.length ?? 0)
       setCargando(false)
     })
   }, [])
