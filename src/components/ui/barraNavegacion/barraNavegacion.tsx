@@ -17,40 +17,42 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-      <div className="navbar__inner">
+    <>
+      <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
+        <div className="navbar__inner">
 
-        <Link to="/" className="navbar__logo">
-          <span className="navbar__logo-text">NÓMADAS</span>
-        </Link>
-
-        <div className="navbar__links">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              to={link.href}
-              className={`navbar__link${location.pathname === link.href ? ' active' : ''}`}
-            >
-              {link.label}
-              {location.pathname === link.href && <span className="navbar__link-indicator" />}
-            </Link>
-          ))}
-        </div>
-
-        <div className="navbar__cta">
-          <Link to="/onboarding">
-            <AppButton label="Regístrate" />
+          <Link to="/" className="navbar__logo">
+            <span className="navbar__logo-text">NÓMADAS</span>
           </Link>
-        </div>
 
-        <button
-          className="navbar__hamburger"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Menú"
-        >
-          <HamburgerIcon open={mobileOpen} />
-        </button>
-      </div>
+          <div className="navbar__links">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                to={link.href}
+                className={`navbar__link${location.pathname === link.href ? ' active' : ''}`}
+              >
+                {link.label}
+                {location.pathname === link.href && <span className="navbar__link-indicator" />}
+              </Link>
+            ))}
+          </div>
+
+          <div className="navbar__cta">
+            <Link to="/onboarding">
+              <AppButton label="Regístrate" />
+            </Link>
+          </div>
+
+          <button
+            className="navbar__hamburger"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Menú"
+          >
+            <HamburgerIcon open={mobileOpen} />
+          </button>
+        </div>
+      </nav>
 
       <MobileMenu
         open={mobileOpen}
@@ -58,7 +60,7 @@ export default function Navbar() {
         activeLink={location.pathname}
         onLinkClick={() => setMobileOpen(false)}
       />
-    </nav>
+    </>
   )
 }
 
