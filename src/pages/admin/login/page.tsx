@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import CampoInput from '../../../components/ui/campoInput/campoInput'
 import AppButton from '../../../components/ui/boton/boton'
@@ -6,6 +6,7 @@ import { useAdminAuth } from '../../../hooks/useAdminAuth'
 import './page.css'
 
 export default function AdminLoginPage() {
+  useEffect(() => { document.title = 'Nómadas: Admin' }, [])
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')

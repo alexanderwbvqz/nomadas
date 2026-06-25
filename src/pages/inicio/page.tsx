@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Compass } from 'lucide-react'
 import AppButton from '../../components/ui/boton/boton'
@@ -6,6 +7,7 @@ import fotoFundador from '../../assets/foto_01_walter_barreto.png'
 import './page.css'
 
 export default function InicioPage() {
+  useEffect(() => { document.title = 'Nómadas: Encuentra tu cofundador' }, [])
   const navigate = useNavigate()
   const { nomadas, aliados } = useMetricas()
 

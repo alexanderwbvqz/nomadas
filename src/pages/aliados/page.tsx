@@ -22,6 +22,7 @@ interface Aliado {
 }
 
 export default function AliadosPage() {
+  useEffect(() => { document.title = 'Nómadas: Aliados' }, [])
   const navigate = useNavigate()
   const [filtroActivo, setFiltroActivo] = useState('Todos')
   const [aliados, setAliados] = useState<Aliado[]>([])

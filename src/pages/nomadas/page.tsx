@@ -27,6 +27,7 @@ const PERFIL_MAP: Record<FiltroLabel, string | null> = {
 }
 
 export default function NomidasPage() {
+  useEffect(() => { document.title = 'Nómadas: Cofundadores' }, [])
   const [cofundadores, setCofundadores] = useState<Cofundador[]>([])
   const [cargando, setCargando] = useState(true)
   const [modalId, setModalId] = useState<string | null>(null)

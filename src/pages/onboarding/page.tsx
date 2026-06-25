@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
 import type { OnboardingData, ResultadoPerfil } from '../../types/onboarding'
@@ -46,6 +46,7 @@ function esValido(paso: number, data: OnboardingData): boolean {
 }
 
 export default function OnboardingPage() {
+  useEffect(() => { document.title = 'Nómadas: Regístrate' }, [])
   const [paso, setPaso] = useState(1)
   const [data, setData] = useState<OnboardingData>(DATA_INICIAL)
   const [resultado, setResultado] = useState<ResultadoPerfil | null>(null)
