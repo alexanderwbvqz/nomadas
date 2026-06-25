@@ -1,0 +1,30 @@
+.tarjeta-contador {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid #E5E7EB;
+  flex: 1;
+  min-width: 140px;
+}
+
+.tarjeta-contador__valor {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+}
+
+.tarjeta-contador__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+.tarjeta-contador--verde    .tarjeta-contador__valor { color: #16A34A; }
+.tarjeta-contador--rojo     .tarjeta-contador__valor { color: #DC2626; }
+.tarjeta-contador--amarillo .tarjeta-contador__valor { color: #D97706; }

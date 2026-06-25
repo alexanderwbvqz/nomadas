@@ -4,4 +4,6 @@ export interface AppButtonProps {
   variante?: 'primario' | 'outline' | 'naranja' | 'texto'
   onClick?: () => void
   disabled?: boolean
+  className?: string
+  htmlType?: 'button' | 'submit' | 'reset'
 }

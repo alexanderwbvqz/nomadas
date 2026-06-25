@@ -1,21 +1,31 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import Layout from '../pages/nomadas/layout'
 import InicioPage from '../pages/inicio/page'
 import NomidasPage from '../pages/nomadas/page'
 import AliadosPage from '../pages/aliados/page'
-import IniciarSesionPage from '../pages/iniciarSesion/page'
-import RegistratePage from '../pages/registrate/page'
 import OnboardingPage from '../pages/onboarding/page'
-import DashboardPage from '../pages/dashboard/page'
+import AdminLoginPage from '../pages/admin/login/page'
+import AdminLayout from '../pages/admin/layout/adminLayout'
+import AdminCofundadoresPage from '../pages/admin/panel/cofundadores/page'
+import AdminAliadosPage from '../pages/admin/panel/aliados/page'
+import PostularAliadoPage from '../pages/postularAliado/page'
 
 const router = createBrowserRouter([
   { path: '/', element: <Layout><InicioPage /></Layout> },
   { path: '/nomada', element: <Layout><NomidasPage /></Layout> },
   { path: '/aliados', element: <Layout><AliadosPage /></Layout> },
-  { path: '/iniciar-sesion', element: <IniciarSesionPage /> },
-  { path: '/registrate', element: <RegistratePage /> },
   { path: '/onboarding', element: <OnboardingPage /> },
-  { path: '/dashboard', element: <DashboardPage /> },
+  { path: '/postular-aliado', element: <PostularAliadoPage /> },
+  { path: '/nomadas-admin-2026', element: <AdminLoginPage /> },
+  {
+    path: '/nomadas-admin-2026/panel',
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <Navigate to="cofundadores" replace /> },
+      { path: 'cofundadores', element: <AdminCofundadoresPage /> },
+      { path: 'aliados', element: <AdminAliadosPage /> },
+    ],
+  },
 ])
 
 export default router

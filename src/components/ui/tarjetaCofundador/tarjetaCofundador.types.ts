@@ -5,5 +5,4 @@ export interface TarjetaCofundadorProps {
   habilidades: string[]
   frase: string
   onVerPerfil?: () => void
-  onConectar?: () => void
 }

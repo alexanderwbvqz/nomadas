@@ -36,7 +36,7 @@ export default function Paso6SocioIdeal({ data, onChange }: Props) {
 
   return (
     <div>
-      <h1 className="paso__titulo">🤝 Tu socio ideal</h1>
+      <h1 className="paso__titulo">Tu socio ideal</h1>
       <p className="paso__subtitulo">¿Con quién quieres construir?</p>
 
       <div className="paso6__seccion">

@@ -111,19 +111,29 @@
 
 /* Mobile menu */
 .navbar__mobile {
-  overflow: hidden;
-  max-height: 0;
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: #ffffff;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  overflow-y: auto;
 }
 
 .navbar__mobile.open {
-  max-height: 320px;
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
   border-top: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .navbar__mobile-inner {
-  padding: 16px 24px 24px;
+  padding: 24px 24px 40px;
 }
 
 .navbar__mobile-link {

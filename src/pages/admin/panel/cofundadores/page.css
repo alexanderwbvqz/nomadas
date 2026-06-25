@@ -1,0 +1,61 @@
+.admin-cofundadores {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.admin-cofundadores__cargando {
+  text-align: center;
+  color: #6b7280;
+  padding: 24px 0;
+  font-size: 0.95rem;
+}
+
+.admin-cofundadores__contadores {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-cofundadores__filtros {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.admin-cofundadores__filtros .campo-input {
+  flex: 1;
+  min-width: 200px;
+  margin: 0;
+}
+
+.admin-cofundadores__filtros .campo-input__label {
+  display: none;
+}
+
+
+@media (max-width: 768px) {
+  .admin-cofundadores {
+    padding: 16px;
+  }
+
+  .admin-cofundadores__contadores {
+    gap: 10px;
+  }
+
+  .admin-cofundadores__filtros {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .admin-cofundadores__filtros .campo-input {
+    grid-column: 1 / -1;
+  }
+
+}

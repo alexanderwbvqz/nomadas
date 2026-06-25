@@ -1,0 +1,237 @@
+.admin-aliados {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.admin-aliados__vacio {
+  text-align: center;
+  padding: 60px 24px !important;
+  color: rgba(10, 10, 15, 0.3);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+}
+
+.admin-aliados__vacio > * {
+  display: block;
+  margin: 0 auto;
+}
+
+.admin-aliados__vacio svg {
+  margin-bottom: 12px;
+  opacity: 0.4;
+}
+
+.admin-aliados__cargando {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: rgba(10, 10, 15, 0.45);
+  text-align: center;
+  padding: 40px 0;
+}
+
+.admin-aliados__contadores {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 600px;
+}
+
+.admin-aliados__filtros {
+  display: flex;
+  gap: 12px;
+}
+
+.admin-aliados__tabla-wrap {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.admin-aliados__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.admin-aliados__tabla thead tr {
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.admin-aliados__tabla th {
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9CA3AF;
+  letter-spacing: 0.06em;
+  text-align: left;
+}
+
+.admin-aliados__tabla tbody tr {
+  border-bottom: 1px solid #F9FAFB;
+  transition: background 0.1s;
+}
+
+.admin-aliados__tabla tbody tr:last-child {
+  border-bottom: none;
+}
+
+.admin-aliados__tabla tbody tr:hover {
+  background: #FAFBFF;
+}
+
+.admin-aliados__tabla td {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.admin-aliados__td-num {
+  color: #9CA3AF !important;
+  font-size: 12px !important;
+  width: 40px;
+}
+
+.admin-aliados__aliado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-aliados__logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #E5E7EB;
+  flex-shrink: 0;
+}
+
+.admin-aliados__logo-placeholder {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6, #6366F1);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-aliados__nombre {
+  font-weight: 600;
+  color: #111827;
+  font-size: 13px;
+}
+
+.admin-aliados__badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.admin-aliados__tipo--mentores {
+  background: #EEF2FF;
+  color: #6366F1;
+}
+
+.admin-aliados__tipo--universidad {
+  background: #FEF9C3;
+  color: #CA8A04;
+}
+
+.admin-aliados__tipo--empresas {
+  background: #DCFCE7;
+  color: #16A34A;
+}
+
+.admin-aliados__descripcion {
+  max-width: 300px;
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+
+.admin-aliados__redes {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.admin-aliados__red {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid #E5E7EB;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B7280;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  text-decoration: none;
+}
+
+.admin-aliados__red:hover {
+  background: #EEF2FF;
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.admin-aliados__sin-redes {
+  color: #D1D5DB;
+  font-size: 13px;
+}
+
+
+@media (max-width: 768px) {
+  .admin-aliados {
+    padding: 16px;
+  }
+
+  .admin-aliados__contadores {
+    gap: 8px;
+  }
+
+  /* Ocultar: # | Descripción | Redes */
+  .admin-aliados__tabla th:nth-child(1),
+  .admin-aliados__tabla td:nth-child(1),
+  .admin-aliados__tabla th:nth-child(4),
+  .admin-aliados__tabla td:nth-child(4),
+  .admin-aliados__tabla th:nth-child(5),
+  .admin-aliados__tabla td:nth-child(5) {
+    display: none;
+  }
+
+  .toggle-activo__label {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ocultar también Tipo y Visibilidad */
+  .admin-aliados__tabla th:nth-child(3),
+  .admin-aliados__tabla td:nth-child(3),
+  .admin-aliados__tabla th:nth-child(6),
+  .admin-aliados__tabla td:nth-child(6) {
+    display: none;
+  }
+}

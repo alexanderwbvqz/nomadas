@@ -1,0 +1,89 @@
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F8FAFF;
+  padding: 24px;
+}
+
+.admin-login__card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-login__logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #111827;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+
+.admin-login__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+  text-align: center;
+}
+
+.admin-login__subtitulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: #9CA3AF;
+  margin: 0 0 16px;
+}
+
+.admin-login__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-login__error {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: #DC2626;
+  background: #FEE2E2;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
+.admin-login__form .app-btn {
+  width: 100% !important;
+  height: 44px !important;
+  border-radius: 999px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .admin-login {
+    padding: 16px;
+    align-items: center;
+  }
+
+  .admin-login__card {
+    padding: 32px 24px;
+    border-radius: 16px;
+  }
+
+  .admin-login__titulo {
+    font-size: 20px;
+  }
+}

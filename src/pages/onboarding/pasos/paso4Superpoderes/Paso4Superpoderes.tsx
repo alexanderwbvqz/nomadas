@@ -28,7 +28,7 @@ export default function Paso4Superpoderes({ data, onChange }: Props) {
 
   return (
     <div>
-      <h1 className="paso__titulo">⚡ Tus superpoderes</h1>
+      <h1 className="paso__titulo">Tus superpoderes</h1>
       <p className="paso__subtitulo">¿Qué sabes hacer bien? Selecciona máximo {MAX}.</p>
 
       {GRUPOS.map((g) => (

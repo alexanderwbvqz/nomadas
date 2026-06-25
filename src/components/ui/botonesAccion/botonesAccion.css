@@ -1,0 +1,67 @@
+.botones-accion {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.botones-accion__btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.botones-accion__btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.botones-accion__btn--ver {
+  background: #F3F4F6;
+  color: #374151;
+}
+
+.botones-accion__btn--ver:hover {
+  background: #E5E7EB;
+}
+
+.botones-accion__btn--aprobar {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.botones-accion__btn--aprobar:hover:not(:disabled) {
+  background: #A7F3D0;
+}
+
+.botones-accion__btn--rechazar {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.botones-accion__btn--rechazar:hover:not(:disabled) {
+  background: #FECACA;
+}
+
+.botones-accion__btn--editar {
+  background: #EEF2FF;
+  color: #4338CA;
+}
+
+.botones-accion__btn--editar:hover {
+  background: #E0E7FF;
+}
+
+.botones-accion__btn--eliminar {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.botones-accion__btn--eliminar:hover {
+  background: #FECACA;
+}

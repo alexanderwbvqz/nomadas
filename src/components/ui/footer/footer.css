@@ -52,6 +52,17 @@
   color: #0a0a0f;
 }
 
+.footer__admin {
+  display: flex;
+  align-items: center;
+  color: rgba(10, 10, 15, 0.2);
+  transition: color 0.2s;
+}
+
+.footer__admin:hover {
+  color: rgba(10, 10, 15, 0.5);
+}
+
 @media (max-width: 600px) {
   .footer__inner {
     flex-direction: column;

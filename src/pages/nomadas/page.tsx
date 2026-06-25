@@ -1,29 +1,86 @@
-import { FilterOutlined } from '@ant-design/icons'
+import { useEffect, useState } from 'react'
 import TarjetaCofundador from '../../components/ui/tarjetaCofundador/tarjetaCofundador'
-import AppButton from '../../components/ui/boton/boton'
+import ModalPerfil from '../../components/ui/modalPerfil/modalPerfil'
+import { supabase } from '../../lib/supabase'
 import './page.css'
 
-const COFUNDADORES = [
-  { id: 1,  foto: 'https://i.pravatar.cc/150?img=1',  nombre: 'Alejandro V.', rol: 'AI Enthusiast & Product Strategist',    habilidades: ['Python', 'UX Strategy', 'LLMs'],       frase: 'Mi sueño: Democratizar el acceso a la educación avanzada mediante agentes de IA personalizados.' },
-  { id: 2,  foto: 'https://i.pravatar.cc/150?img=5',  nombre: 'María G.',     rol: 'Full Stack Developer & Entrepreneur',    habilidades: ['React', 'Node.js', 'Startups'],         frase: 'Creo que la tecnología bien aplicada puede cambiar la vida de millones de personas.' },
-  { id: 3,  foto: 'https://i.pravatar.cc/150?img=3',  nombre: 'Carlos M.',    rol: 'Growth Hacker & Marketing Lead',         habilidades: ['SEO', 'Paid Ads', 'Branding'],          frase: 'Busco un co-fundador técnico para construir el próximo unicornio del agro en Latinoamérica.' },
-  { id: 4,  foto: 'https://i.pravatar.cc/150?img=10', nombre: 'Lucía R.',     rol: 'UX Designer & Design Thinker',           habilidades: ['Figma', 'Research', 'Prototyping'],     frase: 'Diseñar no es solo hacer cosas bonitas, es resolver problemas reales para personas reales.' },
-  { id: 5,  foto: 'https://i.pravatar.cc/150?img=12', nombre: 'Diego F.',     rol: 'Backend Engineer & Cloud Architect',     habilidades: ['AWS', 'Go', 'Microservicios'],          frase: 'Quiero construir infraestructura que escale a millones de usuarios desde el día uno.' },
-  { id: 6,  foto: 'https://i.pravatar.cc/150?img=20', nombre: 'Sofía P.',     rol: 'Fintech Founder & Financial Analyst',    habilidades: ['Fintech', 'Excel', 'Regulación'],      frase: 'La inclusión financiera es el reto más importante de nuestra generación en LATAM.' },
-  { id: 7,  foto: 'https://i.pravatar.cc/150?img=15', nombre: 'Andrés T.',    rol: 'Mobile Developer & UI Engineer',         habilidades: ['Flutter', 'Swift', 'Firebase'],         frase: 'Las mejores apps son las que el usuario ni siente que está usando una app.' },
-  { id: 8,  foto: 'https://i.pravatar.cc/150?img=25', nombre: 'Valeria N.',   rol: 'Operations & Supply Chain Expert',       habilidades: ['Logística', 'ERP', 'Lean'],             frase: 'Una operación eficiente es la ventaja competitiva más difícil de copiar.' },
-  { id: 9,  foto: 'https://i.pravatar.cc/150?img=32', nombre: 'Mateo L.',     rol: 'Data Scientist & ML Engineer',           habilidades: ['TensorFlow', 'SQL', 'Data Viz'],        frase: 'Los datos sin contexto son ruido. Con el contexto correcto, son el futuro.' },
-  { id: 10, foto: 'https://i.pravatar.cc/150?img=33', nombre: 'Camila S.',    rol: 'Content Strategist & Brand Builder',     habilidades: ['Copywriting', 'SEO', 'Social Media'],  frase: 'Una buena historia puede cambiar la percepción de un producto de la noche a la mañana.' },
-  { id: 11, foto: 'https://i.pravatar.cc/150?img=40', nombre: 'Javier O.',    rol: 'Blockchain Developer & Web3 Founder',    habilidades: ['Solidity', 'Ethereum', 'DeFi'],         frase: 'Web3 no es una moda, es una nueva forma de distribuir el valor de forma justa.' },
-  { id: 12, foto: 'https://i.pravatar.cc/150?img=45', nombre: 'Isabella C.',  rol: 'Health Tech Entrepreneur',               habilidades: ['Salud Digital', 'HL7', 'UX'],           frase: 'La tecnología en salud puede salvar millones de vidas si la hacemos accesible.' },
-  { id: 13, foto: 'https://i.pravatar.cc/150?img=50', nombre: 'Sebastián R.', rol: 'EdTech Product Manager',                 habilidades: ['Producto', 'Agile', 'EdTech'],          frase: 'Aprender debería ser tan adictivo como el scroll infinito, pero con propósito.' },
-  { id: 14, foto: 'https://i.pravatar.cc/150?img=55', nombre: 'Paula M.',     rol: 'Legal Tech & Startup Advisor',           habilidades: ['Derecho', 'SaaS', 'Contratos'],         frase: 'El mejor momento para pensar en los aspectos legales de tu startup es antes de que sea un problema.' },
-  { id: 15, foto: 'https://i.pravatar.cc/150?img=60', nombre: 'Nicolás H.',   rol: 'DevOps Engineer & Platform Builder',     habilidades: ['Kubernetes', 'CI/CD', 'Docker'],        frase: 'Una buena plataforma hace que los devs vuelen. Una mala plataforma los paraliza.' },
-  { id: 16, foto: 'https://i.pravatar.cc/150?img=65', nombre: 'Renata Q.',    rol: 'Agritech Innovator & Rural Entrepreneur', habilidades: ['Agro', 'IoT', 'Sostenibilidad'],       frase: 'El campo es el mercado más grande e ignorado por la tecnología en Latinoamérica.' },
-]
+interface Cofundador {
+  id: string
+  nombre: string
+  ocupacion: string
+  foto: string
+  frase: string
+  perfil_resultado: string
+  superpoderes: string[]
+}
+
+type FiltroLabel = 'Todos' | 'Tecnología' | 'Ventas y Finanzas' | 'Marketing' | 'Operaciones'
+
+const FILTROS: FiltroLabel[] = ['Todos', 'Tecnología', 'Ventas y Finanzas', 'Marketing', 'Operaciones']
+
+const PERFIL_MAP: Record<FiltroLabel, string | null> = {
+  'Todos':            null,
+  'Tecnología':       'CTO Builder',
+  'Ventas y Finanzas':'CFO Strategist',
+  'Marketing':        'CMO',
+  'Operaciones':      'COO Executor',
+}
 
 export default function NomidasPage() {
+  const [cofundadores, setCofundadores] = useState<Cofundador[]>([])
+  const [cargando, setCargando] = useState(true)
+  const [modalId, setModalId] = useState<string | null>(null)
+  const [filtro, setFiltro] = useState<FiltroLabel>('Todos')
+
+  useEffect(() => {
+    async function cargar() {
+      const { data: perfiles } = await supabase
+        .from('perfiles_datos')
+        .select('id, nombre, ocupacion, foto, sueno, perfil_resultado')
+        .eq('aprobado', true)
+        .order('created_at', { ascending: false })
+
+      if (!perfiles || perfiles.length === 0) {
+        setCargando(false)
+        return
+      }
+
+      const ids = perfiles.map((p) => p.id)
+      const [{ data: superpoderesRows }, { data: tinderRows }] = await Promise.all([
+        supabase.from('perfil_superpoderes').select('perfil_id, superpoder').in('perfil_id', ids),
+        supabase.from('perfil_tinder').select('perfil_id, frase_representa').in('perfil_id', ids),
+      ])
+
+      const superpoderesPorId: Record<string, string[]> = {}
+      superpoderesRows?.forEach(({ perfil_id, superpoder }) => {
+        if (!superpoderesPorId[perfil_id]) superpoderesPorId[perfil_id] = []
+        superpoderesPorId[perfil_id].push(superpoder)
+      })
+
+      const frasePorId: Record<string, string> = {}
+      tinderRows?.forEach(({ perfil_id, frase_representa }) => {
+        frasePorId[perfil_id] = frase_representa ?? ''
+      })
+
+      setCofundadores(
+        perfiles.map((p) => ({
+          id: p.id,
+          nombre: p.nombre.split(' ').slice(0, 2).join(' '),
+          ocupacion: p.ocupacion ?? '',
+          foto: p.foto ?? '',
+          frase: frasePorId[p.id] || p.sueno || '',
+          perfil_resultado: p.perfil_resultado ?? '',
+          superpoderes: superpoderesPorId[p.id] ?? [],
+        }))
+      )
+      setCargando(false)
+    }
+
+    cargar()
+  }, [])
+
   return (
+    <>
     <section className="nomadas" id="nomada">
       <h1 className="nomadas__titulo">
         Encuentra los mejores{' '}
@@ -35,27 +92,45 @@ export default function NomidasPage() {
       </p>
 
       <div className="nomadas__cabecera">
-        <h2 className="nomadas__cabecera-titulo">Cofundadores</h2>
-        <AppButton label="Filtros" variante="outline" icon={<FilterOutlined />} />
+        <div className="nomadas__filtros">
+          {FILTROS.map((f) => (
+            <button
+              key={f}
+              className={`nomadas__chip${filtro === f ? ' nomadas__chip--activo' : ''}`}
+              onClick={() => setFiltro(f)}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="nomadas__grid">
-        {COFUNDADORES.map((c) => (
-          <TarjetaCofundador
-            key={c.id}
-            foto={c.foto}
-            nombre={c.nombre}
-            rol={c.rol}
-            habilidades={c.habilidades}
-            frase={c.frase}
-          />
-        ))}
-      </div>
-
-      <div className="nomadas__mas">
-        <AppButton label="Más resultados ›" variante="outline" />
-        <p className="nomadas__mas-texto">¡Más de 6000+ nómadas te están esperando!</p>
-      </div>
+      {cargando ? (
+        <p className="nomadas__estado">Cargando nómadas...</p>
+      ) : cofundadores.length === 0 ? (
+        <p className="nomadas__estado">Aún no hay nómadas registrados. ¡Sé el primero!</p>
+      ) : (
+        <div className="nomadas__grid">
+          {cofundadores
+            .filter((c) => PERFIL_MAP[filtro] === null || c.perfil_resultado === PERFIL_MAP[filtro])
+            .map((c) => (
+            <TarjetaCofundador
+              key={c.id}
+              foto={c.foto}
+              nombre={c.nombre}
+              rol={c.perfil_resultado || c.ocupacion}
+              habilidades={c.superpoderes.slice(0, 3)}
+              frase={c.frase}
+              onVerPerfil={() => setModalId(c.id)}
+            />
+          ))}
+        </div>
+      )}
     </section>
+
+    {modalId && (
+      <ModalPerfil id={modalId} onCerrar={() => setModalId(null)} />
+    )}
+    </>
   )
 }

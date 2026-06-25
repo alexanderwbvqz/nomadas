@@ -1,0 +1,86 @@
+.admin-layout {
+  min-height: 100vh;
+  background: #F8FAFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-layout__header {
+  background: #ffffff;
+  border-bottom: 1px solid #E5E7EB;
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-layout__logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #111827;
+  text-decoration: none;
+}
+
+.admin-layout__header-titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: #9CA3AF;
+  flex: 1;
+}
+
+.admin-layout__nav {
+  background: #ffffff;
+  border-bottom: 1px solid #E5E7EB;
+  padding: 0 32px;
+  display: flex;
+  gap: 4px;
+}
+
+.admin-layout__tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 14px 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B7280;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+
+.admin-layout__tab:hover {
+  color: #374151;
+}
+
+.admin-layout__tab--activo {
+  color: #6366F1;
+  border-bottom-color: #6366F1;
+}
+
+@media (max-width: 768px) {
+  .admin-layout__header {
+    padding: 0 16px;
+  }
+
+  .admin-layout__logout-btn .app-btn__label {
+    display: none;
+  }
+
+  .admin-layout__logout-btn {
+    min-width: unset !important;
+    padding: 0 10px !important;
+  }
+
+  .admin-layout__nav {
+    padding: 0 16px;
+  }
+}

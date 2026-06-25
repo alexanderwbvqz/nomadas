@@ -1,0 +1,42 @@
+.paginacion {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.paginacion__btn,
+.paginacion__num {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.15s;
+}
+
+.paginacion__btn:hover:not(:disabled),
+.paginacion__num:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.paginacion__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.paginacion__num--activo {
+  background: #6366F1;
+  border-color: #6366F1;
+  color: #ffffff;
+}

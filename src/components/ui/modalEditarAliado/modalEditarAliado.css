@@ -1,0 +1,209 @@
+.modal-editar-aliado__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 26, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  padding: 24px;
+  animation: overlay-in 0.2s ease;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-editar-aliado {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: modal-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modal-in {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.modal-editar-aliado__cerrar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #F3F4F6;
+  color: #6B7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-editar-aliado__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+}
+
+.modal-editar-aliado__form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-editar-aliado__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.modal-editar-aliado__label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.modal-editar-aliado__select {
+  height: 44px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #374151;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.modal-editar-aliado__select:focus {
+  border-color: #6366F1;
+}
+
+.modal-editar-aliado__textarea {
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #111827;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-editar-aliado__textarea:focus {
+  border-color: #6366F1;
+}
+
+.modal-editar-aliado__file-input {
+  display: none;
+}
+
+.modal-editar-aliado__upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 72px;
+  border: 1.5px dashed #D1D5DB;
+  border-radius: 10px;
+  background: #F9FAFB;
+  color: #9CA3AF;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.modal-editar-aliado__upload-btn:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+  background: #EEF2FF;
+}
+
+.modal-editar-aliado__logo-preview {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #E5E7EB;
+}
+
+.modal-editar-aliado__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-editar-aliado__logo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.modal-editar-aliado__logo-spinner {
+  animation: modal-girar 0.8s linear infinite;
+}
+
+@keyframes modal-girar {
+  to { transform: rotate(360deg); }
+}
+
+.modal-editar-aliado__logo-quitar {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal-editar-aliado__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-editar-aliado__acciones .app-btn {
+  width: 100% !important;
+  height: 44px !important;
+  border-radius: 999px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}

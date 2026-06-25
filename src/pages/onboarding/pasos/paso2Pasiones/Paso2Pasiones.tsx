@@ -26,7 +26,7 @@ export default function Paso2Pasiones({ data, onChange }: Props) {
 
   return (
     <div>
-      <h1 className="paso__titulo">🔥 ¿Qué te apasiona?</h1>
+      <h1 className="paso__titulo">¿Qué te apasiona?</h1>
       <p className="paso__subtitulo">Selecciona hasta {MAX} temas.</p>
 
       <div className="paso__badges">

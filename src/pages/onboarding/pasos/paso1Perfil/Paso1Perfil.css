@@ -37,52 +37,71 @@
   color: #D1D5DB;
 }
 
-.paso1__foto-wrap {
+.paso1__avatar-wrap {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.paso1__foto-preview {
-  width: 64px;
-  height: 64px;
+.paso1__avatar {
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #E5E7EB;
   flex-shrink: 0;
+  background: #F3F4F6;
 }
 
-.paso1__foto-placeholder {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #F3F4F6;
+.paso1__avatar-acciones {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9CA3AF;
-  font-size: 24px;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .paso1__foto-btn {
-  padding: 8px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
   border-radius: 999px;
   border: 1.5px solid #E5E7EB;
   background: transparent;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #374151;
   cursor: pointer;
-  transition: border-color 0.18s;
+  transition: border-color 0.18s, color 0.18s;
 }
 
 .paso1__foto-btn:hover {
-  border-color: #3B82F6;
-  color: #3B82F6;
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.paso1__foto-btn--ghost {
+  border-color: transparent;
+  color: #9CA3AF;
+}
+
+.paso1__foto-btn--ghost:hover {
+  border-color: transparent;
+  color: #6B7280;
+}
+
+.paso1__otro-input {
+  margin-top: 12px;
 }
 
 .paso1__foto-input {
   display: none;
+}
+
+.paso1__error {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #EF4444;
+  font-weight: 500;
+  margin-top: 4px;
 }

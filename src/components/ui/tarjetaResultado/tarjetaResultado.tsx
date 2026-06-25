@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react'
+import { Code2, Target, TrendingUp, Settings2, Sparkles } from 'lucide-react'
 import type { TarjetaResultadoProps } from './tarjetaResultado.types'
+import type { PerfilResultado } from '../../../types/onboarding'
 import './tarjetaResultado.css'
+
+const ICONOS_PERFIL: Record<PerfilResultado, React.ReactNode> = {
+  'CTO Builder':           <Code2 size={36} strokeWidth={1.5} />,
+  'CMO':                   <Target size={36} strokeWidth={1.5} />,
+  'CFO Strategist':        <TrendingUp size={36} strokeWidth={1.5} />,
+  'COO Executor':          <Settings2 size={36} strokeWidth={1.5} />,
+  'Co-Founder Generalista':<Sparkles size={36} strokeWidth={1.5} />,
+}
 
 export default function TarjetaResultado({
   resultado,
@@ -34,8 +44,8 @@ export default function TarjetaResultado({
           )}
         </div>
 
-        <div className="tarjeta-resultado__emoji tarjeta-resultado__item">
-          {resultado.emoji}
+        <div className="tarjeta-resultado__icono tarjeta-resultado__item">
+          {ICONOS_PERFIL[resultado.perfil]}
         </div>
 
         <h2 className="tarjeta-resultado__perfil tarjeta-resultado__item">
@@ -67,7 +77,7 @@ export default function TarjetaResultado({
         )}
 
         <button className="tarjeta-resultado__btn tarjeta-resultado__item" onClick={onEntrar}>
-          Entrar a Nómadas
+          Confirmar
         </button>
       </div>
     </div>

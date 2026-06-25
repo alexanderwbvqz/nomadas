@@ -58,10 +58,8 @@
 
 .nomadas__cabecera {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  justify-content: center;
   margin-top: 56px;
-  text-align: left;
 }
 
 .nomadas__cabecera-titulo {
@@ -69,23 +67,39 @@
   font-weight: 700;
   font-size: 17px;
   color: #0a0a0f;
+  flex-shrink: 0;
 }
 
-.nomadas__cabecera .app-btn {
-  height: 28px !important;
-  padding: 0 12px !important;
-  font-size: 11px !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  border-radius: 999px !important;
-  box-shadow: none !important;
-  opacity: 0.6;
+.nomadas__filtros {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.nomadas__cabecera .app-btn:hover {
-  opacity: 1;
-  transform: none !important;
-  box-shadow: none !important;
+.nomadas__chip {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1.5px solid #E5E7EB;
+  background: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(10, 10, 15, 0.55);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.nomadas__chip:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.nomadas__chip--activo {
+  background: #EEF2FF;
+  border-color: #6366F1;
+  color: #4F46E5;
 }
 
 .nomadas__grid {
@@ -149,6 +163,14 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 12px;
   color: rgba(10, 10, 15, 0.4);
+}
+
+.nomadas__estado {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: rgba(10, 10, 15, 0.45);
+  text-align: center;
+  padding: 48px 0;
 }
 
 .nomadas__descripcion {

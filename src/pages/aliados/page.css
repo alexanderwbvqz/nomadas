@@ -86,6 +86,36 @@
   .aliados__grid { grid-template-columns: 1fr; }
 }
 
+.aliados__cta {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.aliados__cta-btn.app-btn {
+  height: 48px !important;
+  padding: 0 28px !important;
+  border-radius: 999px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35) !important;
+  transition: opacity 0.2s, box-shadow 0.2s !important;
+}
+
+.aliados__cta-btn.app-btn:hover {
+  opacity: 0.9 !important;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45) !important;
+}
+
+.aliados__cta-btn .app-btn__icon {
+  color: #ffffff !important;
+}
+
 .aliados__filtros {
   display: flex;
   flex-wrap: wrap;

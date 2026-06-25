@@ -17,7 +17,7 @@ interface Props {
 export default function Paso3Sueno({ data, onChange }: Props) {
   return (
     <div>
-      <h1 className="paso__titulo">🚀 Tu sueño emprendedor</h1>
+      <h1 className="paso__titulo">Tu sueño emprendedor</h1>
       <p className="paso__subtitulo">Cuéntanos adónde quieres llegar.</p>
 
       <div className="paso3__seccion">

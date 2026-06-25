@@ -1,0 +1,400 @@
+.postular-aliado {
+  min-height: 100vh;
+  padding: 120px 24px 80px;
+  display: flex;
+  justify-content: center;
+  background: #F8FAFF;
+}
+
+.postular-aliado__card {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.postular-aliado__encabezado {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.postular-aliado__badge {
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #3B82F6 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.postular-aliado__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(26px, 3.5vw, 40px);
+  letter-spacing: -1.5px;
+  color: #0a0a0f;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.postular-aliado__titulo-acento {
+  background: linear-gradient(135deg, #3B82F6 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.postular-aliado__descripcion {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: rgba(10, 10, 15, 0.55);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 420px;
+}
+
+.postular-aliado__form {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.postular-aliado__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.postular-aliado__label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.postular-aliado__requerido {
+  color: #6366F1;
+}
+
+/* ── Logo upload ── */
+
+.postular-aliado__file-input {
+  display: none;
+}
+
+.postular-aliado__upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 72px;
+  border: 1.5px dashed #D1D5DB;
+  border-radius: 12px;
+  background: #F9FAFB;
+  color: #9CA3AF;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.postular-aliado__upload-btn:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+  background: #EEF2FF;
+}
+
+.postular-aliado__logo-fila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  background: #F9FAFB;
+}
+
+.postular-aliado__logo-preview {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #E5E7EB;
+  flex-shrink: 0;
+}
+
+.postular-aliado__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postular-aliado__logo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.postular-aliado__logo-spinner {
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.postular-aliado__logo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.postular-aliado__logo-estado {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.postular-aliado__logo-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.postular-aliado__logo-cambiar {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6366F1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.postular-aliado__logo-quitar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #F3F4F6;
+  color: #6B7280;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.postular-aliado__logo-quitar:hover {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+/* ── Tipo buttons ── */
+
+.postular-aliado__tipos {
+  display: flex;
+  gap: 8px;
+}
+
+.postular-aliado__tipo-btn {
+  flex: 1;
+  height: 44px;
+  border: 2px solid #D1D5DB;
+  border-radius: 10px;
+  background: #F9FAFB;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.postular-aliado__tipo-btn:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+  background: #F5F3FF;
+}
+
+.postular-aliado__tipo-btn--activo {
+  background: #EEF2FF;
+  border-color: #6366F1;
+  color: #4F46E5;
+  font-weight: 700;
+}
+
+/* ── Campo error (tipo) ── */
+
+.postular-aliado__campo-error {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #EF4444;
+  font-weight: 500;
+}
+
+.postular-aliado__tipos--error .postular-aliado__tipo-btn:not(.postular-aliado__tipo-btn--activo) {
+  border-color: #EF4444;
+}
+
+/* ── Error / Acciones ── */
+
+.postular-aliado__error {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: #DC2626;
+  text-align: center;
+  margin: 0;
+}
+
+.postular-aliado__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.postular-aliado__acciones .app-btn {
+  width: 100% !important;
+  height: 48px !important;
+  border-radius: 999px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+/* ── Éxito ── */
+
+.postular-aliado__exito {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  min-height: 60vh;
+}
+
+.postular-aliado__exito-icono {
+  color: #6366F1;
+}
+
+.postular-aliado__exito .app-btn {
+  min-width: 200px;
+  height: 48px !important;
+  border-radius: 999px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.postular-aliado__exito-titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+}
+
+.postular-aliado__exito-texto {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: #6B7280;
+  max-width: 360px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Mobile 768px ── */
+
+@media (max-width: 768px) {
+  .postular-aliado {
+    padding: 90px 16px 48px;
+  }
+
+  .postular-aliado__card {
+    gap: 24px;
+  }
+
+  .postular-aliado__descripcion {
+    font-size: 14px;
+  }
+
+  .postular-aliado__form {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+
+  .postular-aliado__tipos {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .postular-aliado__tipo-btn {
+    flex: none;
+    width: auto;
+    height: auto;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #374151;
+  }
+
+  .postular-aliado__tipo-btn--activo {
+    border: 2px solid #6366F1;
+    background: #EEF2FF;
+    color: #4F46E5;
+  }
+
+  .postular-aliado__acciones .app-btn {
+    height: 46px !important;
+  }
+}
+
+/* ── Mobile 480px ── */
+
+@media (max-width: 480px) {
+  .postular-aliado {
+    padding: 76px 12px 40px;
+  }
+
+  .postular-aliado__card {
+    gap: 20px;
+  }
+
+  .postular-aliado__form {
+    padding: 20px 16px 28px;
+    border-radius: 16px;
+  }
+
+  .postular-aliado__exito-titulo {
+    font-size: 22px;
+  }
+}

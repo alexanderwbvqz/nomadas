@@ -1,0 +1,143 @@
+.modal-aliado__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 26, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+  animation: modal-aliado-overlay-in 0.2s ease;
+}
+
+@keyframes modal-aliado-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-aliado {
+  position: relative;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 36px 28px 28px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: modal-aliado-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modal-aliado-in {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.modal-aliado__cerrar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #F3F4F6;
+  color: #6B7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.modal-aliado__cerrar:hover {
+  background: #E5E7EB;
+}
+
+.modal-aliado__logo-wrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.modal-aliado__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.modal-aliado__nombre {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+  text-align: center;
+}
+
+.modal-aliado__badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.modal-aliado__badge--mentoria    { background: #FEF3C7; color: #92400E; }
+.modal-aliado__badge--educacion   { background: #EDE9FE; color: #5B21B6; }
+.modal-aliado__badge--financiamiento { background: #DCFCE7; color: #166534; }
+
+.modal-aliado__descripcion {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #4B5563;
+  line-height: 1.7;
+  margin: 0;
+  text-align: center;
+}
+
+.modal-aliado__links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.modal-aliado__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  background: #F3F4F6;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.modal-aliado__link:hover {
+  background: #E5E7EB;
+  transform: translateY(-1px);
+}
+
+
+.modal-aliado__link-ext {
+  margin-left: auto;
+  opacity: 0.5;
+}

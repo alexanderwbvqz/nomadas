@@ -38,8 +38,8 @@ export default function Navbar() {
         </div>
 
         <div className="navbar__cta">
-          <Link to="/iniciar-sesion">
-            <AppButton label="Iniciar sesión" />
+          <Link to="/onboarding">
+            <AppButton label="Regístrate" />
           </Link>
         </div>
 
@@ -76,8 +76,8 @@ function MobileMenu({ open, links, activeLink, onLinkClick }: MobileMenuProps) {
             {link.label}
           </Link>
         ))}
-        <Link to="/iniciar-sesion" onClick={onLinkClick}>
-          <AppButton label="Iniciar sesión" />
+        <Link to="/onboarding" onClick={onLinkClick}>
+          <AppButton label="Regístrate" />
         </Link>
       </div>
     </div>
