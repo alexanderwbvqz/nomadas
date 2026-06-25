@@ -227,6 +227,10 @@
 }
 
 @media (max-width: 480px) {
+  .admin-aliados__contadores > :first-child {
+    display: none;
+  }
+
   .admin-aliados__tabla th:nth-child(3),
   .admin-aliados__tabla td:nth-child(3) {
     display: none;
