@@ -349,22 +349,21 @@
 
   .postular-aliado__tipos {
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 6px;
   }
 
   .postular-aliado__tipo-btn {
-    flex: none;
-    width: auto;
-    height: auto;
-    padding: 12px 24px;
-    font-size: 14px;
+    flex: 1;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 13px;
     font-weight: 600;
     border: 2px solid #E5E7EB;
     border-radius: 10px;
     background: #ffffff;
     color: #374151;
+    white-space: nowrap;
   }
 
   .postular-aliado__tipo-btn--activo {
