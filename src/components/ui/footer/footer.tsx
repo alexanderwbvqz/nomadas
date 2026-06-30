@@ -24,7 +24,7 @@ export default function Footer() {
               </Link>
             )
           )}
-          <Link to="/nomadas-admin-2026" className="footer__admin">
+          <Link to="/admin" className="footer__admin">
             <Settings size={14} />
           </Link>
         </nav>

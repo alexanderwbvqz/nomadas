@@ -27,7 +27,7 @@ export default function AdminLoginPage() {
       return
     }
 
-    navigate('/nomadas-admin-2026/panel')
+    navigate('/admin/panel')
   }
 
   return (

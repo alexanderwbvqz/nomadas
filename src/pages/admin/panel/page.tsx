@@ -21,13 +21,13 @@ export default function AdminPanelPage() {
 
   useEffect(() => {
     if (!cargandoAuth && !session) {
-      navigate('/nomadas-admin-2026', { replace: true })
+      navigate('/admin', { replace: true })
     }
   }, [session, cargandoAuth])
 
   async function cerrarSesion() {
     await logout()
-    navigate('/nomadas-admin-2026', { replace: true })
+    navigate('/admin', { replace: true })
   }
 
   const { inscritos, cargando: cargandoData, aprobar, rechazar: rechazarHook } = useInscritos()

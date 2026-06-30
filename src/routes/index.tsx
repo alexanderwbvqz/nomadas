@@ -16,9 +16,9 @@ const router = createBrowserRouter([
   { path: '/aliados', element: <Layout><AliadosPage /></Layout> },
   { path: '/onboarding', element: <OnboardingPage /> },
   { path: '/postular-aliado', element: <PostularAliadoPage /> },
-  { path: '/nomadas-admin-2026', element: <AdminLoginPage /> },
+  { path: '/admin', element: <AdminLoginPage /> },
   {
-    path: '/nomadas-admin-2026/panel',
+    path: '/admin/panel',
     element: <AdminLayout />,
     children: [
       { index: true, element: <Navigate to="cofundadores" replace /> },

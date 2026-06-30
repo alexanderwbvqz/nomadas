@@ -11,13 +11,13 @@ export default function AdminLayout() {
 
   useEffect(() => {
     if (!cargando && !session) {
-      navigate('/nomadas-admin-2026', { replace: true })
+      navigate('/admin', { replace: true })
     }
   }, [session, cargando])
 
   async function cerrarSesion() {
     await logout()
-    navigate('/nomadas-admin-2026', { replace: true })
+    navigate('/admin', { replace: true })
   }
 
   if (cargando) return null
@@ -38,14 +38,14 @@ export default function AdminLayout() {
 
       <nav className="admin-layout__nav">
         <NavLink
-          to="/nomadas-admin-2026/panel/cofundadores"
+          to="/admin/panel/cofundadores"
           className={({ isActive }) => `admin-layout__tab${isActive ? ' admin-layout__tab--activo' : ''}`}
         >
           <Users size={15} />
           <span>Cofundadores</span>
         </NavLink>
         <NavLink
-          to="/nomadas-admin-2026/panel/aliados"
+          to="/admin/panel/aliados"
           className={({ isActive }) => `admin-layout__tab${isActive ? ' admin-layout__tab--activo' : ''}`}
         >
           <Handshake size={15} />
