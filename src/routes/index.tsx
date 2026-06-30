@@ -11,7 +11,7 @@ import AdminAliadosPage from '../pages/admin/panel/aliados/page'
 import PostularAliadoPage from '../pages/postularAliado/page'
 
 const router = createBrowserRouter([
-  { path: '/', element: <Layout><InicioPage /></Layout> },
+  { path: '/', element: <Layout sinFooter><InicioPage /></Layout> },
   { path: '/nomada', element: <Layout><NomidasPage /></Layout> },
   { path: '/aliados', element: <Layout><AliadosPage /></Layout> },
   { path: '/onboarding', element: <OnboardingPage /> },
