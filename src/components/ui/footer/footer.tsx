@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Settings } from 'lucide-react'
 import { FOOTER_LINKS } from './footer.types'
 import './footer.css'
 
@@ -24,9 +23,6 @@ export default function Footer() {
               </Link>
             )
           )}
-          <Link to="/admin" className="footer__admin">
-            <Settings size={14} />
-          </Link>
         </nav>
       </div>
     </footer>
