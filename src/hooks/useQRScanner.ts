@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Html5Qrcode } from 'html5-qrcode'
-import { buildMatchUrl } from '../lib/qr'
-
 const SCANNER_ID = 'match-qr-scanner'
+const MATCH_SEGMENT = '/match/'
 
 export function useQRScanner() {
   const navigate = useNavigate()
@@ -25,10 +24,10 @@ export function useQRScanner() {
           if (scannedRef.current) return
           scannedRef.current = true
 
-          const prefix = buildMatchUrl('')
-          if (text.startsWith(prefix)) {
-            const codigo = text.replace(prefix, '')
-            scanner.stop().then(() => navigate(`/match/${codigo}`))
+          const idx = text.indexOf(MATCH_SEGMENT)
+          if (idx !== -1) {
+            const codigo = text.slice(idx + MATCH_SEGMENT.length)
+            if (codigo) scanner.stop().then(() => navigate(`/match/${codigo}`))
           }
         },
         undefined,
