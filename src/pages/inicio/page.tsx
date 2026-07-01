@@ -54,6 +54,10 @@ export default function InicioPage() {
             <span className="inicio__metrica-label">Gratis</span>
           </div>
         </div>
+
+        <button className="inicio__cta-registro" onClick={() => navigate('/onboarding')}>
+          Quiero registrarme
+        </button>
       </div>
 
       <div className="inicio__derecha">
