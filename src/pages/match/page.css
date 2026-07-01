@@ -62,6 +62,10 @@
   text-align: center;
 }
 
+.match-hero__input {
+  display: none;
+}
+
 /* Scanner */
 .match-scanner {
   flex: 1;

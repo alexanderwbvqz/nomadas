@@ -1,3 +1,24 @@
+interface BarcodeDetector {
+  detect(source: HTMLImageElement): Promise<Array<{ rawValue: string }>>
+}
+declare const BarcodeDetector: {
+  new(options: { formats: string[] }): BarcodeDetector
+}
+
+export async function decodificarQRDeImagen(file: File): Promise<string | null> {
+  if (!('BarcodeDetector' in window)) return null
+
+  const img = new Image()
+  const url = URL.createObjectURL(file)
+  img.src = url
+  await new Promise((resolve) => { img.onload = resolve })
+  URL.revokeObjectURL(url)
+
+  const detector = new BarcodeDetector({ formats: ['qr_code'] })
+  const results = await detector.detect(img)
+  return results[0]?.rawValue ?? null
+}
+
 export function buildMatchUrl(codigo: string) {
   return `https://somosnomadas.vercel.app/match/${codigo}`
 }
