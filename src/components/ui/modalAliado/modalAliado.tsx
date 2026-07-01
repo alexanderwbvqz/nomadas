@@ -36,14 +36,14 @@ export default function ModalAliado({ logo, nombre, descripcion, tipo, linkedin,
           <div className="modal-aliado__logo-wrapper">
             <img src={logo} alt={nombre} className="modal-aliado__logo" />
           </div>
-          <h2 className="modal-aliado__nombre">{nombre}</h2>
-          <span className={`modal-aliado__badge ${BADGE_CLASE[tipo]}`}>{tipo}</span>
           <button className="modal-aliado__cerrar" onClick={onCerrar}>
             <X size={20} />
           </button>
         </div>
 
         <div className="modal-aliado__cuerpo">
+          <h2 className="modal-aliado__nombre">{nombre}</h2>
+          <span className={`modal-aliado__badge ${BADGE_CLASE[tipo]}`}>{tipo}</span>
           <p className="modal-aliado__descripcion">{descripcion}</p>
         </div>
 
