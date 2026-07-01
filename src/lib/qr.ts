@@ -1,22 +1,39 @@
-interface BarcodeDetector {
+import { BrowserQRCodeReader } from '@zxing/browser'
+
+interface BarcodeDetectorAPI {
   detect(source: HTMLImageElement): Promise<Array<{ rawValue: string }>>
 }
 declare const BarcodeDetector: {
-  new(options: { formats: string[] }): BarcodeDetector
+  new(options: { formats: string[] }): BarcodeDetectorAPI
 }
 
-export async function decodificarQRDeImagen(file: File): Promise<string | null> {
-  if (!('BarcodeDetector' in window)) return null
-
+async function cargarImagen(file: File): Promise<HTMLImageElement> {
   const img = new Image()
   const url = URL.createObjectURL(file)
   img.src = url
   await new Promise((resolve) => { img.onload = resolve })
   URL.revokeObjectURL(url)
+  return img
+}
 
-  const detector = new BarcodeDetector({ formats: ['qr_code'] })
-  const results = await detector.detect(img)
-  return results[0]?.rawValue ?? null
+export async function decodificarQRDeImagen(file: File): Promise<string | null> {
+  const img = await cargarImagen(file)
+
+  if ('BarcodeDetector' in window) {
+    try {
+      const detector = new BarcodeDetector({ formats: ['qr_code'] })
+      const results = await detector.detect(img)
+      if (results[0]?.rawValue) return results[0].rawValue
+    } catch {}
+  }
+
+  try {
+    const reader = new BrowserQRCodeReader()
+    const result = await reader.decodeFromImageElement(img)
+    return result.getText()
+  } catch {}
+
+  return null
 }
 
 export function buildMatchUrl(codigo: string) {
