@@ -16,6 +16,6 @@ export interface HamburgerIconProps {
 
 export const NAV_LINKS: NavItem[] = [
   { label: 'Inicio', href: '/' },
-  { label: 'Nómada', href: '/nomada' },
+  { label: 'Nómadas', href: '/nomadas' },
   { label: 'Aliados', href: '/aliados' },
 ]

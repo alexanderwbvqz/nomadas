@@ -1,5 +1,6 @@
 import type { OnboardingData, TieneIdea } from '../../../../types/onboarding'
 import BadgeSeleccionable from '../../../../components/ui/badgeSeleccionable/badgeSeleccionable'
+import CampoInput from '../../../../components/ui/campoInput/campoInput'
 import './Paso3Sueno.css'
 
 const SUENOS = [
@@ -15,6 +16,18 @@ interface Props {
 }
 
 export default function Paso3Sueno({ data, onChange }: Props) {
+  const ideas = data.ideasFrases.length > 0 ? data.ideasFrases : ['']
+
+  function handleIdea(index: number, valor: string) {
+    const nuevas = [...ideas]
+    nuevas[index] = valor
+    onChange('ideasFrases', nuevas)
+  }
+
+  function agregarIdea() {
+    onChange('ideasFrases', [...ideas, ''])
+  }
+
   return (
     <div>
       <h1 className="paso__titulo">Tu sueño emprendedor</h1>
@@ -48,12 +61,31 @@ export default function Paso3Sueno({ data, onChange }: Props) {
         </div>
 
         {data.tieneIdea === 'Sí' && (
-          <input
-            className="paso3__input"
+          <CampoInput
+            label=""
             placeholder="Cuéntanos tu idea en una frase..."
             value={data.ideaFrase}
-            onChange={(e) => onChange('ideaFrase', e.target.value)}
+            onChange={(v) => onChange('ideaFrase', v)}
           />
+        )}
+
+        {data.tieneIdea === 'Tengo varias' && (
+          <div className="paso3__ideas">
+            {ideas.map((idea, i) => (
+              <CampoInput
+                key={i}
+                label={`Idea ${i + 1}`}
+                placeholder="Cuéntanos tu idea en una frase..."
+                value={idea}
+                onChange={(v) => handleIdea(i, v)}
+              />
+            ))}
+            <BadgeSeleccionable
+              label="+ Agregar idea"
+              seleccionado={true}
+              onClick={agregarIdea}
+            />
+          </div>
         )}
       </div>
     </div>

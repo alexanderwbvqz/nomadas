@@ -12,7 +12,7 @@ import PostularAliadoPage from '../pages/postularAliado/page'
 
 const router = createBrowserRouter([
   { path: '/', element: <Layout><InicioPage /></Layout> },
-  { path: '/nomada', element: <Layout><NomidasPage /></Layout> },
+  { path: '/nomadas', element: <Layout><NomidasPage /></Layout> },
   { path: '/aliados', element: <Layout><AliadosPage /></Layout> },
   { path: '/onboarding', element: <OnboardingPage /> },
   { path: '/postular-aliado', element: <PostularAliadoPage /> },

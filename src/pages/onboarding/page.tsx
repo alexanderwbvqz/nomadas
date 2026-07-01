@@ -21,7 +21,7 @@ const TOTAL_PASOS = 6
 const DATA_INICIAL: OnboardingData = {
   nombre: '', ocupacion: '', foto: '', whatsapp: '', email: '',
   pasiones: [],
-  sueno: '', tieneIdea: '', ideaFrase: '',
+  sueno: '', tieneIdea: '', ideaFrase: '', ideasFrases: [],
   superpoderes: [],
   perfilesBuscados: [], valoresImportantes: [], disponibilidad: '',
   millonDolares: '', problemaResolver: '', fraseRepresenta: '',
@@ -32,7 +32,15 @@ function esValido(paso: number, data: OnboardingData): boolean {
   switch (paso) {
     case 1: return data.nombre.trim() !== '' && data.ocupacion !== ''
     case 2: return data.pasiones.length >= 1
-    case 3: return data.sueno !== '' && data.tieneIdea !== ''
+    case 3: {
+      if (data.sueno === '' || data.tieneIdea === '') return false
+      if (data.tieneIdea === 'Sí') return data.ideaFrase.trim() !== ''
+      if (data.tieneIdea === 'Tengo varias') {
+        const ideas = data.ideasFrases.length > 0 ? data.ideasFrases : ['']
+        return ideas.every((idea) => idea.trim() !== '')
+      }
+      return true
+    }
     case 4: return data.superpoderes.length >= 1
     case 5: return data.perfilesBuscados.length >= 1 && data.valoresImportantes.length === 3 && data.disponibilidad !== ''
     case 6: return (
@@ -156,6 +164,13 @@ export default function OnboardingPage() {
           />
         </div>
       </div>
+
+      {guardando && (
+        <div className="onboarding__loading">
+          <div className="onboarding__spinner" />
+          <p className="onboarding__loading-texto">Analizando tu perfil...</p>
+        </div>
+      )}
 
       {resultado && (
         <TarjetaResultado

@@ -22,6 +22,7 @@ export interface OnboardingData {
   sueno: string
   tieneIdea: TieneIdea | ''
   ideaFrase: string
+  ideasFrases: string[]
   // Paso 4
   superpoderes: string[]
   // Paso 5

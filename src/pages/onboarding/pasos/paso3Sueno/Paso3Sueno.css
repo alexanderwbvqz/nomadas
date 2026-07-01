@@ -14,7 +14,7 @@
   transition: border-color 0.2s;
   width: 100%;
   box-sizing: border-box;
-  margin-top: 12px;
+  margin-top: 20px;
 }
 
 .paso3__input:focus {
@@ -23,4 +23,20 @@
 
 .paso3__input::placeholder {
   color: #D1D5DB;
+}
+
+.paso3__ideas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  align-items: flex-start;
+}
+
+.paso3__seccion > .campo-input {
+  margin-top: 20px;
+}
+
+.paso3__ideas .campo-input {
+  width: 100%;
 }

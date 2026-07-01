@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Compass } from 'lucide-react'
 import AppButton from '../../components/ui/boton/boton'
+import Footer from '../../components/ui/footer/footer'
 import { useMetricas } from '../../hooks/useMetricas'
 import fotoFundador from '../../assets/foto_01_walter_barreto.png'
 import './page.css'
@@ -34,7 +35,7 @@ export default function InicioPage() {
           <AppButton
             label="Explorar Nómadas"
             icon={<ArrowRight size={16} />}
-            onClick={() => navigate('/nomada')}
+            onClick={() => navigate('/nomadas')}
           />
         </div>
 
@@ -58,6 +59,8 @@ export default function InicioPage() {
         <button className="inicio__cta-registro" onClick={() => navigate('/onboarding')}>
           Quiero registrarme
         </button>
+
+        <Footer />
       </div>
 
       <div className="inicio__derecha">
