@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useMatchPerfil } from '../../../hooks/useMatchPerfil'
+import TarjetaMatch from '../../../components/ui/tarjetaMatch/tarjetaMatch'
 import AppButton from '../../../components/ui/boton/boton'
 import './page.css'
 
@@ -28,5 +29,10 @@ export default function MatchPerfilPage() {
     )
   }
 
-  return null
+  return (
+    <div className="match-perfil">
+      <p className="match-perfil__marca">Nómadas</p>
+      <TarjetaMatch perfil={perfil} />
+    </div>
+  )
 }
