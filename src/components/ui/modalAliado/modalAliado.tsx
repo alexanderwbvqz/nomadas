@@ -32,22 +32,23 @@ export default function ModalAliado({ logo, nombre, descripcion, tipo, linkedin,
   return (
     <div className="modal-aliado__overlay" onClick={onCerrar}>
       <div className="modal-aliado" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-aliado__cerrar" onClick={onCerrar}>
-          <X size={20} />
-        </button>
-
-        <div className="modal-aliado__logo-wrapper">
-          <img src={logo} alt={nombre} className="modal-aliado__logo" />
+        <div className="modal-aliado__cabecera">
+          <div className="modal-aliado__logo-wrapper">
+            <img src={logo} alt={nombre} className="modal-aliado__logo" />
+          </div>
+          <h2 className="modal-aliado__nombre">{nombre}</h2>
+          <span className={`modal-aliado__badge ${BADGE_CLASE[tipo]}`}>{tipo}</span>
+          <button className="modal-aliado__cerrar" onClick={onCerrar}>
+            <X size={20} />
+          </button>
         </div>
 
-        <h2 className="modal-aliado__nombre">{nombre}</h2>
-
-        <span className={`modal-aliado__badge ${BADGE_CLASE[tipo]}`}>{tipo}</span>
-
-        <p className="modal-aliado__descripcion">{descripcion}</p>
+        <div className="modal-aliado__cuerpo">
+          <p className="modal-aliado__descripcion">{descripcion}</p>
+        </div>
 
         {(linkedin || instagram || web) && (
-          <div className="modal-aliado__links">
+          <div className="modal-aliado__pie">
             {linkedin && (
               <a href={linkedin} target="_blank" rel="noopener noreferrer" className="modal-aliado__link">
                 <IconLinkedin />
