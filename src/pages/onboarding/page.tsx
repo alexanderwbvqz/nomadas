@@ -13,6 +13,7 @@ import Paso4Superpoderes from './pasos/paso4Superpoderes/Paso4Superpoderes'
 import Paso5SocioIdeal from './pasos/paso6SocioIdeal/Paso6SocioIdeal'
 import Paso6Tinder from './pasos/paso7Tinder/Paso7Tinder'
 import TarjetaResultado from '../../components/ui/tarjetaResultado/tarjetaResultado'
+import ModalBienvenida from '../../components/ui/modalBienvenida/modalBienvenida'
 import BotonNav from '../../components/ui/botonNav/botonNav'
 import './page.css'
 
@@ -60,6 +61,7 @@ export default function OnboardingPage() {
   const [data, setData] = useState<OnboardingData>(DATA_INICIAL)
   const [resultado, setResultado] = useState<ResultadoPerfil | null>(null)
   const [guardando, setGuardando] = useState(false)
+  const [mostrarBienvenida, setMostrarBienvenida] = useState(false)
   const navigate = useNavigate()
   const paso1 = useOnboardingPaso1()
   const paso6 = useOnboardingPaso6()
@@ -172,15 +174,19 @@ export default function OnboardingPage() {
         </div>
       )}
 
-      {resultado && (
+      {resultado && !mostrarBienvenida && (
         <TarjetaResultado
           resultado={resultado}
           nombre={data.nombre}
           foto={data.foto}
           superpoderes={data.superpoderes}
           fraseRepresenta={data.fraseRepresenta}
-          onEntrar={() => navigate('/')}
+          onEntrar={() => setMostrarBienvenida(true)}
         />
+      )}
+
+      {mostrarBienvenida && (
+        <ModalBienvenida onAceptar={() => navigate('/')} />
       )}
     </div>
   )

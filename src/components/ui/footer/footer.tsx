@@ -6,9 +6,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer__inner">
-        <div className="footer__marca">
-          <span className="footer__copyright">© 2026 Nómadas.</span>
-        </div>
+        <span className="footer__copyright">© 2026 Nómadas.</span>
 
         <nav className="footer__links">
           {FOOTER_LINKS.map((link) =>

@@ -2,28 +2,6 @@
   margin-bottom: 28px;
 }
 
-.paso3__input {
-  height: 44px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 10px;
-  padding: 0 14px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  color: #111827;
-  outline: none;
-  transition: border-color 0.2s;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 20px;
-}
-
-.paso3__input:focus {
-  border-color: #3B82F6;
-}
-
-.paso3__input::placeholder {
-  color: #D1D5DB;
-}
 
 .paso3__ideas {
   display: flex;
