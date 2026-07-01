@@ -19,7 +19,7 @@ export function useInscritos() {
         id, nombre, email, whatsapp, ocupacion, foto, created_at, estado, observaciones, aprobado,
         perfil_suenos(sueno, tiene_idea),
         perfil_ideas(idea),
-        perfil_resultado(categoria),
+        perfil_resultado(categoria, descripcion),
         perfil_pasiones(pasion),
         perfil_superpoderes(superpoder),
         perfil_preferencias(perfiles_buscados, valores_importantes, disponibilidad),
@@ -34,7 +34,7 @@ export function useInscritos() {
 
     type Suenos = Array<{ sueno: string; tiene_idea: string }>
     type Ideas = Array<{ idea: string }>
-    type Resultado = Array<{ categoria: string }>
+    type Resultado = Array<{ categoria: string; descripcion: string }>
     type Pasiones = Array<{ pasion: string }>
     type Superpoderes = Array<{ superpoder: string }>
     type Preferencias = Array<{ perfiles_buscados: string[]; valores_importantes: string[]; disponibilidad: string }>
@@ -53,6 +53,7 @@ export function useInscritos() {
           fechaInscripcion: p.created_at,
           nombre: p.nombre,
           categoria: resultado?.categoria ?? '',
+          descripcion: resultado?.descripcion ?? '',
           estado: (p.estado as EstadoInscrito) ?? 'por_aprobar',
           observaciones: p.observaciones ?? undefined,
           foto: p.foto ?? '',

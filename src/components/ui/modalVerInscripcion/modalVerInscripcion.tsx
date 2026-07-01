@@ -1,4 +1,4 @@
-import { X, Zap, Heart, Star, Lightbulb, Users, Clock, DollarSign, Globe, Quote } from 'lucide-react'
+import { X, Zap, Heart, Star, Lightbulb, Users, Clock, DollarSign, Globe, Quote, Shield, Award, BookOpen } from 'lucide-react'
 import type { Inscrito } from '../../../types/admin'
 import AppButton from '../boton/boton'
 import './modalVerInscripcion.css'
@@ -38,6 +38,10 @@ export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInsc
         </div>
 
         <div className="modal-ver__cuerpo">
+          {inscrito.descripcion && (
+            <p className="modal-ver__descripcion-ia">{inscrito.descripcion}</p>
+          )}
+
           <Fila label="Correo" valor={inscrito.email} />
           <Fila label="WhatsApp" valor={inscrito.whatsapp} />
 
@@ -109,6 +113,29 @@ export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInsc
             <div className="modal-ver__seccion">
               <div className="modal-ver__seccion-titulo"><Globe size={13} /> Problema que resolvería</div>
               <p className="modal-ver__texto">"{inscrito.problemaResolver}"</p>
+            </div>
+          )}
+
+          {inscrito.valoresImportantes && inscrito.valoresImportantes.length > 0 && (
+            <div className="modal-ver__seccion">
+              <div className="modal-ver__seccion-titulo"><Shield size={13} /> Valores en un socio</div>
+              <div className="modal-ver__tags">
+                {inscrito.valoresImportantes.map((v) => <span key={v} className="modal-ver__tag">{v}</span>)}
+              </div>
+            </div>
+          )}
+
+          {inscrito.admiraEmprendedor && (
+            <div className="modal-ver__seccion">
+              <div className="modal-ver__seccion-titulo"><Award size={13} /> Lo que admira en un emprendedor</div>
+              <p className="modal-ver__texto">{inscrito.admiraEmprendedor}</p>
+            </div>
+          )}
+
+          {inscrito.mayorAprendizaje && (
+            <div className="modal-ver__seccion">
+              <div className="modal-ver__seccion-titulo"><BookOpen size={13} /> Mayor aprendizaje</div>
+              <p className="modal-ver__texto">{inscrito.mayorAprendizaje}</p>
             </div>
           )}
         </div>

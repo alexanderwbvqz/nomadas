@@ -103,6 +103,17 @@
   gap: 16px;
 }
 
+.modal-ver__descripcion-ia {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.65;
+  margin: 0;
+  padding: 12px 14px;
+  background: #F8FAFF;
+  border-radius: 10px;
+}
+
 .modal-ver__fila {
   display: flex;
   justify-content: space-between;

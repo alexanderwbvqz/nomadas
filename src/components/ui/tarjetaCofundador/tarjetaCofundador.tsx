@@ -7,7 +7,7 @@ export default function TarjetaCofundador({
   nombre,
   rol,
   habilidades,
-  frase,
+  descripcion,
   onVerPerfil,
 }: TarjetaCofundadorProps) {
   return (
@@ -27,7 +27,7 @@ export default function TarjetaCofundador({
         ))}
       </div>
 
-      <p className="tarjeta__frase">"{frase}"</p>
+      <p className="tarjeta__descripcion">{descripcion}</p>
 
       <div className="tarjeta__acciones">
         <AppButton label="Ver perfil" onClick={onVerPerfil} />

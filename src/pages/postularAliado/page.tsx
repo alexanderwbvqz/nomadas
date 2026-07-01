@@ -170,8 +170,8 @@ export default function PostularAliadoPage() {
 
           {errorServidor && <p className="postular-aliado__error">{errorServidor}</p>}
           <div className="postular-aliado__acciones">
-            <AppButton label={enviando ? 'Enviando...' : 'Enviar postulación'} disabled={enviando || subiendoLogo} htmlType="submit" />
             <AppButton label="Cancelar" variante="outline" onClick={volverAliados} />
+            <AppButton label={enviando ? 'Enviando...' : 'Enviar'} disabled={enviando || subiendoLogo} htmlType="submit" />
           </div>
         </form>
       </div>

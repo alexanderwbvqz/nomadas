@@ -40,7 +40,7 @@ export default function Navbar() {
 
           <div className="navbar__cta">
             <Link to="/onboarding">
-              <AppButton label="Regístrate" />
+              <AppButton label="Quiero registrarme" />
             </Link>
           </div>
 
@@ -79,7 +79,7 @@ function MobileMenu({ open, links, activeLink, onLinkClick }: MobileMenuProps) {
           </Link>
         ))}
         <Link to="/onboarding" onClick={onLinkClick}>
-          <AppButton label="Regístrate" />
+          <AppButton label="Quiero registrarme" />
         </Link>
       </div>
     </div>

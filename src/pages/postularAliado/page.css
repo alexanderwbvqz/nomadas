@@ -273,13 +273,14 @@
 
 .postular-aliado__acciones {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
   margin-top: 8px;
 }
 
 .postular-aliado__acciones .app-btn {
-  width: 100% !important;
+  flex: 1 !important;
+  width: auto !important;
   height: 48px !important;
   border-radius: 999px !important;
   font-size: 15px !important;

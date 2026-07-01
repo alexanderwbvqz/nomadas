@@ -79,11 +79,12 @@ export default function ModalEditarAliado({ aliado, onCerrar, onGuardar }: Modal
   return (
     <div className="modal-editar-aliado__overlay" onClick={onCerrar}>
       <div className="modal-editar-aliado" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-editar-aliado__cerrar" onClick={onCerrar}>
-          <X size={18} />
-        </button>
-
-        <h2 className="modal-editar-aliado__titulo">Editar aliado</h2>
+        <div className="modal-editar-aliado__cabecera">
+          <h2 className="modal-editar-aliado__titulo">Editar aliado</h2>
+          <button className="modal-editar-aliado__cerrar" onClick={onCerrar}>
+            <X size={18} />
+          </button>
+        </div>
 
         <div className="modal-editar-aliado__form">
           <CampoInput
@@ -173,8 +174,8 @@ export default function ModalEditarAliado({ aliado, onCerrar, onGuardar }: Modal
         </div>
 
         <div className="modal-editar-aliado__acciones">
-          <AppButton label="Guardar cambios" disabled={!valido || subiendoLogo} onClick={guardar} />
           <AppButton label="Cancelar" variante="outline" onClick={onCerrar} />
+          <AppButton label="Guardar cambios" disabled={!valido || subiendoLogo} onClick={guardar} />
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ export interface Inscrito {
   fechaInscripcion: string
   nombre: string
   categoria: string
+  descripcion: string
   estado: EstadoInscrito
   observaciones?: string
   foto: string

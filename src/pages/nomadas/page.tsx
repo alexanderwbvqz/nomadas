@@ -9,8 +9,8 @@ interface Cofundador {
   nombre: string
   ocupacion: string
   foto: string
-  frase: string
   categoria: string
+  descripcion: string
   superpoderes: string[]
 }
 
@@ -29,7 +29,7 @@ export default function NomidasPage() {
     async function cargar() {
       const { data: perfiles } = await supabase
         .from('perfiles_datos')
-        .select('id, nombre, ocupacion, foto, perfil_suenos(sueno), perfil_resultado(categoria), perfil_tinder(frase_representa), perfil_superpoderes(superpoder)')
+        .select('id, nombre, ocupacion, foto, perfil_resultado(categoria, descripcion), perfil_superpoderes(superpoder)')
         .eq('aprobado', true)
         .order('created_at', { ascending: false })
 
@@ -38,24 +38,20 @@ export default function NomidasPage() {
         return
       }
 
-      type Suenos = Array<{ sueno: string }>
-      type Resultado = Array<{ categoria: string }>
-      type Tinder = Array<{ frase_representa: string }>
+      type Resultado = Array<{ categoria: string; descripcion: string }>
       type Superpoderes = Array<{ superpoder: string }>
 
       setCofundadores(
         perfiles.map((p) => {
-          const sueno = (p.perfil_suenos as Suenos)?.[0]?.sueno ?? ''
-          const categoria = (p.perfil_resultado as Resultado)?.[0]?.categoria ?? ''
-          const frase = (p.perfil_tinder as Tinder)?.[0]?.frase_representa || sueno
+          const res = (p.perfil_resultado as Resultado)?.[0]
 
           return {
             id: p.id,
             nombre: p.nombre.split(' ').slice(0, 2).join(' '),
             ocupacion: p.ocupacion ?? '',
             foto: p.foto ?? '',
-            frase,
-            categoria,
+            categoria: res?.categoria ?? '',
+            descripcion: res?.descripcion ?? '',
             superpoderes: (p.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
           }
         })
@@ -107,7 +103,7 @@ export default function NomidasPage() {
               nombre={c.nombre}
               rol={c.categoria || c.ocupacion}
               habilidades={c.superpoderes.slice(0, 3)}
-              frase={c.frase}
+              descripcion={c.descripcion}
               onVerPerfil={() => setModalId(c.id)}
             />
           ))}

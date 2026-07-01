@@ -3,6 +3,6 @@ export interface TarjetaCofundadorProps {
   nombre: string
   rol: string
   habilidades: string[]
-  frase: string
+  descripcion: string
   onVerPerfil?: () => void
 }
