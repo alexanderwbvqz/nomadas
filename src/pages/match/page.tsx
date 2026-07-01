@@ -1,10 +1,10 @@
 import { QrCode } from 'lucide-react'
 import AppButton from '../../components/ui/boton/boton'
-import { useQRScanner } from '../../hooks/useQRScanner'
+import { useQRScanner, SCANNER_VIDEO_ID } from '../../hooks/useQRScanner'
 import './page.css'
 
 export default function MatchPage() {
-  const { scanning, errorCamara, iniciarScan, cancelarScan, SCANNER_ID } = useQRScanner()
+  const { scanning, errorCamara, iniciarScan, cancelarScan } = useQRScanner()
 
   return (
     <div className="match-page">
@@ -33,7 +33,7 @@ export default function MatchPage() {
         <div className="match-scanner">
           <p className="match-scanner__instruccion">Apunta la cámara al código QR</p>
           <div className="match-scanner__visor">
-            <div id={SCANNER_ID} className="match-scanner__camara" />
+            <video id={SCANNER_VIDEO_ID} className="match-scanner__camara" />
             <div className="match-scanner__marco" />
           </div>
           <button className="match-scanner__cancelar" onClick={cancelarScan}>

@@ -1,49 +1,39 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Html5Qrcode } from 'html5-qrcode'
-const SCANNER_ID = 'match-qr-scanner'
+import { BrowserQRCodeReader } from '@zxing/browser'
+
+export const SCANNER_VIDEO_ID = 'match-qr-video'
 const MATCH_SEGMENT = '/match/'
 
 export function useQRScanner() {
   const navigate = useNavigate()
   const [scanning, setScanning] = useState(false)
   const [errorCamara, setErrorCamara] = useState(false)
-  const scannedRef = useRef(false)
-  const startedRef = useRef(false)
+  const controlsRef = useRef<{ stop: () => void } | null>(null)
 
   useEffect(() => {
     if (!scanning) return
 
-    scannedRef.current = false
-    const scanner = new Html5Qrcode(SCANNER_ID)
+    const reader = new BrowserQRCodeReader()
 
-    scanner
-      .start(
-        { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 240, height: 240 } },
-        (text) => {
-          if (scannedRef.current) return
+    reader
+      .decodeFromVideoDevice(undefined, SCANNER_VIDEO_ID, (result) => {
+        if (!result) return
 
-          const idx = text.indexOf(MATCH_SEGMENT)
-          if (idx !== -1) {
-            const codigo = text.slice(idx + MATCH_SEGMENT.length)
-            if (codigo) {
-              scannedRef.current = true
-              scanner.stop().then(() => navigate(`/match/${codigo}`))
-            }
+        const text = result.getText()
+        const idx = text.indexOf(MATCH_SEGMENT)
+        if (idx !== -1) {
+          const codigo = text.slice(idx + MATCH_SEGMENT.length)
+          if (codigo) {
+            controlsRef.current?.stop()
+            navigate(`/match/${codigo}`)
           }
-        },
-        undefined,
-      )
-      .then(() => { startedRef.current = true })
+        }
+      })
+      .then((controls) => { controlsRef.current = controls })
       .catch(() => { setErrorCamara(true); setScanning(false) })
 
-    return () => {
-      if (startedRef.current) {
-        startedRef.current = false
-        scanner.stop().catch(() => {})
-      }
-    }
+    return () => { controlsRef.current?.stop(); controlsRef.current = null }
   }, [scanning, navigate])
 
   function iniciarScan() {
@@ -52,8 +42,10 @@ export function useQRScanner() {
   }
 
   function cancelarScan() {
+    controlsRef.current?.stop()
+    controlsRef.current = null
     setScanning(false)
   }
 
-  return { scanning, errorCamara, iniciarScan, cancelarScan, SCANNER_ID }
+  return { scanning, errorCamara, iniciarScan, cancelarScan }
 }
