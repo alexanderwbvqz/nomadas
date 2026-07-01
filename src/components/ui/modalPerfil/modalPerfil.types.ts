@@ -7,8 +7,9 @@ export interface PerfilCompleto {
   whatsapp: string
   sueno: string
   tieneIdea: string
-  ideaFrase: string
-  perfilResultado: string
+  ideas: string[]
+  categoria: string
+  descripcion: string
   pasiones: string[]
   superpoderes: string[]
   perfilesBuscados: string[]

@@ -12,7 +12,6 @@ export interface AliadoAdmin {
   linkedin?: string
   instagram?: string
   web?: string
-  email?: string
 }
 
 export function useAliados() {
@@ -42,7 +41,7 @@ export function useAliados() {
           linkedin: a.linkedin ?? undefined,
           instagram: a.instagram ?? undefined,
           web: a.web ?? undefined,
-          email: a.email ?? undefined,
+
         }))
       )
     }

@@ -29,7 +29,7 @@ export default function ModalPerfil({ id, onCerrar }: ModalPerfilProps) {
               </div>
               <div className="modal-perfil__info">
                 <h2 className="modal-perfil__nombre">{perfil.nombre}</h2>
-                <span className="modal-perfil__perfil-badge">{perfil.perfilResultado}</span>
+                <span className="modal-perfil__perfil-badge">{perfil.categoria}</span>
                 <p className="modal-perfil__ocupacion">{perfil.ocupacion}</p>
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function ModalPerfil({ id, onCerrar }: ModalPerfilProps) {
                   <Lightbulb size={14} /> ¿Tiene idea de negocio?
                 </div>
                 <p className="modal-perfil__texto">
-                  {perfil.tieneIdea}{perfil.ideaFrase ? ` — "${perfil.ideaFrase}"` : ''}
+                  {perfil.tieneIdea}{perfil.ideas.length > 0 ? ` — "${perfil.ideas.join(', ')}"` : ''}
                 </p>
               </div>
             )}

@@ -7,7 +7,6 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__inner">
         <div className="footer__marca">
-          <span className="footer__nombre">Nómadas</span>
           <span className="footer__copyright">© 2026 Nómadas.</span>
         </div>
 

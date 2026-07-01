@@ -5,7 +5,7 @@ export interface Inscrito {
   orden: number
   fechaInscripcion: string
   nombre: string
-  perfil: string
+  categoria: string
   estado: EstadoInscrito
   observaciones?: string
   foto: string
@@ -16,7 +16,7 @@ export interface Inscrito {
   superpoderes: string[]
   sueno: string
   tieneIdea: string
-  ideaFrase: string
+  ideas: string[]
   perfilesBuscados: string[]
   valoresImportantes: string[]
   disponibilidad: string

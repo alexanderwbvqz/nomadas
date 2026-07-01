@@ -1,12 +1,13 @@
 import Navbar from '../../components/ui/barraNavegacion/barraNavegacion'
 import Footer from '../../components/ui/footer/footer'
+import './layout.css'
 
-export default function Layout({ children, sinFooter = false }: { children: React.ReactNode; sinFooter?: boolean }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="layout">
       <Navbar />
-      <main>{children}</main>
-      {!sinFooter && <Footer />}
-    </>
+      <main className="layout__main">{children}</main>
+      <Footer />
+    </div>
   )
 }

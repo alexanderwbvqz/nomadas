@@ -10,21 +10,13 @@ interface Cofundador {
   ocupacion: string
   foto: string
   frase: string
-  perfil_resultado: string
+  categoria: string
   superpoderes: string[]
 }
 
-type FiltroLabel = 'Todos' | 'Tecnología' | 'Ventas y Finanzas' | 'Marketing' | 'Operaciones'
+type FiltroLabel = 'Todos' | 'Tecnología' | 'Marketing - Ventas' | 'Operaciones' | 'Finanzas'
 
-const FILTROS: FiltroLabel[] = ['Todos', 'Tecnología', 'Ventas y Finanzas', 'Marketing', 'Operaciones']
-
-const PERFIL_MAP: Record<FiltroLabel, string | null> = {
-  'Todos':            null,
-  'Tecnología':       'CTO Builder',
-  'Ventas y Finanzas':'CFO Strategist',
-  'Marketing':        'CMO',
-  'Operaciones':      'COO Executor',
-}
+const FILTROS: FiltroLabel[] = ['Todos', 'Tecnología', 'Marketing - Ventas', 'Operaciones', 'Finanzas']
 
 export default function NomidasPage() {
   useEffect(() => { document.title = 'Nómadas: Cofundadores' }, [])
@@ -37,7 +29,7 @@ export default function NomidasPage() {
     async function cargar() {
       const { data: perfiles } = await supabase
         .from('perfiles_datos')
-        .select('id, nombre, ocupacion, foto, sueno, perfil_resultado')
+        .select('id, nombre, ocupacion, foto, perfil_suenos(sueno), perfil_resultado(categoria), perfil_tinder(frase_representa), perfil_superpoderes(superpoder)')
         .eq('aprobado', true)
         .order('created_at', { ascending: false })
 
@@ -46,33 +38,27 @@ export default function NomidasPage() {
         return
       }
 
-      const ids = perfiles.map((p) => p.id)
-      const [{ data: superpoderesRows }, { data: tinderRows }] = await Promise.all([
-        supabase.from('perfil_superpoderes').select('perfil_id, superpoder').in('perfil_id', ids),
-        supabase.from('perfil_tinder').select('perfil_id, frase_representa').in('perfil_id', ids),
-      ])
-
-      const superpoderesPorId: Record<string, string[]> = {}
-      superpoderesRows?.forEach(({ perfil_id, superpoder }) => {
-        if (!superpoderesPorId[perfil_id]) superpoderesPorId[perfil_id] = []
-        superpoderesPorId[perfil_id].push(superpoder)
-      })
-
-      const frasePorId: Record<string, string> = {}
-      tinderRows?.forEach(({ perfil_id, frase_representa }) => {
-        frasePorId[perfil_id] = frase_representa ?? ''
-      })
+      type Suenos = Array<{ sueno: string }>
+      type Resultado = Array<{ categoria: string }>
+      type Tinder = Array<{ frase_representa: string }>
+      type Superpoderes = Array<{ superpoder: string }>
 
       setCofundadores(
-        perfiles.map((p) => ({
-          id: p.id,
-          nombre: p.nombre.split(' ').slice(0, 2).join(' '),
-          ocupacion: p.ocupacion ?? '',
-          foto: p.foto ?? '',
-          frase: frasePorId[p.id] || p.sueno || '',
-          perfil_resultado: p.perfil_resultado ?? '',
-          superpoderes: superpoderesPorId[p.id] ?? [],
-        }))
+        perfiles.map((p) => {
+          const sueno = (p.perfil_suenos as Suenos)?.[0]?.sueno ?? ''
+          const categoria = (p.perfil_resultado as Resultado)?.[0]?.categoria ?? ''
+          const frase = (p.perfil_tinder as Tinder)?.[0]?.frase_representa || sueno
+
+          return {
+            id: p.id,
+            nombre: p.nombre.split(' ').slice(0, 2).join(' '),
+            ocupacion: p.ocupacion ?? '',
+            foto: p.foto ?? '',
+            frase,
+            categoria,
+            superpoderes: (p.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
+          }
+        })
       )
       setCargando(false)
     }
@@ -113,13 +99,13 @@ export default function NomidasPage() {
       ) : (
         <div className="nomadas__grid">
           {cofundadores
-            .filter((c) => PERFIL_MAP[filtro] === null || c.perfil_resultado === PERFIL_MAP[filtro])
+            .filter((c) => filtro === 'Todos' || c.categoria === filtro)
             .map((c) => (
             <TarjetaCofundador
               key={c.id}
               foto={c.foto}
               nombre={c.nombre}
-              rol={c.perfil_resultado || c.ocupacion}
+              rol={c.categoria || c.ocupacion}
               habilidades={c.superpoderes.slice(0, 3)}
               frase={c.frase}
               onVerPerfil={() => setModalId(c.id)}

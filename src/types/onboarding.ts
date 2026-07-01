@@ -1,26 +1,12 @@
 export type Ocupacion = 'Estudiante' | 'Profesional' | 'Emprendedor' | 'Freelancer' | 'Otro' | (string & {})
 export type TieneIdea = 'Sí' | 'No' | 'Tengo varias'
 export type DisponibilidadHoras = 'Menos de 5 horas' | '5-10 horas' | '10-20 horas' | 'Más de 20 horas'
-export type CategoriaPerfil = 'Tecnología' | 'Marketing' | 'Ventas' | 'Finanzas' | 'Operaciones'
-export type PerfilResultado =
-  | 'CTO Builder'
-  | 'CMO'
-  | 'CFO Strategist'
-  | 'COO Executor'
-  | 'Co-Founder Generalista'
-
-export interface ScoresPerfil {
-  Tecnología: number
-  Ventas: number
-  Finanzas: number
-  Operaciones: number
-}
+export type CategoriaPerfil = 'Tecnología' | 'Marketing - Ventas' | 'Operaciones' | 'Finanzas'
 
 export interface ResultadoPerfil {
-  perfil: PerfilResultado
+  categoria: CategoriaPerfil
   descripcion: string
   busca: string[]
-  scores: ScoresPerfil
 }
 
 export interface OnboardingData {

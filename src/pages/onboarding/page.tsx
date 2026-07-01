@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
 import type { OnboardingData, ResultadoPerfil } from '../../types/onboarding'
 import { supabase } from '../../lib/supabase'
 import { useOnboardingPaso1 } from '../../hooks/useOnboardingPaso1'
+
 import { useOnboardingPaso6 } from '../../hooks/useOnboardingPaso6'
 import Paso1Perfil from './pasos/paso1Perfil/Paso1Perfil'
 import Paso2Pasiones from './pasos/paso2Pasiones/Paso2Pasiones'
@@ -87,60 +88,8 @@ export default function OnboardingPage() {
 
     const perfil = fnData as ResultadoPerfil
 
-    // Mostrar resultado inmediatamente
     setGuardando(false)
     setResultado(perfil)
-
-    // Guardar en Supabase en segundo plano
-    const { data: fila, error: errorPerfil } = await supabase
-      .from('perfiles_datos')
-      .insert({
-        nombre: data.nombre,
-        email: data.email,
-        whatsapp: data.whatsapp,
-        ocupacion: data.ocupacion,
-        foto: data.foto,
-        sueno: data.sueno,
-        tiene_idea: data.tieneIdea,
-        idea_frase: data.ideaFrase,
-        perfil_resultado: perfil.perfil,
-      })
-      .select('id')
-      .single()
-
-    if (errorPerfil) {
-      console.error('Error guardando perfil:', errorPerfil)
-      return
-    }
-
-    if (fila) {
-      const pid = fila.id
-      const resultados = await Promise.all([
-        supabase.from('perfil_pasiones').insert(
-          data.pasiones.map((pasion) => ({ perfil_id: pid, pasion }))
-        ),
-        supabase.from('perfil_superpoderes').insert(
-          data.superpoderes.map((superpoder) => ({ perfil_id: pid, superpoder }))
-        ),
-        supabase.from('perfil_preferencias').insert({
-          perfil_id: pid,
-          perfiles_buscados: data.perfilesBuscados,
-          valores_importantes: data.valoresImportantes,
-          disponibilidad: data.disponibilidad,
-        }),
-        supabase.from('perfil_tinder').insert({
-          perfil_id: pid,
-          millon_dolares: data.millonDolares,
-          problema_resolver: data.problemaResolver,
-          frase_representa: data.fraseRepresenta,
-          admira_emprendedor: data.admiraEmprendedor,
-          mayor_aprendizaje: data.mayorAprendizaje,
-        }),
-      ])
-      resultados.forEach(({ error }, i) => {
-        if (error) console.error(`Error en tabla relacionada [${i}]:`, error)
-      })
-    }
   }
 
   function atras() {

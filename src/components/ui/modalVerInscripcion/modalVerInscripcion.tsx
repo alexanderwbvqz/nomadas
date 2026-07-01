@@ -32,7 +32,7 @@ export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInsc
           )}
           <div>
             <h2 className="modal-ver__nombre">{inscrito.nombre}</h2>
-            <span className="modal-ver__badge">{inscrito.perfil}</span>
+            <span className="modal-ver__badge">{inscrito.categoria}</span>
             <p className="modal-ver__ocupacion">{inscrito.ocupacion}</p>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInsc
             <div className="modal-ver__seccion">
               <div className="modal-ver__seccion-titulo"><Lightbulb size={13} /> ¿Tiene idea de negocio?</div>
               <p className="modal-ver__texto">
-                {inscrito.tieneIdea}{inscrito.ideaFrase ? ` — "${inscrito.ideaFrase}"` : ''}
+                {inscrito.tieneIdea}{inscrito.ideas.length > 0 ? ` — "${inscrito.ideas.join(', ')}"` : ''}
               </p>
             </div>
           )}

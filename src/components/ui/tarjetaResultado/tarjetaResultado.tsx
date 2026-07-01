@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Code2, Target, TrendingUp, Settings2, Sparkles } from 'lucide-react'
+import { Code2, Target, TrendingUp, Settings2 } from 'lucide-react'
 import type { TarjetaResultadoProps } from './tarjetaResultado.types'
-import type { PerfilResultado } from '../../../types/onboarding'
+import type { CategoriaPerfil } from '../../../types/onboarding'
 import './tarjetaResultado.css'
 
-const ICONOS_PERFIL: Record<PerfilResultado, React.ReactNode> = {
-  'CTO Builder':           <Code2 size={36} strokeWidth={1.5} />,
-  'CMO':                   <Target size={36} strokeWidth={1.5} />,
-  'CFO Strategist':        <TrendingUp size={36} strokeWidth={1.5} />,
-  'COO Executor':          <Settings2 size={36} strokeWidth={1.5} />,
-  'Co-Founder Generalista':<Sparkles size={36} strokeWidth={1.5} />,
+const ICONOS: Record<CategoriaPerfil, React.ReactNode> = {
+  'Tecnología':       <Code2 size={12} strokeWidth={2} />,
+  'Marketing - Ventas': <Target size={12} strokeWidth={2} />,
+  'Operaciones':      <Settings2 size={12} strokeWidth={2} />,
+  'Finanzas':         <TrendingUp size={12} strokeWidth={2} />,
 }
 
 export default function TarjetaResultado({
@@ -44,15 +43,12 @@ export default function TarjetaResultado({
           )}
         </div>
 
-        <div className="tarjeta-resultado__icono tarjeta-resultado__item">
-          {ICONOS_PERFIL[resultado.perfil]}
-        </div>
-
-        <h2 className="tarjeta-resultado__perfil tarjeta-resultado__item">
-          {resultado.perfil}
-        </h2>
-
         <p className="tarjeta-resultado__nombre tarjeta-resultado__item">{nombre}</p>
+
+        <span className="tarjeta-resultado__categoria-badge tarjeta-resultado__item">
+          {ICONOS[resultado.categoria]}
+          {resultado.categoria}
+        </span>
 
         {topSuperpoderes.length > 0 && (
           <div className="tarjeta-resultado__tags tarjeta-resultado__item">

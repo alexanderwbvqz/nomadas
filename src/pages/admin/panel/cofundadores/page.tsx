@@ -31,7 +31,7 @@ export default function AdminCofundadoresPage() {
   const filtrados = useMemo(() => {
     let lista = [...inscritos]
     if (filtroEstado) lista = lista.filter((i) => i.estado === filtroEstado)
-    if (filtroPerfil) lista = lista.filter((i) => i.perfil === filtroPerfil)
+    if (filtroPerfil) lista = lista.filter((i) => i.categoria === filtroPerfil)
     if (filtroNombre) lista = lista.filter((i) => i.nombre.toLowerCase().includes(filtroNombre.toLowerCase()))
     return lista.sort((a, b) => new Date(b.fechaInscripcion).getTime() - new Date(a.fechaInscripcion).getTime())
   }, [inscritos, filtroEstado, filtroPerfil, filtroNombre])
@@ -44,7 +44,7 @@ export default function AdminCofundadoresPage() {
   const aprobados = inscritos.filter((i) => i.estado === 'aprobado').length
   const rechazados = inscritos.filter((i) => i.estado === 'rechazado').length
 
-  const perfiles = [...new Set(inscritos.map((i) => i.perfil))]
+  const perfiles = [...new Set(inscritos.map((i) => i.categoria))]
 
   return (
     <main className="admin-cofundadores">

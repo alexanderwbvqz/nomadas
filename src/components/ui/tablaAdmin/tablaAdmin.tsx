@@ -50,7 +50,7 @@ export default function TablaAdmin({ inscritos, onVer, onAprobar, onRechazar }: 
                 </div>
               </td>
               <td>
-                <span className="tabla-admin__perfil-badge">{ins.perfil}</span>
+                <span className="tabla-admin__perfil-badge">{ins.categoria}</span>
               </td>
               <td>
                 <span className={`tabla-admin__estado tabla-admin__estado--${ins.estado}`}>

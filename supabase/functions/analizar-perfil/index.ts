@@ -1,18 +1,18 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
-const PERFILES = ['CTO Builder', 'CMO', 'CFO Strategist', 'COO Executor', 'Co-Founder Generalista']
+const CATEGORIAS = ['Tecnología', 'Marketing - Ventas', 'Operaciones', 'Finanzas']
 
 const DESCRIPCIONES: Record<string, string> = {
-  'CTO Builder': 'Le encanta construir productos. Piensa en soluciones tecnológicas.',
-  'CMO': 'Nació para conectar con clientes y cerrar tratos. Combina marketing y ventas.',
-  'CFO Strategist': 'Analiza oportunidades. Piensa en rentabilidad y modelos de negocio.',
-  'COO Executor': 'Convierte el caos en sistemas. Hace que las cosas sucedan.',
-  'Co-Founder Generalista': 'Tienes habilidades distribuidas. Eres el pegamento del equipo.',
+  'Tecnología':       'Piensa en soluciones técnicas y le apasiona construir productos digitales.',
+  'Marketing - Ventas': 'Nació para conectar con clientes, posicionar marcas y cerrar tratos.',
+  'Operaciones':      'Convierte el caos en sistemas. Hace que las cosas sucedan con eficiencia.',
+  'Finanzas':         'Analiza oportunidades, cuida los números y piensa en rentabilidad.',
 }
 
 const CAMPOS_REQUERIDOS = [
-  'nombre', 'ocupacion', 'sueno', 'tieneIdea',
+  'nombre', 'ocupacion',
   'millonDolares', 'problemaResolver', 'fraseRepresenta',
   'admiraEmprendedor', 'mayorAprendizaje',
 ]
@@ -62,14 +62,14 @@ Deno.serve(async (req) => {
     )
   }
 
-  const prompt = `Eres un experto en perfiles de cofundadores de startups. Analiza el siguiente perfil y asigna uno de estos roles: ${PERFILES.join(', ')}.
+  const prompt = `Eres un experto en perfiles de cofundadores de startups. Analiza el siguiente perfil y clasifícalo en UNA de estas 4 categorías: ${CATEGORIAS.join(', ')}.
 
 DATOS DEL USUARIO:
 - Nombre: ${data.nombre}
 - Ocupación: ${data.ocupacion}
 - Pasiones: ${(data.pasiones as string[]).join(', ')}
-- Sueño emprendedor: ${data.sueno}
-- Tiene idea: ${data.tieneIdea}${data.ideaFrase ? ` — "${data.ideaFrase}"` : ''}
+- Sueño emprendedor: ${data.sueno || 'No especificado'}
+- Tiene idea de negocio: ${data.tieneIdea || 'No especificado'}
 - Superpoderes: ${(data.superpoderes as string[]).join(', ')}
 - Perfiles que busca en un socio: ${(data.perfilesBuscados as string[] ?? []).join(', ')}
 - Valores importantes: ${(data.valoresImportantes as string[] ?? []).join(', ')}
@@ -82,8 +82,8 @@ DATOS DEL USUARIO:
 
 Responde ÚNICAMENTE con un JSON con esta estructura exacta, sin texto adicional:
 {
-  "perfil": "<uno de los 5 perfiles>",
-  "razon": "<explicación breve de 1-2 oraciones de por qué este perfil>"
+  "categoria": "<una de las 4 categorías exactamente>",
+  "descripcion": "<2-3 oraciones personalizadas explicando por qué esta persona encaja en esa categoría, basándote en sus habilidades, pasiones y respuestas. NO menciones nombres de perfiles como CTO Builder, Growth Hacker, CFO, COO ni similares. Habla directamente de la persona.>"
 }`
 
   const groqRes = await fetch(GROQ_URL, {
@@ -103,14 +103,77 @@ Responde ÚNICAMENTE con un JSON con esta estructura exacta, sin texto adicional
   const groqData = await groqRes.json()
   const content = JSON.parse(groqData.choices[0].message.content)
 
-  const perfil = PERFILES.includes(content.perfil) ? content.perfil : 'Co-Founder Generalista'
+  const categoria = CATEGORIAS.includes(content.categoria) ? content.categoria : 'Tecnología'
+  const descripcion = content.descripcion || DESCRIPCIONES[categoria]
+
+  const supabase = createClient(
+    Deno.env.get('SUPABASE_URL')!,
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+  )
+
+  const { data: fila, error: errorPerfil } = await supabase
+    .from('perfiles_datos')
+    .insert({
+      nombre: data.nombre,
+      email: data.email,
+      whatsapp: data.whatsapp,
+      ocupacion: data.ocupacion,
+      foto: data.foto || null,
+    })
+    .select('id')
+    .single()
+
+  if (errorPerfil || !fila) {
+    return new Response(
+      JSON.stringify({ error: 'Error guardando perfil', detail: errorPerfil?.message }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  }
+
+  const pid = fila.id
+  const inserts: Promise<unknown>[] = [
+    supabase.from('perfil_pasiones').insert(
+      (data.pasiones as string[]).map((pasion) => ({ perfil_id: pid, pasion }))
+    ),
+    supabase.from('perfil_superpoderes').insert(
+      (data.superpoderes as string[]).map((superpoder) => ({ perfil_id: pid, superpoder }))
+    ),
+    supabase.from('perfil_preferencias').insert({
+      perfil_id: pid,
+      perfiles_buscados: data.perfilesBuscados,
+      valores_importantes: data.valoresImportantes,
+      disponibilidad: data.disponibilidad,
+    }),
+    supabase.from('perfil_tinder').insert({
+      perfil_id: pid,
+      millon_dolares: data.millonDolares,
+      problema_resolver: data.problemaResolver,
+      frase_representa: data.fraseRepresenta,
+      admira_emprendedor: data.admiraEmprendedor,
+      mayor_aprendizaje: data.mayorAprendizaje,
+    }),
+    supabase.from('perfil_suenos').insert({
+      perfil_id: pid,
+      sueno: data.sueno || null,
+      tiene_idea: data.tieneIdea || null,
+    }),
+    supabase.from('perfil_resultado').insert({
+      perfil_id: pid,
+      categoria,
+      descripcion,
+      busca: (data.perfilesBuscados as string[]).join(', '),
+    }),
+  ]
+  if (data.ideaFrase) {
+    inserts.push(supabase.from('perfil_ideas').insert({ perfil_id: pid, idea: data.ideaFrase }))
+  }
+  await Promise.all(inserts)
 
   return new Response(
     JSON.stringify({
-      perfil,
-      descripcion: content.razon || DESCRIPCIONES[perfil],
+      categoria,
+      descripcion,
       busca: data.perfilesBuscados ?? [],
-      scores: { Tecnología: 0, Ventas: 0, Finanzas: 0, Operaciones: 0 },
     }),
     {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

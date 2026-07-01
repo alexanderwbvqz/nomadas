@@ -77,10 +77,6 @@
   color: #d4860a;
 }
 
-.tarjeta-aliado__badge--red {
-  background: rgba(16, 185, 129, 0.12);
-  color: #059669;
-}
 
 .tarjeta-aliado__badge--financiamiento {
   background: rgba(59, 130, 246, 0.1);

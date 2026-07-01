@@ -15,7 +15,16 @@ export function useInscritos() {
 
     const { data: perfiles } = await supabase
       .from('perfiles_datos')
-      .select('*')
+      .select(`
+        id, nombre, email, whatsapp, ocupacion, foto, created_at, estado, observaciones, aprobado,
+        perfil_suenos(sueno, tiene_idea),
+        perfil_ideas(idea),
+        perfil_resultado(categoria),
+        perfil_pasiones(pasion),
+        perfil_superpoderes(superpoder),
+        perfil_preferencias(perfiles_buscados, valores_importantes, disponibilidad),
+        perfil_tinder(millon_dolares, problema_resolver, frase_representa, admira_emprendedor, mayor_aprendizaje)
+      `)
       .order('created_at', { ascending: false })
 
     if (!perfiles || perfiles.length === 0) {
@@ -23,65 +32,48 @@ export function useInscritos() {
       return
     }
 
-    const ids = perfiles.map((p) => p.id)
-
-    const [
-      { data: pasiones },
-      { data: superpoderes },
-      { data: preferencias },
-      { data: tinder },
-    ] = await Promise.all([
-      supabase.from('perfil_pasiones').select('*').in('perfil_id', ids),
-      supabase.from('perfil_superpoderes').select('*').in('perfil_id', ids),
-      supabase.from('perfil_preferencias').select('*').in('perfil_id', ids),
-      supabase.from('perfil_tinder').select('*').in('perfil_id', ids),
-    ])
-
-    const pasionesPorId: Record<string, string[]> = {}
-    pasiones?.forEach(({ perfil_id, pasion }) => {
-      if (!pasionesPorId[perfil_id]) pasionesPorId[perfil_id] = []
-      pasionesPorId[perfil_id].push(pasion)
-    })
-
-    const superpoderesPorId: Record<string, string[]> = {}
-    superpoderes?.forEach(({ perfil_id, superpoder }) => {
-      if (!superpoderesPorId[perfil_id]) superpoderesPorId[perfil_id] = []
-      superpoderesPorId[perfil_id].push(superpoder)
-    })
-
-    const prefPorId: Record<string, NonNullable<typeof preferencias>[number]> = {}
-    preferencias?.forEach((p) => { prefPorId[p.perfil_id] = p })
-
-    const tinderPorId: Record<string, NonNullable<typeof tinder>[number]> = {}
-    tinder?.forEach((t) => { tinderPorId[t.perfil_id] = t })
+    type Suenos = Array<{ sueno: string; tiene_idea: string }>
+    type Ideas = Array<{ idea: string }>
+    type Resultado = Array<{ categoria: string }>
+    type Pasiones = Array<{ pasion: string }>
+    type Superpoderes = Array<{ superpoder: string }>
+    type Preferencias = Array<{ perfiles_buscados: string[]; valores_importantes: string[]; disponibilidad: string }>
+    type Tinder = Array<{ millon_dolares: string; problema_resolver: string; frase_representa: string; admira_emprendedor: string; mayor_aprendizaje: string }>
 
     setInscritos(
-      perfiles.map((p, i) => ({
-        id: p.id,
-        orden: perfiles.length - i,
-        fechaInscripcion: p.created_at,
-        nombre: p.nombre,
-        perfil: p.perfil_resultado ?? '',
-        estado: (p.estado as EstadoInscrito) ?? 'por_aprobar',
-        observaciones: p.observaciones ?? undefined,
-        foto: p.foto ?? '',
-        ocupacion: p.ocupacion ?? '',
-        email: p.email ?? '',
-        whatsapp: p.whatsapp ?? '',
-        sueno: p.sueno ?? '',
-        tieneIdea: p.tiene_idea ?? '',
-        ideaFrase: p.idea_frase ?? '',
-        pasiones: pasionesPorId[p.id] ?? [],
-        superpoderes: superpoderesPorId[p.id] ?? [],
-        perfilesBuscados: prefPorId[p.id]?.perfiles_buscados ?? [],
-        valoresImportantes: prefPorId[p.id]?.valores_importantes ?? [],
-        disponibilidad: prefPorId[p.id]?.disponibilidad ?? '',
-        millonDolares: tinderPorId[p.id]?.millon_dolares ?? '',
-        problemaResolver: tinderPorId[p.id]?.problema_resolver ?? '',
-        fraseRepresenta: tinderPorId[p.id]?.frase_representa ?? '',
-        admiraEmprendedor: tinderPorId[p.id]?.admira_emprendedor ?? '',
-        mayorAprendizaje: tinderPorId[p.id]?.mayor_aprendizaje ?? '',
-      }))
+      perfiles.map((p, i) => {
+        const suenos = (p.perfil_suenos as Suenos)?.[0]
+        const resultado = (p.perfil_resultado as Resultado)?.[0]
+        const pref = (p.perfil_preferencias as Preferencias)?.[0]
+        const tinder = (p.perfil_tinder as Tinder)?.[0]
+
+        return {
+          id: p.id,
+          orden: perfiles.length - i,
+          fechaInscripcion: p.created_at,
+          nombre: p.nombre,
+          categoria: resultado?.categoria ?? '',
+          estado: (p.estado as EstadoInscrito) ?? 'por_aprobar',
+          observaciones: p.observaciones ?? undefined,
+          foto: p.foto ?? '',
+          ocupacion: p.ocupacion ?? '',
+          email: p.email ?? '',
+          whatsapp: p.whatsapp ?? '',
+          sueno: suenos?.sueno ?? '',
+          tieneIdea: suenos?.tiene_idea ?? '',
+          ideas: (p.perfil_ideas as Ideas)?.map((i) => i.idea) ?? [],
+          pasiones: (p.perfil_pasiones as Pasiones)?.map((x) => x.pasion) ?? [],
+          superpoderes: (p.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
+          perfilesBuscados: pref?.perfiles_buscados ?? [],
+          valoresImportantes: pref?.valores_importantes ?? [],
+          disponibilidad: pref?.disponibilidad ?? '',
+          millonDolares: tinder?.millon_dolares ?? '',
+          problemaResolver: tinder?.problema_resolver ?? '',
+          fraseRepresenta: tinder?.frase_representa ?? '',
+          admiraEmprendedor: tinder?.admira_emprendedor ?? '',
+          mayorAprendizaje: tinder?.mayor_aprendizaje ?? '',
+        }
+      })
     )
 
     setCargando(false)
