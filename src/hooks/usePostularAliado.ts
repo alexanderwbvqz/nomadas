@@ -135,6 +135,7 @@ export function usePostularAliado() {
       linkedin: form.linkedin.trim() || null,
       instagram: form.instagram.trim() || null,
       web: form.web.trim() || null,
+      activo: false,
     })
 
     if (err) {
