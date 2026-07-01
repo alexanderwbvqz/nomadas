@@ -14,6 +14,7 @@ export function useQRScanner() {
   useEffect(() => {
     if (!scanning) return
 
+    scannedRef.current = false
     const scanner = new Html5Qrcode(SCANNER_ID)
 
     scanner
@@ -22,12 +23,14 @@ export function useQRScanner() {
         { fps: 10, qrbox: { width: 240, height: 240 } },
         (text) => {
           if (scannedRef.current) return
-          scannedRef.current = true
 
           const idx = text.indexOf(MATCH_SEGMENT)
           if (idx !== -1) {
             const codigo = text.slice(idx + MATCH_SEGMENT.length)
-            if (codigo) scanner.stop().then(() => navigate(`/match/${codigo}`))
+            if (codigo) {
+              scannedRef.current = true
+              scanner.stop().then(() => navigate(`/match/${codigo}`))
+            }
           }
         },
         undefined,
