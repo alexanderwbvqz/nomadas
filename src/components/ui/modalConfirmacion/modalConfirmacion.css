@@ -1,4 +1,4 @@
-.modal-bienvenida__overlay {
+.modal-confirmacion__overlay {
   position: fixed;
   inset: 0;
   background: rgba(5, 8, 26, 0.92);
@@ -7,15 +7,15 @@
   justify-content: center;
   z-index: 300;
   padding: 24px;
-  animation: modal-bienvenida-overlay-in 0.2s ease;
+  animation: modal-confirmacion-overlay-in 0.2s ease;
 }
 
-@keyframes modal-bienvenida-overlay-in {
+@keyframes modal-confirmacion-overlay-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-.modal-bienvenida {
+.modal-confirmacion {
   background: #ffffff;
   border-radius: 24px;
   width: 100%;
@@ -25,15 +25,15 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  animation: modal-bienvenida-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: modal-confirmacion-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes modal-bienvenida-in {
+@keyframes modal-confirmacion-in {
   from { transform: scale(0.9); opacity: 0; }
   to   { transform: scale(1);   opacity: 1; }
 }
 
-.modal-bienvenida__icono {
+.modal-confirmacion__icono {
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -44,7 +44,7 @@
   color: #6366F1;
 }
 
-.modal-bienvenida__titulo {
+.modal-confirmacion__titulo {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 22px;
   font-weight: 800;
@@ -53,7 +53,7 @@
   text-align: center;
 }
 
-.modal-bienvenida__mensaje {
+.modal-confirmacion__mensaje {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   color: #6B7280;

@@ -1,7 +1,8 @@
 import { useRef } from 'react'
-import { ImagePlus, X, Loader, Handshake } from 'lucide-react'
+import { ImagePlus, X, Loader } from 'lucide-react'
 import CampoInput from '../../components/ui/campoInput/campoInput'
 import AppButton from '../../components/ui/boton/boton'
+import ModalConfirmacion from '../../components/ui/modalConfirmacion/modalConfirmacion'
 import type { TipoAliado } from '../../components/ui/tarjetaAliado/tarjetaAliado.types'
 import { usePostularAliado } from '../../hooks/usePostularAliado'
 import './page.css'
@@ -15,23 +16,16 @@ export default function PostularAliadoPage() {
     handleSubmit, volverAliados,
   } = usePostularAliado()
 
-  if (enviado) {
-    return (
-      <div className="postular-aliado">
-        <div className="postular-aliado__exito">
-          <div className="postular-aliado__exito-icono"><Handshake size={48} /></div>
-          <h2 className="postular-aliado__exito-titulo">¡Postulación enviada!</h2>
-          <p className="postular-aliado__exito-texto">
-            Revisaremos tu información y nos pondremos en contacto contigo pronto.
-          </p>
-          <AppButton label="Volver a Aliados" onClick={volverAliados} />
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="postular-aliado">
+      {enviado && (
+        <ModalConfirmacion
+          titulo="¡Postulación enviada!"
+          mensaje="Revisaremos tu información y nos pondremos en contacto contigo pronto. Una vez aprobada, tu aliado estará visible en la sección Aliados de la plataforma."
+          onAceptar={volverAliados}
+        />
+      )}
       <div className="postular-aliado__card">
         <div className="postular-aliado__encabezado">
           <span className="postular-aliado__badge">Red Estratégica</span>

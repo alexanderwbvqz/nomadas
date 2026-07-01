@@ -13,7 +13,7 @@ import Paso4Superpoderes from './pasos/paso4Superpoderes/Paso4Superpoderes'
 import Paso5SocioIdeal from './pasos/paso6SocioIdeal/Paso6SocioIdeal'
 import Paso6Tinder from './pasos/paso7Tinder/Paso7Tinder'
 import TarjetaResultado from '../../components/ui/tarjetaResultado/tarjetaResultado'
-import ModalBienvenida from '../../components/ui/modalBienvenida/modalBienvenida'
+import ModalConfirmacion from '../../components/ui/modalConfirmacion/modalConfirmacion'
 import BotonNav from '../../components/ui/botonNav/botonNav'
 import './page.css'
 
@@ -186,7 +186,11 @@ export default function OnboardingPage() {
       )}
 
       {mostrarBienvenida && (
-        <ModalBienvenida onAceptar={() => navigate('/')} />
+        <ModalConfirmacion
+          titulo="¡Todo listo!"
+          mensaje="Hemos recibido tu registro y ahora iniciaremos el proceso de revisión. En un plazo máximo de 24 horas validaremos la información enviada. Una vez aprobada, tu perfil estará disponible en la sección Nómadas, donde otros cofundadores podrán conocerte y conectar contigo para formar la próxima gran startup."
+          onAceptar={() => navigate('/')}
+        />
       )}
     </div>
   )
