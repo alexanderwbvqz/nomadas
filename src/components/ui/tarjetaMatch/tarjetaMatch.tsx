@@ -14,6 +14,7 @@ interface TarjetaMatchProps {
 
 export default function TarjetaMatch({ perfil }: TarjetaMatchProps) {
   const primerNombre = perfil.nombre.split(' ')[0]
+  const rompeHielo = perfil.fraseRompeHielo || perfil.sueno
 
   return (
     <div className="tarjeta-match">
@@ -72,13 +73,13 @@ export default function TarjetaMatch({ perfil }: TarjetaMatchProps) {
         </div>
       )}
 
-      {perfil.fraseRompeHielo && (
+      {rompeHielo && (
         <div className="tarjeta-match__hielo">
           <p className="tarjeta-match__hielo-label">
             <MessageSquare size={13} />
             ROMPE EL HIELO
           </p>
-          <p className="tarjeta-match__hielo-texto">"{perfil.fraseRompeHielo}"</p>
+          <p className="tarjeta-match__hielo-texto">"{rompeHielo}"</p>
         </div>
       )}
 
