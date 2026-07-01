@@ -1,0 +1,38 @@
+import { useRef } from 'react'
+import QRCode from 'react-qr-code'
+import AppButton from '../boton/boton'
+import { buildMatchUrl, descargarQRComoPNG } from '../../../lib/qr'
+import './modalQR.css'
+
+interface ModalQRProps {
+  codigo: string
+  nombre: string
+  onCerrar: () => void
+}
+
+export default function ModalQR({ codigo, nombre, onCerrar }: ModalQRProps) {
+  const url = buildMatchUrl(codigo)
+  const qrRef = useRef<HTMLDivElement>(null)
+
+  function descargar() {
+    if (qrRef.current) descargarQRComoPNG(qrRef.current, nombre)
+  }
+
+  return (
+    <div className="modal-qr__overlay" onClick={onCerrar}>
+      <div className="modal-qr" onClick={(e) => e.stopPropagation()}>
+        <h2 className="modal-qr__titulo">Código QR</h2>
+        <p className="modal-qr__nombre">{nombre}</p>
+        <p className="modal-qr__codigo">{codigo}</p>
+        <div className="modal-qr__qr" ref={qrRef}>
+          <QRCode value={url} size={200} />
+        </div>
+        <p className="modal-qr__url">{url}</p>
+        <div className="modal-qr__acciones">
+          <AppButton label="Cancelar" variante="outline" onClick={onCerrar} />
+          <AppButton label="Descargar" onClick={descargar} />
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -58,6 +58,16 @@
   color: #6B7280 !important;
 }
 
+.tabla-admin__codigo {
+  font-size: 11px;
+  font-family: monospace;
+  color: #9CA3AF;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .tabla-admin__nombre-wrap {
   display: flex;
   align-items: center;

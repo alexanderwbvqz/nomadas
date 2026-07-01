@@ -6,6 +6,7 @@ import TarjetaContador from '../../../../components/ui/tarjetaContador/tarjetaCo
 import TablaAdmin from '../../../../components/ui/tablaAdmin/tablaAdmin'
 import ModalVerInscripcion from '../../../../components/ui/modalVerInscripcion/modalVerInscripcion'
 import ModalRechazo from '../../../../components/ui/modalRechazo/modalRechazo'
+import ModalQR from '../../../../components/ui/modalQR/modalQR'
 import Paginacion from '../../../../components/ui/paginacion/paginacion'
 import CampoInput from '../../../../components/ui/campoInput/campoInput'
 import SelectFiltro from '../../../../components/ui/selectFiltro/selectFiltro'
@@ -21,6 +22,7 @@ export default function AdminCofundadoresPage() {
   const [filtroNombre, setFiltroNombre] = useState('')
   const [modalVer, setModalVer] = useState<Inscrito | null>(null)
   const [modalRechazo, setModalRechazo] = useState<Inscrito | null>(null)
+  const [modalQR, setModalQR] = useState<Inscrito | null>(null)
 
   async function rechazar(motivo: string) {
     if (!modalRechazo) return
@@ -91,6 +93,7 @@ export default function AdminCofundadoresPage() {
         onVer={setModalVer}
         onAprobar={aprobar}
         onRechazar={setModalRechazo}
+        onQR={setModalQR}
       />
 
       <Paginacion
@@ -107,6 +110,13 @@ export default function AdminCofundadoresPage() {
           nombre={modalRechazo.nombre}
           onCerrar={() => setModalRechazo(null)}
           onConfirmar={rechazar}
+        />
+      )}
+      {modalQR && (
+        <ModalQR
+          codigo={modalQR.codigoMatch}
+          nombre={modalQR.nombre}
+          onCerrar={() => setModalQR(null)}
         />
       )}
     </main>

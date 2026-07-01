@@ -2,6 +2,7 @@ export type EstadoInscrito = 'por_aprobar' | 'aprobado' | 'rechazado'
 
 export interface Inscrito {
   id: string
+  codigoMatch: string
   orden: number
   fechaInscripcion: string
   nombre: string

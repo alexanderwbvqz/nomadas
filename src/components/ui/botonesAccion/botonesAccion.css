@@ -65,3 +65,12 @@
 .botones-accion__btn--eliminar:hover {
   background: #FECACA;
 }
+
+.botones-accion__btn--qr {
+  background: #EEF2FF;
+  color: #6366F1;
+}
+
+.botones-accion__btn--qr:hover {
+  background: #E0E7FF;
+}

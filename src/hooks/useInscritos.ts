@@ -16,7 +16,7 @@ export function useInscritos() {
     const { data: perfiles } = await supabase
       .from('perfiles_datos')
       .select(`
-        id, nombre, email, whatsapp, ocupacion, foto, created_at, estado, observaciones, aprobado,
+        id, codigo_match, nombre, email, whatsapp, ocupacion, foto, created_at, estado, observaciones, aprobado,
         perfil_suenos(sueno, tiene_idea),
         perfil_ideas(idea),
         perfil_resultado(categoria, descripcion),
@@ -49,6 +49,7 @@ export function useInscritos() {
 
         return {
           id: p.id,
+          codigoMatch: p.codigo_match ?? '',
           orden: perfiles.length - i,
           fechaInscripcion: p.created_at,
           nombre: p.nombre,

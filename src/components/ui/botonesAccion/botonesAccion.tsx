@@ -1,4 +1,4 @@
-import { Eye, Check, X, Pencil, Trash2 } from 'lucide-react'
+import { Eye, Check, X, Pencil, Trash2, QrCode } from 'lucide-react'
 import './botonesAccion.css'
 
 interface BotonesAccionProps {
@@ -7,6 +7,7 @@ interface BotonesAccionProps {
   onRechazar?: () => void
   onEditar?: () => void
   onEliminar?: () => void
+  onQR?: () => void
   aprobadoDeshabilitado?: boolean
   rechazadoDeshabilitado?: boolean
 }
@@ -17,6 +18,7 @@ export default function BotonesAccion({
   onRechazar,
   onEditar,
   onEliminar,
+  onQR,
   aprobadoDeshabilitado = false,
   rechazadoDeshabilitado = false,
 }: BotonesAccionProps) {
@@ -55,6 +57,11 @@ export default function BotonesAccion({
       {onEliminar && (
         <button className="botones-accion__btn botones-accion__btn--eliminar" onClick={onEliminar} title="Eliminar">
           <Trash2 size={15} />
+        </button>
+      )}
+      {onQR && (
+        <button className="botones-accion__btn botones-accion__btn--qr" onClick={onQR} title="Generar QR">
+          <QrCode size={15} />
         </button>
       )}
     </div>

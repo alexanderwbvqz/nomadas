@@ -7,6 +7,7 @@ interface TablaAdminProps {
   onVer: (inscrito: Inscrito) => void
   onAprobar: (id: string) => void
   onRechazar: (inscrito: Inscrito) => void
+  onQR?: (inscrito: Inscrito) => void
 }
 
 const ESTADO_LABEL: Record<EstadoInscrito, string> = {
@@ -15,7 +16,7 @@ const ESTADO_LABEL: Record<EstadoInscrito, string> = {
   rechazado: 'Rechazado',
 }
 
-export default function TablaAdmin({ inscritos, onVer, onAprobar, onRechazar }: TablaAdminProps) {
+export default function TablaAdmin({ inscritos, onVer, onAprobar, onRechazar, onQR }: TablaAdminProps) {
   if (inscritos.length === 0) {
     return <p className="tabla-admin__vacio">No hay inscritos que coincidan con los filtros.</p>
   }
@@ -27,6 +28,7 @@ export default function TablaAdmin({ inscritos, onVer, onAprobar, onRechazar }: 
           <tr>
             <th>#</th>
             <th>Fecha</th>
+            <th>Código</th>
             <th>Nombre</th>
             <th>Perfil</th>
             <th>Estado</th>
@@ -43,6 +45,7 @@ export default function TablaAdmin({ inscritos, onVer, onAprobar, onRechazar }: 
                   day: '2-digit', month: '2-digit', year: 'numeric',
                 })}
               </td>
+              <td className="tabla-admin__codigo">{ins.codigoMatch || '—'}</td>
               <td className="tabla-admin__nombre">
                 <div className="tabla-admin__nombre-wrap">
                   {ins.foto && <img src={ins.foto} alt={ins.nombre} className="tabla-admin__avatar" />}
@@ -69,6 +72,7 @@ export default function TablaAdmin({ inscritos, onVer, onAprobar, onRechazar }: 
                   onVer={() => onVer(ins)}
                   onAprobar={() => onAprobar(ins.id)}
                   onRechazar={() => onRechazar(ins)}
+                  onQR={onQR ? () => onQR(ins) : undefined}
                   aprobadoDeshabilitado={ins.estado === 'aprobado' || ins.estado === 'rechazado'}
                   rechazadoDeshabilitado={ins.estado === 'aprobado' || ins.estado === 'rechazado'}
                 />

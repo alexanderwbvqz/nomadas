@@ -13,9 +13,11 @@
     "@ant-design/icons": "^6.2.5",
     "@supabase/supabase-js": "^2.108.2",
     "antd": "^6.4.3",
+    "html5-qrcode": "^2.3.8",
     "lucide-react": "^1.17.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-qr-code": "^2.2.0",
     "react-router-dom": "^7.16.0"
   },
   "devDependencies": {
