@@ -4,6 +4,7 @@ import CampoInput from '../campoInput/campoInput'
 import AppButton from '../boton/boton'
 import type { AliadoAdmin } from '../../../hooks/useAliados'
 import { supabase } from '../../../lib/supabase'
+import Overlay from '../overlay/overlay'
 import './modalEditarAliado.css'
 
 interface ModalEditarAliadoProps {
@@ -77,7 +78,7 @@ export default function ModalEditarAliado({ aliado, onCerrar, onGuardar }: Modal
   const valido = form.nombre.trim() && form.descripcion.trim() && form.tipo
 
   return (
-    <div className="modal-editar-aliado__overlay" onClick={onCerrar}>
+    <Overlay onClick={onCerrar}>
       <div className="modal-editar-aliado" onClick={(e) => e.stopPropagation()}>
         <div className="modal-editar-aliado__cabecera">
           <h2 className="modal-editar-aliado__titulo">Editar aliado</h2>
@@ -178,6 +179,6 @@ export default function ModalEditarAliado({ aliado, onCerrar, onGuardar }: Modal
           <AppButton label="Guardar cambios" disabled={!valido || subiendoLogo} onClick={guardar} />
         </div>
       </div>
-    </div>
+    </Overlay>
   )
 }

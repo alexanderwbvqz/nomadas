@@ -1,5 +1,6 @@
 import { X, Globe, ExternalLink } from 'lucide-react'
 import type { ModalAliadoProps } from './modalAliado.types'
+import Overlay from '../overlay/overlay'
 import './modalAliado.css'
 
 const BADGE_CLASE: Record<string, string> = {
@@ -30,7 +31,7 @@ function IconInstagram() {
 
 export default function ModalAliado({ logo, nombre, descripcion, tipo, linkedin, instagram, web, onCerrar }: ModalAliadoProps) {
   return (
-    <div className="modal-aliado__overlay" onClick={onCerrar}>
+    <Overlay onClick={onCerrar}>
       <div className="modal-aliado" onClick={(e) => e.stopPropagation()}>
         <div className="modal-aliado__cabecera">
           <div className="modal-aliado__logo-wrapper">
@@ -73,6 +74,6 @@ export default function ModalAliado({ logo, nombre, descripcion, tipo, linkedin,
           </div>
         )}
       </div>
-    </div>
+    </Overlay>
   )
 }

@@ -169,6 +169,17 @@ Responde ÚNICAMENTE con un JSON con esta estructura exacta, sin texto adicional
   }
   await Promise.all(inserts)
 
+  // Generar embedding con gte-small (built-in en Supabase Edge Runtime)
+  try {
+    // @ts-ignore: Supabase.ai es un global del Edge Runtime
+    const session = new Supabase.ai.Session('gte-small')
+    const output = await session.run(descripcion, { mean_pool: true, normalize: true })
+    const embedding = Array.from(output.data as Float32Array)
+    await supabase.from('perfiles_datos').update({ embedding }).eq('id', pid)
+  } catch {
+    // No fatal: el perfil queda guardado, el matching usará la fórmula de fallback
+  }
+
   return new Response(
     JSON.stringify({
       categoria,

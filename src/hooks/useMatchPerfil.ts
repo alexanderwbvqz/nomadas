@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
 export interface MatchPerfil {
+  id: string
   nombre: string
   foto: string
   ocupacion: string
@@ -13,6 +14,7 @@ export interface MatchPerfil {
   superpoderes: string[]
   fraseRompeHielo: string
   whatsapp: string
+  afinidad: number
 }
 
 export function useMatchPerfil(codigo: string) {
@@ -31,7 +33,7 @@ export function useMatchPerfil(codigo: string) {
     const { data } = await supabase
       .from('perfiles_datos')
       .select(`
-        nombre, foto, ocupacion, whatsapp,
+        id, nombre, foto, ocupacion, whatsapp,
         perfil_resultado(categoria, descripcion),
         perfil_suenos(sueno, tiene_idea),
         perfil_pasiones(pasion),
@@ -58,6 +60,7 @@ export function useMatchPerfil(codigo: string) {
     const tinder = (data.perfil_tinder as Tinder)?.[0]
 
     setPerfil({
+      id: data.id,
       nombre: data.nombre,
       foto: data.foto ?? '',
       ocupacion: data.ocupacion ?? '',
@@ -69,6 +72,7 @@ export function useMatchPerfil(codigo: string) {
       pasiones: (data.perfil_pasiones as Pasiones)?.map((p) => p.pasion) ?? [],
       superpoderes: (data.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
       fraseRompeHielo: tinder?.frase_representa ?? '',
+      afinidad: 0,
     })
 
     setCargando(false)

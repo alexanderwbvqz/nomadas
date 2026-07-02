@@ -10,7 +10,7 @@ import AdminCofundadoresPage from '../pages/admin/panel/cofundadores/page'
 import AdminAliadosPage from '../pages/admin/panel/aliados/page'
 import PostularAliadoPage from '../pages/postularAliado/page'
 import MatchPage from '../pages/match/page'
-import MatchPerfilPage from '../pages/match/perfil/page'
+import MatchInicioPage from '../pages/match/inicio/page'
 import NotFoundPage from '../pages/404/page'
 
 const router = createBrowserRouter([
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   { path: '/onboarding', element: <OnboardingPage /> },
   { path: '/postular-aliado', element: <PostularAliadoPage /> },
   { path: '/match', element: <MatchPage /> },
-  { path: '/match/:codigo', element: <MatchPerfilPage /> },
+  { path: '/match/:codigo', element: <MatchInicioPage /> },
   { path: '/admin', element: <AdminLoginPage /> },
   {
     path: '/admin/panel',

@@ -1,13 +1,14 @@
 import { X, Clock, Lightbulb, Heart, Zap, Users, Star, DollarSign, Globe, Quote, Mail, Shield, Award, BookOpen } from 'lucide-react'
 import { usePerfilCompleto } from '../../../hooks/usePerfilCompleto'
 import type { ModalPerfilProps } from './modalPerfil.types'
+import Overlay from '../overlay/overlay'
 import './modalPerfil.css'
 
 export default function ModalPerfil({ id, onCerrar }: ModalPerfilProps) {
   const { perfil, cargando } = usePerfilCompleto(id)
 
   return (
-    <div className="modal-perfil__overlay" onClick={onCerrar}>
+    <Overlay onClick={onCerrar}>
       <div className="modal-perfil" onClick={(e) => e.stopPropagation()}>
         <button className="modal-perfil__cerrar" onClick={onCerrar}>
           <X size={20} />
@@ -171,6 +172,6 @@ export default function ModalPerfil({ id, onCerrar }: ModalPerfilProps) {
           </>
         )}
       </div>
-    </div>
+    </Overlay>
   )
 }

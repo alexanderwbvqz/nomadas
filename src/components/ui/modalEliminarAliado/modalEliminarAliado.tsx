@@ -1,5 +1,6 @@
 import { X, Trash2 } from 'lucide-react'
 import AppButton from '../boton/boton'
+import Overlay from '../overlay/overlay'
 import './modalEliminarAliado.css'
 
 interface ModalEliminarAliadoProps {
@@ -10,7 +11,7 @@ interface ModalEliminarAliadoProps {
 
 export default function ModalEliminarAliado({ nombre, onCerrar, onConfirmar }: ModalEliminarAliadoProps) {
   return (
-    <div className="modal-eliminar-aliado__overlay" onClick={onCerrar}>
+    <Overlay onClick={onCerrar}>
       <div className="modal-eliminar-aliado" onClick={(e) => e.stopPropagation()}>
         <button className="modal-eliminar-aliado__cerrar" onClick={onCerrar}>
           <X size={18} />
@@ -30,6 +31,6 @@ export default function ModalEliminarAliado({ nombre, onCerrar, onConfirmar }: M
           <AppButton label="Cancelar" variante="outline" onClick={onCerrar} />
         </div>
       </div>
-    </div>
+    </Overlay>
   )
 }

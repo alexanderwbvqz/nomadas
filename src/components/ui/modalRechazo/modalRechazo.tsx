@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X } from 'lucide-react'
 import AppButton from '../boton/boton'
+import Overlay from '../overlay/overlay'
 import './modalRechazo.css'
 
 interface ModalRechazoProps {
@@ -13,7 +14,7 @@ export default function ModalRechazo({ nombre, onCerrar, onConfirmar }: ModalRec
   const [motivo, setMotivo] = useState('')
 
   return (
-    <div className="modal-rechazo__overlay" onClick={onCerrar}>
+    <Overlay onClick={onCerrar}>
       <div className="modal-rechazo" onClick={(e) => e.stopPropagation()}>
         <button className="modal-rechazo__cerrar" onClick={onCerrar}>
           <X size={18} />
@@ -41,6 +42,6 @@ export default function ModalRechazo({ nombre, onCerrar, onConfirmar }: ModalRec
           <AppButton label="Cancelar" variante="outline" onClick={onCerrar} />
         </div>
       </div>
-    </div>
+    </Overlay>
   )
 }

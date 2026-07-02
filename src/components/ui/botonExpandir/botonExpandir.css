@@ -1,0 +1,30 @@
+.boton-expandir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 14px 24px;
+  background: none;
+  border: none;
+  border-top: 1px solid #F3F4F6;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #6366F1;
+  transition: background 0.15s;
+}
+
+.boton-expandir:hover {
+  background: #F5F3FF;
+}
+
+.boton-expandir__icono {
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.boton-expandir__icono--girado {
+  transform: rotate(180deg);
+}

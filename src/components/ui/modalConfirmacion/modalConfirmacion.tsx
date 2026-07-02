@@ -1,5 +1,6 @@
 import { PartyPopper } from 'lucide-react'
 import AppButton from '../boton/boton'
+import Overlay from '../overlay/overlay'
 import './modalConfirmacion.css'
 
 interface ModalConfirmacionProps {
@@ -10,7 +11,7 @@ interface ModalConfirmacionProps {
 
 export default function ModalConfirmacion({ titulo, mensaje, onAceptar }: ModalConfirmacionProps) {
   return (
-    <div className="modal-confirmacion__overlay">
+    <Overlay>
       <div className="modal-confirmacion">
         <div className="modal-confirmacion__icono">
           <PartyPopper size={32} />
@@ -22,6 +23,6 @@ export default function ModalConfirmacion({ titulo, mensaje, onAceptar }: ModalC
 
         <AppButton label="Aceptar" onClick={onAceptar} />
       </div>
-    </div>
+    </Overlay>
   )
 }

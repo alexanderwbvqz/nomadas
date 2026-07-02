@@ -1,6 +1,7 @@
 import { X, Zap, Heart, Star, Lightbulb, Users, Clock, DollarSign, Globe, Quote, Shield, Award, BookOpen } from 'lucide-react'
 import type { Inscrito } from '../../../types/admin'
 import AppButton from '../boton/boton'
+import Overlay from '../overlay/overlay'
 import './modalVerInscripcion.css'
 
 interface ModalVerInscripcionProps {
@@ -20,7 +21,7 @@ function Fila({ label, valor }: { label: string; valor: string }) {
 
 export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInscripcionProps) {
   return (
-    <div className="modal-ver__overlay" onClick={onCerrar}>
+    <Overlay onClick={onCerrar}>
       <div className="modal-ver" onClick={(e) => e.stopPropagation()}>
         <button className="modal-ver__cerrar" onClick={onCerrar}>
           <X size={18} />
@@ -144,6 +145,6 @@ export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInsc
           <AppButton label="Aceptar" onClick={onCerrar} />
         </div>
       </div>
-    </div>
+    </Overlay>
   )
 }

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import QRCode from 'react-qr-code'
 import AppButton from '../boton/boton'
+import Overlay from '../overlay/overlay'
 import { buildMatchUrl, descargarQRComoPNG } from '../../../lib/qr'
 import './modalQR.css'
 
@@ -19,7 +20,7 @@ export default function ModalQR({ codigo, nombre, onCerrar }: ModalQRProps) {
   }
 
   return (
-    <div className="modal-qr__overlay" onClick={onCerrar}>
+    <Overlay onClick={onCerrar}>
       <div className="modal-qr" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal-qr__titulo">Código QR</h2>
         <p className="modal-qr__nombre">{nombre}</p>
@@ -33,6 +34,6 @@ export default function ModalQR({ codigo, nombre, onCerrar }: ModalQRProps) {
           <AppButton label="Descargar" onClick={descargar} />
         </div>
       </div>
-    </div>
+    </Overlay>
   )
 }
