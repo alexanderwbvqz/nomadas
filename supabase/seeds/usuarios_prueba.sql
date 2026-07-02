@@ -101,7 +101,7 @@ BEGIN
       pid,
       nombre_actual,
       ocupacion_actual,
-      'https://i.pravatar.cc/150?img=' || i,
+      'https://i.pravatar.cc/150?img=' || ((i % 70) + 1),
       '+58414' || LPAD(i::text, 7, '0'),
       lower(replace(nombre_actual, ' ', '.')) || '@nomadas.com',
       'aprobado',
