@@ -169,6 +169,41 @@ Responde ÚNICAMENTE con un JSON con esta estructura exacta, sin texto adicional
   }
   await Promise.all(inserts)
 
+  // Generar pregunta rompe hielo con Groq
+  try {
+    const promptHielo = `Eres un experto en networking entre emprendedores. Genera UNA sola pregunta corta, curiosa e interesante para iniciar una conversación con esta persona. La pregunta debe ser directa, relevante a su perfil y fácil de responder. Máximo 20 palabras. Sin comillas.
+
+Perfil:
+- Categoría: ${categoria}
+- Ocupación: ${data.ocupacion}
+- Pasiones: ${(data.pasiones as string[]).join(', ')}
+- Superpoderes: ${(data.superpoderes as string[]).join(', ')}
+- Sueño: ${data.sueno || 'No especificado'}
+
+Responde ÚNICAMENTE con la pregunta, sin texto adicional.`
+
+    const groqHielo = await fetch(GROQ_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Deno.env.get('GROQ_API_KEY')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: promptHielo }],
+        temperature: 0.8,
+        max_tokens: 60,
+      }),
+    })
+    const groqHieloData = await groqHielo.json()
+    const preguntaHielo = groqHieloData.choices?.[0]?.message?.content?.trim()
+    if (preguntaHielo) {
+      await supabase.from('perfil_tinder').update({ pregunta_hielo: preguntaHielo }).eq('perfil_id', pid)
+    }
+  } catch {
+    // No fatal
+  }
+
   // Generar embedding con gte-small (built-in en Supabase Edge Runtime)
   try {
     // @ts-ignore: Supabase.ai es un global del Edge Runtime

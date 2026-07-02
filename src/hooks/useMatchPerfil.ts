@@ -13,6 +13,7 @@ export interface MatchPerfil {
   pasiones: string[]
   superpoderes: string[]
   fraseRompeHielo: string
+  preguntaHielo: string
   whatsapp: string
   afinidad: number
 }
@@ -38,7 +39,7 @@ export function useMatchPerfil(codigo: string) {
         perfil_suenos(sueno, tiene_idea),
         perfil_pasiones(pasion),
         perfil_superpoderes(superpoder),
-        perfil_tinder(frase_representa)
+        perfil_tinder(frase_representa, pregunta_hielo)
       `)
       .eq('codigo_match', codigo)
       .single()
@@ -53,7 +54,7 @@ export function useMatchPerfil(codigo: string) {
     type Suenos = Array<{ sueno: string; tiene_idea: string }>
     type Pasiones = Array<{ pasion: string }>
     type Superpoderes = Array<{ superpoder: string }>
-    type Tinder = Array<{ frase_representa: string }>
+    type Tinder = Array<{ frase_representa: string; pregunta_hielo: string }>
 
     const resultado = (data.perfil_resultado as Resultado)?.[0]
     const sueno = (data.perfil_suenos as Suenos)?.[0]
@@ -72,6 +73,7 @@ export function useMatchPerfil(codigo: string) {
       pasiones: (data.perfil_pasiones as Pasiones)?.map((p) => p.pasion) ?? [],
       superpoderes: (data.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
       fraseRompeHielo: tinder?.frase_representa ?? '',
+      preguntaHielo: tinder?.pregunta_hielo ?? '',
       afinidad: 0,
     })
 

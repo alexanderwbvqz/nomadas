@@ -44,7 +44,7 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
         perfil_suenos(sueno, tiene_idea),
         perfil_pasiones(pasion),
         perfil_superpoderes(superpoder),
-        perfil_tinder(frase_representa)
+        perfil_tinder(frase_representa, pregunta_hielo)
       `)
       .in('id', ids)
 
@@ -54,7 +54,7 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
     type Suenos = Array<{ sueno: string; tiene_idea: string }>
     type Pasiones = Array<{ pasion: string }>
     type Superpoderes = Array<{ superpoder: string }>
-    type Tinder = Array<{ frase_representa: string }>
+    type Tinder = Array<{ frase_representa: string; pregunta_hielo: string }>
 
     const candidatos: CandidatoConSimilitud[] = data.map((p) => {
       const resultado = (p.perfil_resultado as Resultado)?.[0]
@@ -74,6 +74,7 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
         pasiones: (p.perfil_pasiones as Pasiones)?.map((x) => x.pasion) ?? [],
         superpoderes: (p.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
         fraseRompeHielo: tinder?.frase_representa ?? '',
+        preguntaHielo: tinder?.pregunta_hielo ?? '',
         afinidad: 0,
         similarity: similarityMap.get(p.id) ?? 0,
       }
@@ -93,7 +94,7 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
         perfil_suenos(sueno, tiene_idea),
         perfil_pasiones(pasion),
         perfil_superpoderes(superpoder),
-        perfil_tinder(frase_representa)
+        perfil_tinder(frase_representa, pregunta_hielo)
       `)
       .eq('aprobado', true)
       .neq('id', owner.id)
@@ -104,7 +105,7 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
     type Suenos = Array<{ sueno: string; tiene_idea: string }>
     type Pasiones = Array<{ pasion: string }>
     type Superpoderes = Array<{ superpoder: string }>
-    type Tinder = Array<{ frase_representa: string }>
+    type Tinder = Array<{ frase_representa: string; pregunta_hielo: string }>
 
     const candidatos: MatchPerfil[] = data.map((p) => {
       const resultado = (p.perfil_resultado as Resultado)?.[0]
@@ -124,6 +125,7 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
         pasiones: (p.perfil_pasiones as Pasiones)?.map((x) => x.pasion) ?? [],
         superpoderes: (p.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
         fraseRompeHielo: tinder?.frase_representa ?? '',
+        preguntaHielo: tinder?.pregunta_hielo ?? '',
         afinidad: 0,
       }
     })
