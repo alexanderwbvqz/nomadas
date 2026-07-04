@@ -91,8 +91,8 @@ export default function TarjetaMatch({ perfil }: TarjetaMatchProps) {
               ✦ ¿Por qué hacen match?
             </p>
             <ul className="tarjeta-match__lista">
-              {perfil.pasiones.map((p) => (
-                <li key={p} className="tarjeta-match__lista-item">
+              {perfil.pasiones.map((p, i) => (
+                <li key={`${p}-${i}`} className="tarjeta-match__lista-item">
                   <span className="tarjeta-match__lista-dot" />
                   {p}
                 </li>
