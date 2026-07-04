@@ -19,22 +19,22 @@ export function useInscritos() {
   }
 
   async function aprobar(id: string) {
+    const inscrito = inscritos.find((i) => i.id === id)
     await aprobarInscrito(id)
     setInscritos((prev) =>
       prev.map((i) => i.id === id ? { ...i, estado: 'aprobado', observaciones: undefined } : i)
     )
-    const inscrito = inscritos.find((i) => i.id === id)
     if (inscrito?.email) {
       enviarCorreoAprobado(inscrito.nombre, inscrito.email)
     }
   }
 
   async function rechazar(id: string, motivo: string) {
+    const inscrito = inscritos.find((i) => i.id === id)
     await rechazarInscrito(id, motivo)
     setInscritos((prev) =>
       prev.map((i) => i.id === id ? { ...i, estado: 'rechazado', observaciones: motivo } : i)
     )
-    const inscrito = inscritos.find((i) => i.id === id)
     if (inscrito?.email) {
       enviarCorreoRechazado(inscrito.nombre, inscrito.email, motivo)
     }

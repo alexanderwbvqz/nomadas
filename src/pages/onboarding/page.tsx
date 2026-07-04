@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
 import type { OnboardingData, ResultadoPerfil } from '../../types/onboarding'
 import { analizarPerfil } from '../../api/perfiles'
+import { enviarCorreoRegistro } from '../../api/correos'
 import { useOnboardingPaso1 } from '../../hooks/useOnboardingPaso1'
 
 import { useOnboardingPaso6 } from '../../hooks/useOnboardingPaso6'
@@ -93,6 +94,8 @@ export default function OnboardingPage() {
       setGuardando(false)
       return
     }
+
+    enviarCorreoRegistro(data.nombre, data.email)
 
     setGuardando(false)
     setResultado(perfil)
