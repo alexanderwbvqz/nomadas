@@ -12,9 +12,10 @@ const DIMENSIONES = [
 
 interface TarjetaMatchProps {
   perfil: MatchPerfil
+  posicion?: number
 }
 
-export default function TarjetaMatch({ perfil }: TarjetaMatchProps) {
+export default function TarjetaMatch({ perfil, posicion }: TarjetaMatchProps) {
   const [expandido, setExpandido] = useState(false)
   const rompeHielo = perfil.preguntaHielo || perfil.fraseRompeHielo || perfil.sueno
 
@@ -22,6 +23,9 @@ export default function TarjetaMatch({ perfil }: TarjetaMatchProps) {
     <div className="tarjeta-match">
       {/* Banner con afinidad */}
       <div className="tarjeta-match__banner">
+        {posicion !== undefined && (
+          <span className="tarjeta-match__ranking">#{posicion}</span>
+        )}
         <div className="tarjeta-match__afinidad-wrap">
           <span className="tarjeta-match__afinidad-pct">{perfil.afinidad}%</span>
           <span className="tarjeta-match__afinidad-label">de afinidad</span>

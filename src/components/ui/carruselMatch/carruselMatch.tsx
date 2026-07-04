@@ -34,17 +34,19 @@ export default function CarruselMatch({ matches, cargando }: CarruselMatchProps)
 
   if (matches.length === 0) return null
 
+  const ordenados = [...matches].sort((a, b) => b.afinidad - a.afinidad)
+
   if (esDesktop) {
     return (
       <div className="carrusel-match__grid">
-        {matches.map((perfil) => (
-          <TarjetaMatch key={perfil.id} perfil={perfil} />
+        {ordenados.map((perfil, i) => (
+          <TarjetaMatch key={perfil.id} perfil={perfil} posicion={i + 1} />
         ))}
       </div>
     )
   }
 
-  const visibles = matches.slice(pagina * itemsPorPagina, (pagina + 1) * itemsPorPagina)
+  const visibles = ordenados.slice(pagina * itemsPorPagina, (pagina + 1) * itemsPorPagina)
 
   return (
     <div className="carrusel-match">
@@ -58,8 +60,8 @@ export default function CarruselMatch({ matches, cargando }: CarruselMatchProps)
       </button>
 
       <div className={`carrusel-match__tarjetas${bp === 'tablet' ? ' carrusel-match__tarjetas--tablet' : ''}`}>
-        {visibles.map((perfil) => (
-          <TarjetaMatch key={perfil.id} perfil={perfil} />
+        {visibles.map((perfil, i) => (
+          <TarjetaMatch key={perfil.id} perfil={perfil} posicion={pagina * itemsPorPagina + i + 1} />
         ))}
       </div>
 
