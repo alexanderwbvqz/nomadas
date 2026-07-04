@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase'
 import type { OnboardingData, ResultadoPerfil } from '../types/onboarding'
-import type { PerfilCompleto, RedPerfil, MatchPerfil } from '../types/perfiles'
+import type { PerfilCompleto, RedPerfil, MatchPerfil, Cofundador } from '../types/perfiles'
 
 export async function analizarPerfil(data: OnboardingData): Promise<ResultadoPerfil | null> {
   const { data: fnData, error } = await supabase.functions.invoke('analizar-perfil', { body: data })
@@ -86,6 +86,33 @@ export async function getPerfilCompleto(id: string): Promise<PerfilCompleto | nu
     mayorAprendizaje: tinder?.mayor_aprendizaje ?? '',
     redes: (data.perfil_redes as Redes)?.map((r) => ({ red: r.red as RedPerfil['red'], url: r.url })) ?? [],
   }
+}
+
+export async function getNomadas(): Promise<Cofundador[]> {
+  const { data: perfiles } = await supabase
+    .from('perfiles_datos')
+    .select('id, nombre, ocupacion, foto, whatsapp, perfil_resultado(categoria, descripcion), perfil_superpoderes(superpoder)')
+    .eq('aprobado', true)
+    .order('created_at', { ascending: false })
+
+  if (!perfiles || perfiles.length === 0) return []
+
+  type Resultado = Array<{ categoria: string; descripcion: string }>
+  type Superpoderes = Array<{ superpoder: string }>
+
+  return perfiles.map((p) => {
+    const res = (p.perfil_resultado as Resultado)?.[0]
+    return {
+      id: p.id,
+      nombre: p.nombre.split(' ').slice(0, 2).join(' '),
+      ocupacion: p.ocupacion ?? '',
+      foto: p.foto ?? '',
+      whatsapp: p.whatsapp ?? '',
+      categoria: res?.categoria ?? '',
+      descripcion: res?.descripcion ?? '',
+      superpoderes: (p.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
+    }
+  })
 }
 
 const MATCH_PERFIL_SELECT = `
