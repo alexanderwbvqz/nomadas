@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { getEventoPublico, registrarAsistenciaPublica } from '../api/asistencia'
+import type { ResultadoRegistro } from '../api/asistencia'
 import type { Evento } from '../types/asistencia'
 
-type Estado = 'idle' | 'cargando' | 'registrado' | 'no_encontrado' | 'finalizado' | 'error'
+type Estado = 'idle' | 'cargando' | ResultadoRegistro | 'finalizado' | 'error'
 
 export function useRegistroAsistencia(eventoId: string) {
   const [evento, setEvento] = useState<Evento | null>(null)
@@ -21,8 +22,12 @@ export function useRegistroAsistencia(eventoId: string) {
   async function registrar() {
     if (!whatsapp.trim() || !evento) return
     setEstado('cargando')
-    const resultado = await registrarAsistenciaPublica(evento.id, whatsapp.trim())
-    setEstado(resultado === 'registrado' ? 'registrado' : 'no_encontrado')
+    try {
+      const resultado = await registrarAsistenciaPublica(evento.id, whatsapp.trim())
+      setEstado(resultado)
+    } catch {
+      setEstado('error')
+    }
   }
 
   return { evento, cargandoEvento, whatsapp, setWhatsapp, estado, registrar }

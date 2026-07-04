@@ -125,6 +125,11 @@
   color: #991B1B;
 }
 
+.registro-evento__feedback--pendiente {
+  background: #FFFBEB;
+  color: #92400E;
+}
+
 .registro-evento__link-onboarding {
   display: inline-flex;
   align-items: center;

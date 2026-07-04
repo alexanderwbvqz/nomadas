@@ -84,25 +84,35 @@ export async function getEventoPublico(id: string): Promise<Evento | null> {
   return { id: data.id, nombre: data.nombre, fecha: data.fecha, estado: data.estado, createdAt: data.created_at }
 }
 
+export type ResultadoRegistro = 'registrado' | 'ya_registrado' | 'por_aprobar' | 'rechazado' | 'no_encontrado'
+
 export async function registrarAsistenciaPublica(
   eventoId: string,
   whatsapp: string
-): Promise<'registrado' | 'no_encontrado'> {
+): Promise<ResultadoRegistro> {
   const { data: perfil } = await supabase
     .from('perfiles_datos')
-    .select('id')
-    .eq('whatsapp', whatsapp)
-    .eq('estado', 'aprobado')
+    .select('id, estado, nombre')
+    .eq('whatsapp', whatsapp.replace(/\D/g, '') === whatsapp ? whatsapp : whatsapp)
     .single()
 
   if (!perfil) return 'no_encontrado'
 
+  if (perfil.estado === 'por_aprobar') return 'por_aprobar'
+  if (perfil.estado === 'rechazado') return 'rechazado'
+
+  const { data: asistenciaExistente } = await supabase
+    .from('asistencias')
+    .select('id')
+    .eq('evento_id', eventoId)
+    .eq('perfil_id', perfil.id)
+    .single()
+
+  if (asistenciaExistente) return 'ya_registrado'
+
   await supabase
     .from('asistencias')
-    .upsert(
-      { evento_id: eventoId, perfil_id: perfil.id, asistio: true },
-      { onConflict: 'evento_id,perfil_id' }
-    )
+    .insert({ evento_id: eventoId, perfil_id: perfil.id, asistio: true })
 
   return 'registrado'
 }

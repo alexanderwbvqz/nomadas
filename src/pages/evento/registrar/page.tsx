@@ -47,7 +47,11 @@ export default function RegistrarAsistenciaPage() {
           </div>
         ) : estado === 'registrado' ? (
           <div className="registro-evento__feedback registro-evento__feedback--registrado">
-            ¡Asistencia confirmada! Nos vemos en el evento.
+            ¡Asistencia confirmada! Nos vemos en el evento. 🎉
+          </div>
+        ) : estado === 'ya_registrado' ? (
+          <div className="registro-evento__feedback registro-evento__feedback--registrado">
+            Ya confirmaste tu asistencia. ¡Te esperamos! 👋
           </div>
         ) : (
           <div className="registro-evento__form">
@@ -68,12 +72,20 @@ export default function RegistrarAsistenciaPage() {
             />
 
             {estado === 'no_encontrado' && (
-              <div className="registro-evento__feedback registro-evento__feedback--no-encontrado">
-                <strong>Número no encontrado</strong>
-                <span>Tu número no está en la lista de nómadas aprobados.</span>
-                <Link to="/onboarding" className="registro-evento__link-onboarding">
-                  Regístrate aquí
-                </Link>
+              <div className="registro-evento__feedback registro-evento__feedback--error">
+                No encontramos un perfil con este número.
+              </div>
+            )}
+
+            {estado === 'por_aprobar' && (
+              <div className="registro-evento__feedback registro-evento__feedback--pendiente">
+                Tu registro aún está en revisión. Comunícate con la persona encargada.
+              </div>
+            )}
+
+            {estado === 'rechazado' && (
+              <div className="registro-evento__feedback registro-evento__feedback--error">
+                Tu perfil no fue aprobado. No puedes registrar asistencia.
               </div>
             )}
 
