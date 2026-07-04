@@ -70,6 +70,7 @@ DATOS DEL USUARIO:
 - Pasiones: ${(data.pasiones as string[]).join(', ')}
 - Sueño emprendedor: ${data.sueno || 'No especificado'}
 - Tiene idea de negocio: ${data.tieneIdea || 'No especificado'}
+- Tiene emprendimiento en marcha: ${data.tieneEmprendimiento || 'No especificado'}${data.detalleEmprendimiento ? `\n- Detalle del emprendimiento: "${data.detalleEmprendimiento}"` : ''}
 - Superpoderes: ${(data.superpoderes as string[]).join(', ')}
 - Perfiles que busca en un socio: ${(data.perfilesBuscados as string[] ?? []).join(', ')}
 - Valores importantes: ${(data.valoresImportantes as string[] ?? []).join(', ')}
@@ -118,6 +119,7 @@ Responde ÚNICAMENTE con un JSON con esta estructura exacta, sin texto adicional
       email: data.email,
       whatsapp: data.whatsapp,
       ocupacion: data.ocupacion,
+      ocupacion_categoria: data.ocupacionCategoria || null,
       foto: data.foto || null,
     })
     .select('id')
@@ -156,6 +158,8 @@ Responde ÚNICAMENTE con un JSON con esta estructura exacta, sin texto adicional
       perfil_id: pid,
       sueno: data.sueno || null,
       tiene_idea: data.tieneIdea || null,
+      tiene_emprendimiento: data.tieneEmprendimiento || null,
+      detalle_emprendimiento: data.detalleEmprendimiento || null,
     }),
     supabase.from('perfil_resultado').insert({
       perfil_id: pid,
@@ -166,6 +170,10 @@ Responde ÚNICAMENTE con un JSON con esta estructura exacta, sin texto adicional
   ]
   if (data.ideaFrase) {
     inserts.push(supabase.from('perfil_ideas').insert({ perfil_id: pid, idea: data.ideaFrase }))
+  }
+  const redes = (data.redes as Array<{ red: string; url: string }> ?? []).filter((r) => r.url?.trim())
+  if (redes.length > 0) {
+    inserts.push(supabase.from('perfil_redes').insert(redes.map((r) => ({ perfil_id: pid, red: r.red, url: r.url.trim() }))))
   }
   await Promise.all(inserts)
 
@@ -213,6 +221,20 @@ Responde ÚNICAMENTE con la pregunta, sin texto adicional.`
     await supabase.from('perfiles_datos').update({ embedding }).eq('id', pid)
   } catch {
     // No fatal: el perfil queda guardado, el matching usará la fórmula de fallback
+  }
+
+  // Correo de confirmación de registro
+  try {
+    await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/enviar-correo`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ tipo: 'registro', nombre: data.nombre, email: data.email }),
+    })
+  } catch {
+    // No fatal
   }
 
   return new Response(

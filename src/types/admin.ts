@@ -1,4 +1,22 @@
+import type { TipoAliado } from '../components/ui/tarjetaAliado/tarjetaAliado.types'
+import type { RedSocial } from './onboarding'
+
 export type EstadoInscrito = 'por_aprobar' | 'aprobado' | 'rechazado'
+
+export interface Aliado {
+  id: string
+  logo: string
+  nombre: string
+  descripcion: string
+  tipo: TipoAliado
+  linkedin?: string
+  instagram?: string
+  web?: string
+}
+
+export interface AliadoAdmin extends Aliado {
+  activo: boolean
+}
 
 export interface Inscrito {
   id: string
@@ -27,4 +45,7 @@ export interface Inscrito {
   fraseRepresenta: string
   admiraEmprendedor: string
   mayorAprendizaje: string
+  redes: RedSocial[]
+  tieneEmprendimiento: string
+  detalleEmprendimiento: string
 }

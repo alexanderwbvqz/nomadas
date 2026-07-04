@@ -1,7 +1,8 @@
-import { X, Zap, Heart, Star, Lightbulb, Users, Clock, DollarSign, Globe, Quote, Shield, Award, BookOpen } from 'lucide-react'
+import { X, Zap, Heart, Star, Lightbulb, Users, Clock, DollarSign, Globe, Quote, Shield, Award, BookOpen, Rocket } from 'lucide-react'
 import type { Inscrito } from '../../../types/admin'
 import AppButton from '../boton/boton'
 import Overlay from '../overlay/overlay'
+import RedesSociales from '../redesSociales/redesSociales'
 import './modalVerInscripcion.css'
 
 interface ModalVerInscripcionProps {
@@ -46,6 +47,13 @@ export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInsc
           <Fila label="Correo" valor={inscrito.email} />
           <Fila label="WhatsApp" valor={inscrito.whatsapp} />
 
+          {inscrito.redes.length > 0 && (
+            <div className="modal-ver__seccion">
+              <div className="modal-ver__seccion-titulo">Redes sociales</div>
+              <RedesSociales redes={inscrito.redes} />
+            </div>
+          )}
+
           {inscrito.fraseRepresenta && (
             <div className="modal-ver__seccion">
               <div className="modal-ver__seccion-titulo"><Quote size={13} /> Frase que lo representa</div>
@@ -83,6 +91,15 @@ export default function ModalVerInscripcion({ inscrito, onCerrar }: ModalVerInsc
               <div className="modal-ver__seccion-titulo"><Lightbulb size={13} /> ¿Tiene idea de negocio?</div>
               <p className="modal-ver__texto">
                 {inscrito.tieneIdea}{inscrito.ideas.length > 0 ? ` — "${inscrito.ideas.join(', ')}"` : ''}
+              </p>
+            </div>
+          )}
+
+          {inscrito.tieneEmprendimiento && (
+            <div className="modal-ver__seccion">
+              <div className="modal-ver__seccion-titulo"><Rocket size={13} /> ¿Tiene emprendimiento en marcha?</div>
+              <p className="modal-ver__texto">
+                {inscrito.tieneEmprendimiento}{inscrito.detalleEmprendimiento ? ` — "${inscrito.detalleEmprendimiento}"` : ''}
               </p>
             </div>
           )}

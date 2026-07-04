@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
 import type { OnboardingData, ResultadoPerfil } from '../../types/onboarding'
-import { supabase } from '../../lib/supabase'
+import { analizarPerfil } from '../../api/perfiles'
 import { useOnboardingPaso1 } from '../../hooks/useOnboardingPaso1'
 
 import { useOnboardingPaso6 } from '../../hooks/useOnboardingPaso6'
@@ -20,9 +20,9 @@ import './page.css'
 const TOTAL_PASOS = 6
 
 const DATA_INICIAL: OnboardingData = {
-  nombre: '', ocupacion: '', foto: '', whatsapp: '', email: '',
+  nombre: '', ocupacion: '', ocupacionCategoria: '', foto: '', whatsapp: '', email: '', redes: [],
   pasiones: [],
-  sueno: '', tieneIdea: '', ideaFrase: '', ideasFrases: [],
+  sueno: '', tieneIdea: '', ideaFrase: '', ideasFrases: [], tieneEmprendimiento: '', detalleEmprendimiento: '',
   superpoderes: [],
   perfilesBuscados: [], valoresImportantes: [], disponibilidad: '',
   millonDolares: '', problemaResolver: '', fraseRepresenta: '',
@@ -87,16 +87,12 @@ export default function OnboardingPage() {
 
     setGuardando(true)
 
-    const { data: fnData, error: fnError } = await supabase.functions.invoke('analizar-perfil', {
-      body: data,
-    })
+    const perfil = await analizarPerfil(data)
 
-    if (fnError || !fnData) {
+    if (!perfil) {
       setGuardando(false)
       return
     }
-
-    const perfil = fnData as ResultadoPerfil
 
     setGuardando(false)
     setResultado(perfil)
@@ -188,7 +184,7 @@ export default function OnboardingPage() {
       {mostrarBienvenida && (
         <ModalConfirmacion
           titulo="¡Todo listo!"
-          mensaje="Hemos recibido tu registro y ahora iniciaremos el proceso de revisión. En un plazo máximo de 24 horas validaremos la información enviada. Una vez aprobada, tu perfil estará disponible en la sección Nómadas, donde otros cofundadores podrán conocerte y conectar contigo para formar la próxima gran startup."
+          mensaje="Hemos recibido tu registro y ahora iniciaremos el proceso de revisión. En un plazo máximo de 24 horas validaremos la información enviada. Una vez aprobada, tu perfil estará disponible en la sección Nómadas, donde otros cofundadores podrán conocerte y conectar contigo para formar la próxima gran startup. Te enviamos un correo de confirmación a tu email."
           onAceptar={() => navigate('/')}
         />
       )}
