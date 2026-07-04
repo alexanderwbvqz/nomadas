@@ -47,7 +47,7 @@ export async function getAsistencias(eventoId: string): Promise<AsistenciaNomada
   if (!data) return []
 
   return data.map((a) => {
-    const p = a.perfiles_datos as { nombre: string; whatsapp: string; foto: string; perfil_resultado: Array<{ categoria: string }> } | null
+    const p = (a.perfiles_datos as unknown) as { nombre: string; whatsapp: string; foto: string; perfil_resultado: Array<{ categoria: string }> } | null
     return {
       perfilId: a.perfil_id,
       nombre: p?.nombre ?? '',

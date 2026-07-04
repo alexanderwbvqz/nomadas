@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, MouseEvent } from 'react'
 import './botonIcono.css'
 
 interface BotonIconoProps {
   icono: ReactNode
-  onClick: () => void
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void
   variante?: 'default' | 'peligro'
   type?: 'button' | 'submit' | 'reset'
 }

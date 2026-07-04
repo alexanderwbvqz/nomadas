@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import type { AliadoAdmin } from '../types/admin'
+import type { TipoAliado } from '../components/ui/tarjetaAliado/tarjetaAliado.types'
 
 export type { AliadoAdmin }
 
