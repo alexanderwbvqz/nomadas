@@ -10,7 +10,7 @@ export function useNomadas() {
     async function cargar() {
       const { data: perfiles } = await supabase
         .from('perfiles_datos')
-        .select('id, nombre, ocupacion, foto, perfil_resultado(categoria, descripcion), perfil_superpoderes(superpoder)')
+        .select('id, nombre, ocupacion, foto, whatsapp, perfil_resultado(categoria, descripcion), perfil_superpoderes(superpoder)')
         .eq('aprobado', true)
         .order('created_at', { ascending: false })
 
@@ -33,6 +33,7 @@ export function useNomadas() {
             categoria: res?.categoria ?? '',
             descripcion: res?.descripcion ?? '',
             superpoderes: (p.perfil_superpoderes as Superpoderes)?.map((s) => s.superpoder) ?? [],
+            whatsapp: p.whatsapp ?? '',
           }
         })
       )

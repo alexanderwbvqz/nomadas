@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import TarjetaCofundador from '../../components/ui/tarjetaCofundador/tarjetaCofundador'
 import ModalPerfil from '../../components/ui/modalPerfil/modalPerfil'
 import FiltroChips from '../../components/ui/filtroChips/filtroChips'
+import CampoBusqueda from '../../components/ui/campoBusqueda/campoBusqueda'
 import { useNomadas } from '../../hooks/useNomadas'
 import './page.css'
 
@@ -14,6 +15,7 @@ export default function NomidasPage() {
   const { cofundadores, cargando } = useNomadas()
   const [modalId, setModalId] = useState<string | null>(null)
   const [filtro, setFiltro] = useState<FiltroLabel>('Todos')
+  const [busqueda, setBusqueda] = useState('')
 
   return (
     <>
@@ -29,6 +31,11 @@ export default function NomidasPage() {
 
       <div className="nomadas__cabecera">
         <FiltroChips opciones={FILTROS} activo={filtro} onChange={(v) => setFiltro(v as FiltroLabel)} />
+        <CampoBusqueda
+          value={busqueda}
+          onChange={setBusqueda}
+          placeholder="Buscar por nombre o WhatsApp"
+        />
       </div>
 
       {cargando ? (
@@ -39,6 +46,11 @@ export default function NomidasPage() {
         <div className="nomadas__grid">
           {cofundadores
             .filter((c) => filtro === 'Todos' || c.categoria === filtro)
+            .filter((c) => {
+              if (!busqueda.trim()) return true
+              const q = busqueda.toLowerCase()
+              return c.nombre.toLowerCase().includes(q) || c.whatsapp?.includes(q)
+            })
             .map((c) => (
             <TarjetaCofundador
               key={c.id}

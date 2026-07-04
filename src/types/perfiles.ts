@@ -39,6 +39,7 @@ export interface Cofundador {
   categoria: string
   descripcion: string
   superpoderes: string[]
+  whatsapp: string
 }
 
 export interface MatchPerfil {
