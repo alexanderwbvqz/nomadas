@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
 import type { MatchPerfil } from './useMatchPerfil'
 import { distribuirPorSimilitud, distribuirMatches, type CandidatoConSimilitud } from '../lib/matchScore'
+import { getCandidatosElegibles, getVectorMatches, getCandidatosPorIds } from '../api/match'
 
 export function useMatchesTop10(owner: MatchPerfil | null) {
   const [matches, setMatches] = useState<MatchPerfil[]>([])
@@ -16,16 +16,20 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
     if (!owner) return
     setCargando(true)
 
-    // Intentar búsqueda vectorial
-    const { data: vectorData } = await supabase.rpc('match_perfiles', {
-      owner_id: owner.id,
-      candidate_count: 50,
-    }) as { data: { id: string; similarity: number }[] | null }
+    const elegibles = await getCandidatosElegibles(owner.id)
+    if (elegibles.length === 0) {
+      setMatches([])
+      setCargando(false)
+      return
+    }
 
-    if (vectorData && vectorData.length > 0) {
-      await cargarPorVector(vectorData)
+    const vectorData = await getVectorMatches(owner.id, 50)
+    const vectorFiltrado = vectorData.filter((r) => elegibles.includes(r.id))
+
+    if (vectorFiltrado.length > 0) {
+      await cargarPorVector(vectorFiltrado)
     } else {
-      await cargarPorFormula()
+      await cargarPorFormula(elegibles)
     }
 
     setCargando(false)
@@ -36,19 +40,7 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
     const ids = vectorData.map((r) => r.id)
     const similarityMap = new Map(vectorData.map((r) => [r.id, r.similarity]))
 
-    const { data } = await supabase
-      .from('perfiles_datos')
-      .select(`
-        id, nombre, foto, ocupacion, whatsapp,
-        perfil_resultado(categoria, descripcion),
-        perfil_suenos(sueno, tiene_idea),
-        perfil_pasiones(pasion),
-        perfil_superpoderes(superpoder),
-        perfil_tinder(frase_representa, pregunta_hielo)
-      `)
-      .in('id', ids)
-
-    if (!data) return
+    const data = await getCandidatosPorIds(ids)
 
     type Resultado = Array<{ categoria: string; descripcion: string }>
     type Suenos = Array<{ sueno: string; tiene_idea: string }>
@@ -83,23 +75,10 @@ export function useMatchesTop10(owner: MatchPerfil | null) {
     setMatches(distribuirPorSimilitud(candidatos, owner.categoria))
   }
 
-  async function cargarPorFormula() {
+  async function cargarPorFormula(elegibles: string[]) {
     if (!owner) return
 
-    const { data } = await supabase
-      .from('perfiles_datos')
-      .select(`
-        id, nombre, foto, ocupacion, whatsapp,
-        perfil_resultado(categoria, descripcion),
-        perfil_suenos(sueno, tiene_idea),
-        perfil_pasiones(pasion),
-        perfil_superpoderes(superpoder),
-        perfil_tinder(frase_representa, pregunta_hielo)
-      `)
-      .eq('aprobado', true)
-      .neq('id', owner.id)
-
-    if (!data) return
+    const data = await getCandidatosPorIds(elegibles)
 
     type Resultado = Array<{ categoria: string; descripcion: string }>
     type Suenos = Array<{ sueno: string; tiene_idea: string }>
