@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { MatchPerfil } from '../../../hooks/useMatchPerfil'
+import { useBreakpoint } from '../../../hooks/useBreakpoint'
 import TarjetaMatch from '../tarjetaMatch/tarjetaMatch'
 import './carruselMatch.css'
 
@@ -8,6 +11,17 @@ interface CarruselMatchProps {
 }
 
 export default function CarruselMatch({ matches, cargando }: CarruselMatchProps) {
+  const [pagina, setPagina] = useState(0)
+  const bp = useBreakpoint()
+
+  const esDesktop = bp === 'lg' || bp === 'xl'
+  const itemsPorPagina = bp === 'tablet' ? 2 : 1
+  const totalPaginas = Math.ceil(matches.length / itemsPorPagina)
+
+  useEffect(() => {
+    setPagina(0)
+  }, [bp])
+
   if (cargando) {
     return (
       <div className="carrusel-match__skeleton-wrap">
@@ -20,13 +34,43 @@ export default function CarruselMatch({ matches, cargando }: CarruselMatchProps)
 
   if (matches.length === 0) return null
 
+  if (esDesktop) {
+    return (
+      <div className="carrusel-match__grid">
+        {matches.map((perfil) => (
+          <TarjetaMatch key={perfil.id} perfil={perfil} />
+        ))}
+      </div>
+    )
+  }
+
+  const visibles = matches.slice(pagina * itemsPorPagina, (pagina + 1) * itemsPorPagina)
+
   return (
     <div className="carrusel-match">
-      {matches.map((perfil) => (
-        <div key={perfil.id} className="carrusel-match__item">
-          <TarjetaMatch perfil={perfil} />
-        </div>
-      ))}
+      <button
+        className="carrusel-match__flecha"
+        onClick={() => setPagina((p) => p - 1)}
+        disabled={pagina === 0}
+        aria-label="Anterior"
+      >
+        <ChevronLeft size={22} />
+      </button>
+
+      <div className={`carrusel-match__tarjetas${bp === 'tablet' ? ' carrusel-match__tarjetas--tablet' : ''}`}>
+        {visibles.map((perfil) => (
+          <TarjetaMatch key={perfil.id} perfil={perfil} />
+        ))}
+      </div>
+
+      <button
+        className="carrusel-match__flecha"
+        onClick={() => setPagina((p) => p + 1)}
+        disabled={pagina >= totalPaginas - 1}
+        aria-label="Siguiente"
+      >
+        <ChevronRight size={22} />
+      </button>
     </div>
   )
 }

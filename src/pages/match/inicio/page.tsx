@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Sparkles, Flame } from 'lucide-react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useMatchPerfil } from '../../../hooks/useMatchPerfil'
 import { useMatchesTop10 } from '../../../hooks/useMatchesTop10'
@@ -38,25 +37,40 @@ export default function MatchInicioPage() {
   const primerNombre = perfil.nombre.split(' ')[0]
 
   return (
-    <div className="match-perfil match-perfil--carrusel">
-      <p className="match-perfil__marca">Nómadas</p>
+    <div className="match-perfil">
 
-      <div className="match-perfil__saludo">
-        <h1 className="match-perfil__saludo-titulo">
-          Hola, {primerNombre} <Sparkles size={26} className="match-perfil__saludo-icono" />
-        </h1>
-        <p className="match-perfil__saludo-texto">
-          Conoce el perfil de este nómada y empieza una conversación que podría cambiar todo.
-        </p>
-        <AppButton label="Ver mi perfil" onClick={() => setModalAbierto(true)} />
+      <div className="match-perfil__topbar">
+        <span className="match-perfil__marca">Nómadas</span>
       </div>
 
-      <div className="match-perfil__conexiones-label">
-        <Flame size={16} className="match-perfil__conexiones-icono" />
-        <span>Tus mejores conexiones en Nómadas</span>
+      <div className="match-perfil__hero">
+        <div className="match-perfil__hero-texto">
+          <p className="match-perfil__saludo-sub">Hola,</p>
+          <h1 className="match-perfil__saludo-nombre">{primerNombre}</h1>
+          <p className="match-perfil__saludo-desc">
+            Conoce el perfil de este nómada y empieza una conversación que podría cambiar todo.
+          </p>
+          <AppButton label="Ver mi perfil" onClick={() => setModalAbierto(true)} />
+        </div>
+
+        {perfil.foto && (
+          <div className="match-perfil__hero-foto-wrap">
+            <img src={perfil.foto} alt={perfil.nombre} className="match-perfil__hero-foto" />
+          </div>
+        )}
       </div>
 
-      <CarruselMatch matches={matches} cargando={cargandoMatches} />
+      <div className="match-perfil__seccion-header">
+        <span className="match-perfil__seccion-titulo">Tus conexiones</span>
+        <div className="match-perfil__seccion-linea" />
+        {matches.length > 0 && (
+          <span className="match-perfil__seccion-count">{matches.length}</span>
+        )}
+      </div>
+
+      <div className="match-perfil__contenido">
+        <CarruselMatch matches={matches} cargando={cargandoMatches} />
+      </div>
 
       {modalAbierto && (
         <ModalPerfil id={perfil.id} onCerrar={() => setModalAbierto(false)} />

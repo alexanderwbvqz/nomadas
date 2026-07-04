@@ -1,24 +1,71 @@
+/* ── Carousel (mobile / tablet) ─────────────────────────────────────────── */
+
 .carrusel-match {
   display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 8px 24px;
+  width: 100%;
+}
+
+.carrusel-match__tarjetas {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 12px;
-  padding: 4px 16px 16px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 }
 
-.carrusel-match::-webkit-scrollbar {
-  display: none;
+.carrusel-match__tarjetas--tablet {
+  grid-template-columns: 1fr 1fr;
 }
 
-.carrusel-match__item {
-  scroll-snap-align: center;
+/* Flechas */
+.carrusel-match__flecha {
   flex-shrink: 0;
-  width: calc(100% - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #E5E7EB;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  margin-top: 180px;
 }
 
-/* Skeleton */
+.carrusel-match__flecha:hover:not(:disabled) {
+  background: #6366F1;
+  color: #ffffff;
+  border-color: #6366F1;
+}
+
+.carrusel-match__flecha:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Grid (desktop lg / xl) ─────────────────────────────────────────────── */
+
+.carrusel-match__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 4px 16px 24px;
+  width: 100%;
+}
+
+@media (min-width: 1280px) {
+  .carrusel-match__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Skeleton ────────────────────────────────────────────────────────────── */
+
 .carrusel-match__skeleton-wrap {
   display: flex;
   gap: 12px;

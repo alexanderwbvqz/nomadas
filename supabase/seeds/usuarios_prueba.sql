@@ -1,6 +1,7 @@
 DO $$
 DECLARE
-  pid uuid;
+  pid        uuid;
+  evento_id  uuid := gen_random_uuid();
 
   -- Nombres por categoría
   nombres_tec  text[] := ARRAY['Carlos Mendez','Diego Torres','Andrés Rojas','Luis Fernández','Miguel Castillo','Gabriel Vargas','Sebastián Mora','Ricardo Peña','Alejandro Díaz','Javier Soto','Daniel Ríos','Felipe Guzmán','Tomás Aguilar','Eduardo Ramos','Pablo Vega','Nicolás Castro','Ignacio Fuentes','Matías Herrera','Rodrigo Jiménez','Esteban Navarro','Cristóbal Paredes','Renato Espinoza','Simón Alvarado','Marco Reyes','Iván Muñoz'];
@@ -38,6 +39,54 @@ DECLARE
   frases_ops  text[] := ARRAY['Los sistemas liberan el potencial humano','Un buen proceso hoy evita un caos mañana','La excelencia operativa es el motor del crecimiento','Mide todo lo que importa','Ejecutar bien es la ventaja competitiva más sostenible'];
   frases_fin  text[] := ARRAY['El dinero es un medio, no un fin','Las mejores inversiones son las que no se ven','El flujo de caja es el oxígeno de una empresa','Controla tus números o ellos te controlarán','La disciplina financiera separa a los que sueñan de los que logran'];
 
+  -- Millón de dólares por categoría
+  millon_tec  text[] := ARRAY['Una plataforma de IA que personalice la educación para cada estudiante','Un sistema de salud digital accesible para toda Latinoamérica','Infraestructura cloud para startups en mercados emergentes','Una herramienta que automatice el trabajo repetitivo en PYMEs','Software que conecte talento tech con oportunidades globales'];
+  millon_ven  text[] := ARRAY['Una plataforma que conecte marcas locales con mercados globales','Un sistema de ventas automatizado para pequeños negocios','Una red de distribución directa al consumidor en toda la región','Una agencia de branding para startups con impacto social','Un marketplace de servicios creativos para emprendedores'];
+  millon_ops  text[] := ARRAY['Un sistema de logística inteligente para e-commerce regional','Una plataforma de gestión operativa para startups en crecimiento','Software de optimización de procesos para industrias tradicionales','Una red de proveedores certificados para empresas en expansión','Un sistema de control de calidad automatizado para manufactura'];
+  millon_fin  text[] := ARRAY['Un fondo de microcréditos para emprendedores sin historial bancario','Una plataforma de inversión colectiva para proyectos locales','Un sistema de gestión financiera accesible para PYMEs','Una fintech que simplifique los pagos internacionales en LATAM','Una plataforma de educación financiera para jóvenes emprendedores'];
+
+  -- Problema del mundo por categoría
+  problema_tec  text[] := ARRAY['La brecha digital que excluye a millones de personas','La falta de acceso a educación de calidad en zonas rurales','La ineficiencia energética en ciudades en desarrollo','La desconexión entre talento y oportunidades laborales','La falta de herramientas tech accesibles para pequeños negocios'];
+  problema_ven  text[] := ARRAY['La dificultad de los pequeños negocios para competir con grandes marcas','La falta de acceso a mercados internacionales para productores locales','El desperdicio de recursos por cadenas de distribución ineficientes','La poca visibilidad de productos locales de calidad','La desconexión entre consumidores y productores responsables'];
+  problema_ops  text[] := ARRAY['La ineficiencia operativa que frena el crecimiento de las PYMEs','La falta de sistemas de gestión accesibles para negocios medianos','El desperdicio en cadenas de suministro mal optimizadas','La dificultad de escalar operaciones sin perder calidad','La falta de procesos claros en startups en etapa temprana'];
+  problema_fin  text[] := ARRAY['La exclusión financiera de millones de personas en LATAM','La falta de acceso a capital para emprendedores con ideas brillantes','La opacidad del sistema financiero para el ciudadano común','La dificultad de gestionar finanzas personales sin educación formal','La falta de opciones de inversión accesibles para la clase media'];
+
+  -- Admira en un emprendedor por categoría
+  admira_tec  text[] := ARRAY['Su capacidad de resolver problemas complejos con soluciones simples','La persistencia ante los fracasos técnicos y la iteración constante','Su visión de largo plazo sin perder el foco en el producto','La habilidad de construir equipos técnicos de alto rendimiento','Su capacidad de aprender rápido y adaptarse a nuevas tecnologías'];
+  admira_ven  text[] := ARRAY['Su habilidad para conectar con las personas de forma genuina','La capacidad de crear narrativas que inspiran y mueven a la acción','Su persistencia para cerrar tratos incluso en momentos difíciles','La visión para identificar oportunidades de mercado antes que nadie','Su energía para motivar a todo el equipo hacia una meta común'];
+  admira_ops  text[] := ARRAY['Su capacidad de convertir el caos en sistemas que funcionan','La disciplina para ejecutar planes con consistencia y precisión','Su habilidad para escalar operaciones sin perder la calidad','La visión sistémica que anticipa cuellos de botella antes de que ocurran','Su capacidad de liderar equipos diversos hacia resultados concretos'];
+  admira_fin  text[] := ARRAY['Su disciplina para gestionar el riesgo sin perder la ambición','La capacidad de leer oportunidades de inversión que otros no ven','Su transparencia y honestidad en el manejo del dinero','La habilidad de tomar decisiones bajo presión con datos sólidos','Su visión para construir negocios financieramente sostenibles desde el inicio'];
+
+  -- Mayor aprendizaje por categoría
+  aprendizaje_tec  text[] := ARRAY['El mejor código es el que no necesitas escribir','Lanzar rápido y aprender del usuario es más valioso que la perfección','Un equipo motivado construye mejor que uno de estrellas individuales','La tecnología es un medio, no un fin en sí mismo','Escuchar al cliente desde el día uno evita meses de trabajo perdido'];
+  aprendizaje_ven  text[] := ARRAY['La confianza se construye con consistencia, no con grandes gestos','El NO es el inicio de una negociación, no el final','Conocer al cliente mejor que él mismo es la mayor ventaja competitiva','Las personas compran emociones, no productos','El seguimiento constante es lo que separa a los buenos vendedores de los grandes'];
+  aprendizaje_ops  text[] := ARRAY['Lo que no se mide no se puede mejorar','Un proceso bien documentado es el mejor legado que puedes dejar','Delegar con confianza multiplica el impacto del equipo','La simplicidad operativa es más poderosa que la sofisticación innecesaria','Anticipar el problema es siempre más barato que resolverlo en crisis'];
+  aprendizaje_fin  text[] := ARRAY['El flujo de caja es más importante que las ganancias en papel','Nunca inviertas en lo que no entiendes completamente','La disciplina financiera en tiempos buenos es lo que salva en tiempos malos','Diversificar no es solo una estrategia, es una mentalidad','El mejor momento para planear las finanzas fue ayer, el segundo mejor es hoy'];
+
+  -- Preguntas rompe hielo por categoría
+  hielo_tec  text[] := ARRAY['¿Qué problema técnico te quita el sueño pero no puedes dejar de pensar en él?','Si pudieras automatizar una sola cosa en el mundo, ¿qué sería?','¿Cuál fue el bug más difícil que resolviste y qué aprendiste?','¿Qué tecnología emergente crees que cambiará más el mundo en 5 años?','¿Prefieres construir el producto perfecto o lanzar rápido y mejorar?'];
+  hielo_ven  text[] := ARRAY['¿Cuál fue la venta más difícil que cerraste y cómo lo lograste?','¿Qué marca te parece que hace el mejor marketing y por qué?','Si tuvieras que vender hielo en el polo norte, ¿cuál sería tu pitch?','¿Qué es lo primero que analizas cuando llegas a un mercado nuevo?','¿Cómo diferencias a un cliente potencial de uno que solo curiosea?'];
+  hielo_ops  text[] := ARRAY['¿Cuál fue el proceso más caótico que lograste ordenar y cómo lo hiciste?','¿Qué herramienta de gestión no podrías vivir sin ella?','Si pudieras optimizar un solo proceso en cualquier industria, ¿cuál elegirías?','¿Cómo decides cuándo un proceso es suficientemente bueno para escalar?','¿Qué es lo primero que haces cuando llegas a una startup con operaciones desordenadas?'];
+  hielo_fin  text[] := ARRAY['¿Cuál fue la mejor inversión que hiciste y qué te enseñó?','¿Cómo explicas el valor del dinero a alguien que nunca ha pensado en finanzas?','¿Qué métrica financiera crees que los emprendedores ignoran más?','Si solo pudieras revisar un número de tu negocio cada día, ¿cuál sería?','¿Cuándo crees que una startup está lista para levantar capital externo?'];
+
+  -- Perfiles buscados por categoría (complementarios)
+  busca_tec  text[] := ARRAY['Marketing - Ventas','Operaciones','Finanzas'];
+  busca_ven  text[] := ARRAY['Tecnología','Operaciones','Finanzas'];
+  busca_ops  text[] := ARRAY['Tecnología','Marketing - Ventas','Finanzas'];
+  busca_fin  text[] := ARRAY['Tecnología','Operaciones','Marketing - Ventas'];
+
+  -- Valores importantes
+  valores_todos text[] := ARRAY['Ambición','Honestidad','Trabajo en equipo','Responsabilidad','Innovación','Perseverancia','Humildad','Liderazgo','Confianza','Compromiso'];
+
+  -- Disponibilidad
+  disponibilidades text[] := ARRAY['Menos de 5 horas','5 a 10 horas','10 a 20 horas','Más de 20 horas'];
+
+  -- Emprendimientos en marcha por categoría
+  emprend_tec  text[] := ARRAY['Una app de gestión de proyectos para startups','Una plataforma de e-learning con IA','Un marketplace de servicios tech para PYMEs'];
+  emprend_ven  text[] := ARRAY['Una agencia de marketing digital para startups','Un SaaS de automatización de ventas','Una plataforma de influencer marketing'];
+  emprend_ops  text[] := ARRAY['Un software de gestión de inventarios','Una consultora de procesos para startups','Una plataforma de logística last-mile'];
+  emprend_fin  text[] := ARRAY['Una fintech de microcréditos','Una plataforma de inversiones para millennials','Un sistema de gestión financiera para PYMEs'];
+
   nombre_actual     text;
   ocupacion_actual  text;
   categoria_actual  text;
@@ -47,9 +96,20 @@ DECLARE
   frases_cat        text[];
   ocup_cat          text[];
   nombres_cat       text[];
+  busca_cat         text[];
+  emprend_cat       text[];
+  millon_cat        text[];
+  problema_cat      text[];
+  admira_cat        text[];
+  aprendizaje_cat   text[];
+  hielo_cat         text[];
   idx               int;
 
 BEGIN
+  -- Evento de prueba para que todos los perfiles aparezcan en el match
+  INSERT INTO eventos (id, nombre, fecha, estado)
+  VALUES (evento_id, 'Nómadas — Evento de prueba', CURRENT_DATE, 'activo');
+
   FOR i IN 1..100 LOOP
 
     -- Determinar categoría y arrays según bloque de 25
@@ -61,6 +121,13 @@ BEGIN
       supers_cat       := supers_tec;
       suenos_cat       := suenos_tec;
       frases_cat       := frases_tec;
+      busca_cat        := busca_tec;
+      emprend_cat      := emprend_tec;
+      millon_cat       := millon_tec;
+      problema_cat     := problema_tec;
+      admira_cat       := admira_tec;
+      aprendizaje_cat  := aprendizaje_tec;
+      hielo_cat        := hielo_tec;
       idx              := i;
     ELSIF i <= 50 THEN
       categoria_actual := 'Marketing - Ventas';
@@ -70,6 +137,13 @@ BEGIN
       supers_cat       := supers_ven;
       suenos_cat       := suenos_ven;
       frases_cat       := frases_ven;
+      busca_cat        := busca_ven;
+      emprend_cat      := emprend_ven;
+      millon_cat       := millon_ven;
+      problema_cat     := problema_ven;
+      admira_cat       := admira_ven;
+      aprendizaje_cat  := aprendizaje_ven;
+      hielo_cat        := hielo_ven;
       idx              := i - 25;
     ELSIF i <= 75 THEN
       categoria_actual := 'Operaciones';
@@ -79,6 +153,13 @@ BEGIN
       supers_cat       := supers_ops;
       suenos_cat       := suenos_ops;
       frases_cat       := frases_ops;
+      busca_cat        := busca_ops;
+      emprend_cat      := emprend_ops;
+      millon_cat       := millon_ops;
+      problema_cat     := problema_ops;
+      admira_cat       := admira_ops;
+      aprendizaje_cat  := aprendizaje_ops;
+      hielo_cat        := hielo_ops;
       idx              := i - 50;
     ELSE
       categoria_actual := 'Finanzas';
@@ -88,6 +169,13 @@ BEGIN
       supers_cat       := supers_fin;
       suenos_cat       := suenos_fin;
       frases_cat       := frases_fin;
+      busca_cat        := busca_fin;
+      emprend_cat      := emprend_fin;
+      millon_cat       := millon_fin;
+      problema_cat     := problema_fin;
+      admira_cat       := admira_fin;
+      aprendizaje_cat  := aprendizaje_fin;
+      hielo_cat        := hielo_fin;
       idx              := i - 75;
     END IF;
 
@@ -116,19 +204,21 @@ BEGIN
       categoria_actual,
       'Perfil de ' || categoria_actual || ' con experiencia en ' || ocupacion_actual || '. Busca un cofundador complementario para construir una startup de impacto.',
       CASE categoria_actual
-        WHEN 'Tecnología'       THEN 'Marketing - Ventas, Finanzas'
+        WHEN 'Tecnología'         THEN 'Marketing - Ventas, Finanzas'
         WHEN 'Marketing - Ventas' THEN 'Tecnología, Operaciones'
-        WHEN 'Operaciones'      THEN 'Tecnología, Marketing - Ventas'
-        WHEN 'Finanzas'         THEN 'Tecnología, Operaciones'
+        WHEN 'Operaciones'        THEN 'Tecnología, Marketing - Ventas'
+        WHEN 'Finanzas'           THEN 'Tecnología, Operaciones'
       END
     );
 
-    -- Sueños
-    INSERT INTO perfil_suenos (perfil_id, sueno, tiene_idea)
+    -- Sueños + emprendimiento
+    INSERT INTO perfil_suenos (perfil_id, sueno, tiene_idea, tiene_emprendimiento, detalle_emprendimiento)
     VALUES (
       pid,
       suenos_cat[((idx - 1) % array_length(suenos_cat, 1)) + 1],
-      CASE WHEN i % 3 = 0 THEN 'Sí, tengo una idea clara' WHEN i % 3 = 1 THEN 'Tengo algunas ideas' ELSE 'No' END
+      CASE WHEN i % 3 = 0 THEN 'Sí' WHEN i % 3 = 1 THEN 'Tengo varias' ELSE 'No' END,
+      CASE WHEN i % 4 = 0 THEN 'Sí' ELSE 'No' END,
+      CASE WHEN i % 4 = 0 THEN emprend_cat[((idx - 1) % array_length(emprend_cat, 1)) + 1] ELSE NULL END
     );
 
     -- Pasiones (3 por usuario, rotando)
@@ -137,7 +227,6 @@ BEGIN
       (pid, pasiones_cat[(idx % array_length(pasiones_cat, 1)) + 1]),
       (pid, pasiones_cat[((idx + 1) % array_length(pasiones_cat, 1)) + 1]);
 
-    -- También agregar "Startups" y "Emprendimiento" a algunos para generar matches cruzados
     IF i % 4 = 0 THEN
       INSERT INTO perfil_pasiones (perfil_id, pasion) VALUES (pid, 'Startups');
     END IF;
@@ -150,12 +239,37 @@ BEGIN
       (pid, supers_cat[((idx - 1) % array_length(supers_cat, 1)) + 1]),
       (pid, supers_cat[(idx % array_length(supers_cat, 1)) + 1]);
 
-    -- Tinder
-    INSERT INTO perfil_tinder (perfil_id, frase_representa)
+    -- Preferencias
+    INSERT INTO perfil_preferencias (perfil_id, perfiles_buscados, valores_importantes, disponibilidad)
     VALUES (
       pid,
-      frases_cat[((idx - 1) % array_length(frases_cat, 1)) + 1]
+      ARRAY[
+        busca_cat[((idx - 1) % array_length(busca_cat, 1)) + 1],
+        busca_cat[(idx % array_length(busca_cat, 1)) + 1]
+      ],
+      ARRAY[
+        valores_todos[((i - 1) % array_length(valores_todos, 1)) + 1],
+        valores_todos[(i       % array_length(valores_todos, 1)) + 1],
+        valores_todos[((i + 1) % array_length(valores_todos, 1)) + 1]
+      ],
+      disponibilidades[((i - 1) % array_length(disponibilidades, 1)) + 1]
     );
+
+    -- Tinder
+    INSERT INTO perfil_tinder (perfil_id, frase_representa, millon_dolares, problema_resolver, admira_emprendedor, mayor_aprendizaje, pregunta_hielo)
+    VALUES (
+      pid,
+      frases_cat[((idx - 1) % array_length(frases_cat, 1)) + 1],
+      millon_cat[((idx - 1) % array_length(millon_cat, 1)) + 1],
+      problema_cat[((idx - 1) % array_length(problema_cat, 1)) + 1],
+      admira_cat[((idx - 1) % array_length(admira_cat, 1)) + 1],
+      aprendizaje_cat[((idx - 1) % array_length(aprendizaje_cat, 1)) + 1],
+      hielo_cat[((idx - 1) % array_length(hielo_cat, 1)) + 1]
+    );
+
+    -- Asistencia al evento de prueba
+    INSERT INTO asistencias (evento_id, perfil_id, asistio)
+    VALUES (evento_id, pid, true);
 
   END LOOP;
 END $$;
