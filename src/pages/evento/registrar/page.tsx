@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
+import { CheckCircle, UserCheck } from 'lucide-react'
 import { useRegistroAsistencia } from '../../../hooks/useRegistroAsistencia'
 import CampoInput from '../../../components/ui/campoInput/campoInput'
 import AppButton from '../../../components/ui/boton/boton'
@@ -6,7 +7,7 @@ import './page.css'
 
 export default function RegistrarAsistenciaPage() {
   const { id = '' } = useParams<{ id: string }>()
-  const { evento, cargandoEvento, whatsapp, setWhatsapp, estado, registrar } = useRegistroAsistencia(id)
+  const { evento, cargandoEvento, whatsapp, setWhatsapp, estado, nombreNomada, registrar } = useRegistroAsistencia(id)
 
   if (cargandoEvento) {
     return (
@@ -47,11 +48,13 @@ export default function RegistrarAsistenciaPage() {
           </div>
         ) : estado === 'registrado' ? (
           <div className="registro-evento__feedback registro-evento__feedback--registrado">
-            ¡Asistencia confirmada! Nos vemos en el evento. 🎉
+            <CheckCircle size={28} className="registro-evento__feedback-icono" />
+            <span>¡Asistencia confirmada! Nos vemos en el evento, {nombreNomada}.</span>
           </div>
         ) : estado === 'ya_registrado' ? (
           <div className="registro-evento__feedback registro-evento__feedback--registrado">
-            Ya confirmaste tu asistencia. ¡Te esperamos! 👋
+            <UserCheck size={28} className="registro-evento__feedback-icono" />
+            <span>Ya confirmaste tu asistencia, {nombreNomada}.</span>
           </div>
         ) : (
           <div className="registro-evento__form">

@@ -90,6 +90,14 @@
 .registro-evento__feedback--registrado {
   background: #DCFCE7;
   color: #15803D;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.registro-evento__feedback-icono {
+  color: #16A34A;
 }
 
 .registro-evento__feedback--no-encontrado {

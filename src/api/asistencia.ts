@@ -84,7 +84,8 @@ export async function getEventoPublico(id: string): Promise<Evento | null> {
   return { id: data.id, nombre: data.nombre, fecha: data.fecha, estado: data.estado, createdAt: data.created_at }
 }
 
-export type ResultadoRegistro = 'registrado' | 'ya_registrado' | 'por_aprobar' | 'rechazado' | 'no_encontrado'
+export type TipoResultado = 'registrado' | 'ya_registrado' | 'por_aprobar' | 'rechazado' | 'no_encontrado'
+export type ResultadoRegistro = { tipo: TipoResultado; nombre: string }
 
 export async function registrarAsistenciaPublica(
   eventoId: string,
@@ -93,13 +94,15 @@ export async function registrarAsistenciaPublica(
   const { data: perfil } = await supabase
     .from('perfiles_datos')
     .select('id, estado, nombre')
-    .eq('whatsapp', whatsapp.replace(/\D/g, '') === whatsapp ? whatsapp : whatsapp)
+    .eq('whatsapp', whatsapp)
     .single()
 
-  if (!perfil) return 'no_encontrado'
+  if (!perfil) return { tipo: 'no_encontrado', nombre: '' }
 
-  if (perfil.estado === 'por_aprobar') return 'por_aprobar'
-  if (perfil.estado === 'rechazado') return 'rechazado'
+  const primerNombre = perfil.nombre.split(' ')[0]
+
+  if (perfil.estado === 'por_aprobar') return { tipo: 'por_aprobar', nombre: primerNombre }
+  if (perfil.estado === 'rechazado') return { tipo: 'rechazado', nombre: primerNombre }
 
   const { data: asistenciaExistente } = await supabase
     .from('asistencias')
@@ -108,11 +111,11 @@ export async function registrarAsistenciaPublica(
     .eq('perfil_id', perfil.id)
     .single()
 
-  if (asistenciaExistente) return 'ya_registrado'
+  if (asistenciaExistente) return { tipo: 'ya_registrado', nombre: primerNombre }
 
   await supabase
     .from('asistencias')
     .insert({ evento_id: eventoId, perfil_id: perfil.id, asistio: true })
 
-  return 'registrado'
+  return { tipo: 'registrado', nombre: primerNombre }
 }
