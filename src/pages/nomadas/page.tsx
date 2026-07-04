@@ -49,7 +49,11 @@ export default function NomidasPage() {
             .filter((c) => {
               if (!busqueda.trim()) return true
               const q = busqueda.toLowerCase()
-              return c.nombre.toLowerCase().includes(q) || c.whatsapp?.includes(q)
+              const soloDigitos = busqueda.replace(/\D/g, '')
+              return (
+                c.nombre.toLowerCase().includes(q) ||
+                (soloDigitos.length > 0 && c.whatsapp.replace(/\D/g, '').includes(soloDigitos))
+              )
             })
             .map((c) => (
             <TarjetaCofundador
