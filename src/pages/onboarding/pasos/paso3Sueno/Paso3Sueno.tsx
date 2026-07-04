@@ -1,6 +1,7 @@
 import type { OnboardingData, TieneIdea } from '../../../../types/onboarding'
 import BadgeSeleccionable from '../../../../components/ui/badgeSeleccionable/badgeSeleccionable'
 import CampoInput from '../../../../components/ui/campoInput/campoInput'
+import BotonAgregar from '../../../../components/ui/botonAgregar/botonAgregar'
 import './Paso3Sueno.css'
 
 const SUENOS = [
@@ -80,12 +81,31 @@ export default function Paso3Sueno({ data, onChange }: Props) {
                 onChange={(v) => handleIdea(i, v)}
               />
             ))}
-            <BadgeSeleccionable
-              label="+ Agregar idea"
-              seleccionado={true}
-              onClick={agregarIdea}
-            />
+            <BotonAgregar label="Agregar idea" onClick={agregarIdea} fullWidth />
           </div>
+        )}
+      </div>
+
+      <div className="paso3__seccion">
+        <p className="paso__pregunta">¿Cuentas con un emprendimiento/startup en marcha?</p>
+        <div className="paso__badges">
+          {(['Sí', 'No'] as const).map((op) => (
+            <BadgeSeleccionable
+              key={op}
+              label={op}
+              seleccionado={data.tieneEmprendimiento === op}
+              onClick={() => onChange('tieneEmprendimiento', op)}
+            />
+          ))}
+        </div>
+
+        {data.tieneEmprendimiento === 'Sí' && (
+          <CampoInput
+            label=""
+            placeholder="¿De qué trata tu emprendimiento / startup?"
+            value={data.detalleEmprendimiento}
+            onChange={(v) => onChange('detalleEmprendimiento', v)}
+          />
         )}
       </div>
     </div>

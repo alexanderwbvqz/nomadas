@@ -2,9 +2,9 @@ import type { TarjetaAliadoProps } from './tarjetaAliado.types'
 import './tarjetaAliado.css'
 
 const BADGE_CLASE: Record<string, string> = {
-  'Mentores': 'tarjeta-aliado__badge--mentoria',
-  'Universidad': 'tarjeta-aliado__badge--educacion',
-  'Empresas': 'tarjeta-aliado__badge--financiamiento',
+  'Mentores':             'tarjeta-aliado__badge--mentoria',
+  'Organizadores':        'tarjeta-aliado__badge--educacion',
+  'Aliados Estratégicos': 'tarjeta-aliado__badge--financiamiento',
 }
 
 function IconLinkedin() {

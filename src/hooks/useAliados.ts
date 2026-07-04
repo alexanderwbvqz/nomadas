@@ -1,18 +1,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import type { TipoAliado } from '../components/ui/tarjetaAliado/tarjetaAliado.types'
+import type { AliadoAdmin } from '../types/admin'
 
-export interface AliadoAdmin {
-  id: string
-  logo: string
-  nombre: string
-  descripcion: string
-  tipo: TipoAliado
-  activo: boolean
-  linkedin?: string
-  instagram?: string
-  web?: string
-}
+export type { AliadoAdmin }
 
 export function useAliados() {
   const [aliados, setAliados] = useState<AliadoAdmin[]>([])

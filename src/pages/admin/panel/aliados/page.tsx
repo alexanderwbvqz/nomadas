@@ -12,9 +12,9 @@ import type { AliadoAdmin } from '../../../../hooks/useAliados'
 import './page.css'
 
 const TIPO_CLASE: Record<TipoAliado, string> = {
-  Mentores:    'admin-aliados__tipo--mentores',
-  Universidad: 'admin-aliados__tipo--universidad',
-  Empresas:    'admin-aliados__tipo--empresas',
+  Mentores:               'admin-aliados__tipo--mentores',
+  Organizadores:          'admin-aliados__tipo--universidad',
+  'Aliados Estratégicos': 'admin-aliados__tipo--empresas',
 }
 
 export default function AdminAliadosPage() {
@@ -61,8 +61,8 @@ export default function AdminAliadosPage() {
             opciones={[
               { valor: '', label: 'Todos los tipos' },
               { valor: 'Mentores', label: 'Mentores' },
-              { valor: 'Universidad', label: 'Universidad' },
-              { valor: 'Empresas', label: 'Empresas' },
+              { valor: 'Organizadores', label: 'Organizadores' },
+              { valor: 'Aliados Estratégicos', label: 'Aliados Estratégicos' },
             ]}
             onChange={(v) => setFiltroTipo(v as TipoAliado | '')}
           />

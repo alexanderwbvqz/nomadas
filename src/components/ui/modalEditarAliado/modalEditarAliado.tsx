@@ -2,8 +2,8 @@ import { useState, useRef } from 'react'
 import { X, ImagePlus, Loader } from 'lucide-react'
 import CampoInput from '../campoInput/campoInput'
 import AppButton from '../boton/boton'
-import type { AliadoAdmin } from '../../../hooks/useAliados'
-import { supabase } from '../../../lib/supabase'
+import type { AliadoAdmin } from '../../../types/admin'
+import { subirLogoAliado } from '../../../api/aliados'
 import Overlay from '../overlay/overlay'
 import './modalEditarAliado.css'
 
@@ -38,21 +38,15 @@ export default function ModalEditarAliado({ aliado, onCerrar, onGuardar }: Modal
     setSubiendoLogo(true)
     setLogoPreview(URL.createObjectURL(archivo))
 
-    const ext = archivo.name.split('.').pop()
-    const nombre = `${Date.now()}.${ext}`
+    const publicUrl = await subirLogoAliado(archivo)
 
-    const { error: uploadErr } = await supabase.storage
-      .from('aliados-logos')
-      .upload(nombre, archivo, { upsert: true })
-
-    if (uploadErr) {
+    if (!publicUrl) {
       setLogoPreview(aliado.logo || null)
       setSubiendoLogo(false)
       return
     }
 
-    const { data } = supabase.storage.from('aliados-logos').getPublicUrl(nombre)
-    set('logo', data.publicUrl)
+    set('logo', publicUrl)
     setSubiendoLogo(false)
   }
 
@@ -138,8 +132,8 @@ export default function ModalEditarAliado({ aliado, onCerrar, onGuardar }: Modal
               onChange={(e) => set('tipo', e.target.value)}
             >
               <option value="Mentores">Mentores</option>
-              <option value="Universidad">Universidad</option>
-              <option value="Empresas">Empresas</option>
+              <option value="Organizadores">Organizadores</option>
+              <option value="Aliados Estratégicos">Aliados Estratégicos</option>
             </select>
           </div>
 

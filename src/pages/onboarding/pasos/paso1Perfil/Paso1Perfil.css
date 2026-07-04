@@ -77,6 +77,23 @@
   display: none;
 }
 
+.paso1__red-fila {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.paso1__red-select {
+  min-width: unset !important;
+  width: 110px;
+}
+
+.paso1__red-input {
+  flex: 1;
+}
+
+
 .paso1__error {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 12px;

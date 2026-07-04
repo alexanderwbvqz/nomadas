@@ -1,0 +1,59 @@
+.modal-crear-evento {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-crear-evento__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #0a0a0f;
+  margin: 0;
+}
+
+.modal-crear-evento__campos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-crear-evento__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-crear-evento__label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(10, 10, 15, 0.65);
+}
+
+.modal-crear-evento__input {
+  height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #0a0a0f;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.modal-crear-evento__input:focus {
+  border-color: #6366F1;
+}
+
+.modal-crear-evento__acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}

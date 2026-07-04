@@ -1,15 +1,8 @@
 import { useState } from 'react'
 import type { OnboardingData } from '../types/onboarding'
+import { validarTextoLargo } from '../validators/onboarding'
 
 export type CampoPaso6 = 'millonDolares' | 'problemaResolver' | 'fraseRepresenta' | 'admiraEmprendedor' | 'mayorAprendizaje'
-
-const MIN = 15
-
-function validarCampo(_campo: CampoPaso6, valor: string): string {
-  if (!valor.trim()) return 'Este campo es requerido'
-  if (valor.trim().length < MIN) return `Mínimo ${MIN} caracteres (${valor.trim().length}/${MIN})`
-  return ''
-}
 
 export function useOnboardingPaso6() {
   const [errores, setErrores] = useState<Partial<Record<CampoPaso6, string>>>({})
@@ -17,7 +10,7 @@ export function useOnboardingPaso6() {
 
   function handleBlur(campo: CampoPaso6, valor: string) {
     setTocados((prev) => ({ ...prev, [campo]: true }))
-    setErrores((prev) => ({ ...prev, [campo]: validarCampo(campo, valor) }))
+    setErrores((prev) => ({ ...prev, [campo]: validarTextoLargo(valor) }))
   }
 
   function validarTodo(data: Pick<OnboardingData, CampoPaso6>): boolean {
@@ -26,7 +19,7 @@ export function useOnboardingPaso6() {
     let hayErrores = false
 
     for (const campo of campos) {
-      const msg = validarCampo(campo, data[campo])
+      const msg = validarTextoLargo(data[campo])
       if (msg) {
         nuevosErrores[campo] = msg
         hayErrores = true

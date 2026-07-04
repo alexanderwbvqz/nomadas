@@ -8,6 +8,7 @@ interface CampoInputProps {
   tipo?: 'text' | 'email' | 'tel' | 'password' | 'textarea'
   filas?: number
   requerido?: boolean
+  disabled?: boolean
   value: string
   onChange: (valor: string) => void
   onBlur?: () => void
@@ -20,6 +21,7 @@ export default function CampoInput({
   tipo = 'text',
   filas = 4,
   requerido = false,
+  disabled = false,
   value,
   onChange,
   onBlur,
@@ -54,6 +56,7 @@ export default function CampoInput({
             type={tipoReal}
             placeholder={placeholder}
             value={value}
+            disabled={disabled}
             onChange={(e) => onChange(e.target.value)}
             onBlur={onBlur}
           />

@@ -7,18 +7,19 @@ interface OpcionFiltro {
 }
 
 interface SelectFiltroProps {
-  icono: ReactNode
+  icono?: ReactNode
   valor: string
   opciones: OpcionFiltro[]
   onChange: (valor: string) => void
+  className?: string
 }
 
-export default function SelectFiltro({ icono, valor, opciones, onChange }: SelectFiltroProps) {
+export default function SelectFiltro({ icono, valor, opciones, onChange, className }: SelectFiltroProps) {
   return (
     <div className="select-filtro">
-      <span className="select-filtro__icono">{icono}</span>
+      {icono && <span className="select-filtro__icono">{icono}</span>}
       <select
-        className="select-filtro__select"
+        className={`select-filtro__select${icono ? '' : ' select-filtro__select--sin-icono'}${className ? ` ${className}` : ''}`}
         value={valor}
         onChange={(e) => onChange(e.target.value)}
       >

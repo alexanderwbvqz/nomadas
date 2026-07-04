@@ -3,41 +3,20 @@ import { useNavigate } from 'react-router-dom'
 import { Handshake } from 'lucide-react'
 import AppButton from '../../components/ui/boton/boton'
 import TarjetaAliado from '../../components/ui/tarjetaAliado/tarjetaAliado'
+import FiltroChips from '../../components/ui/filtroChips/filtroChips'
 import ModalAliado from '../../components/ui/modalAliado/modalAliado'
-import type { TipoAliado } from '../../components/ui/tarjetaAliado/tarjetaAliado.types'
-import { supabase } from '../../lib/supabase'
+import { useAliadosPublicos } from '../../hooks/useAliadosPublicos'
+import type { Aliado } from '../../types/admin'
 import './page.css'
 
-const FILTROS = ['Todos', 'Mentores', 'Universidad', 'Empresas']
-
-interface Aliado {
-  id: string
-  logo: string
-  nombre: string
-  descripcion: string
-  tipo: TipoAliado
-  linkedin?: string
-  instagram?: string
-  web?: string
-}
+const FILTROS = ['Todos', 'Mentores', 'Organizadores', 'Aliados Estratégicos']
 
 export default function AliadosPage() {
   useEffect(() => { document.title = 'Nómadas: Aliados' }, [])
   const navigate = useNavigate()
   const [filtroActivo, setFiltroActivo] = useState('Todos')
-  const [aliados, setAliados] = useState<Aliado[]>([])
+  const { aliados } = useAliadosPublicos()
   const [modalAliado, setModalAliado] = useState<Aliado | null>(null)
-
-  useEffect(() => {
-    supabase
-      .from('aliados')
-      .select('id, logo, nombre, descripcion, tipo, linkedin, instagram, web')
-      .eq('activo', true)
-      .order('created_at', { ascending: false })
-      .then(({ data }) => {
-        if (data) setAliados(data as Aliado[])
-      })
-  }, [])
 
   const aliadosFiltrados = filtroActivo === 'Todos'
     ? aliados
@@ -59,14 +38,7 @@ export default function AliadosPage() {
       </div>
 
       <div className="aliados__filtros">
-        {FILTROS.map((f) => (
-          <AppButton
-            key={f}
-            label={f}
-            variante={filtroActivo === f ? 'primario' : 'texto'}
-            onClick={() => setFiltroActivo(f)}
-          />
-        ))}
+        <FiltroChips opciones={FILTROS} activo={filtroActivo} onChange={setFiltroActivo} />
       </div>
 
       <div className="aliados__grid">

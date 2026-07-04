@@ -22,7 +22,7 @@ interface Props {
 export default function Paso7Tinder({ data, onChange, errores = {}, tocados = {}, onBlur }: Props) {
   return (
     <div>
-      <h1 className="paso__titulo">Preguntas Tinder</h1>
+      <h1 className="paso__titulo">Preguntas Match</h1>
       <p className="paso__subtitulo">Estas son las que generan conexión real.</p>
 
       {PREGUNTAS.map(({ campo, label, placeholder }) => (

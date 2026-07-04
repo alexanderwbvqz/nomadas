@@ -1,0 +1,30 @@
+.boton-agregar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1.5px dashed #D1D5DB;
+  border-radius: 999px;
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.boton-agregar:hover:not(:disabled) {
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.boton-agregar:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.boton-agregar--full {
+  width: 100%;
+  justify-content: center;
+}

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LogOut, Users, Handshake } from 'lucide-react'
+import { LogOut, Users, Handshake, CalendarCheck } from 'lucide-react'
 import { useAdminAuth } from '../../../hooks/useAdminAuth'
 import AppButton from '../../../components/ui/boton/boton'
 import './adminLayout.css'
@@ -50,6 +50,13 @@ export default function AdminLayout() {
         >
           <Handshake size={15} />
           <span>Aliados</span>
+        </NavLink>
+        <NavLink
+          to="/admin/panel/asistencia"
+          className={({ isActive }) => `admin-layout__tab${isActive ? ' admin-layout__tab--activo' : ''}`}
+        >
+          <CalendarCheck size={15} />
+          <span>Asistencia</span>
         </NavLink>
       </nav>
 

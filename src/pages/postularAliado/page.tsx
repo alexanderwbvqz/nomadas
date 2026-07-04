@@ -96,7 +96,7 @@ export default function PostularAliadoPage() {
           <div className="postular-aliado__campo">
             <label className="postular-aliado__label">Tipo de aliado <span className="postular-aliado__requerido">*</span></label>
             <div className={`postular-aliado__tipos${tocados.tipo && errores.tipo ? ' postular-aliado__tipos--error' : ''}`}>
-              {(['Mentores', 'Universidad', 'Empresas'] as TipoAliado[]).map((t) => (
+              {(['Mentores', 'Organizadores', 'Aliados Estratégicos'] as TipoAliado[]).map((t) => (
                 <button
                   key={t}
                   type="button"

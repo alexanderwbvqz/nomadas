@@ -4,9 +4,9 @@ import Overlay from '../overlay/overlay'
 import './modalAliado.css'
 
 const BADGE_CLASE: Record<string, string> = {
-  'Mentores':    'modal-aliado__badge--mentoria',
-  'Universidad': 'modal-aliado__badge--educacion',
-  'Empresas':    'modal-aliado__badge--financiamiento',
+  'Mentores':             'modal-aliado__badge--mentoria',
+  'Organizadores':        'modal-aliado__badge--educacion',
+  'Aliados Estratégicos': 'modal-aliado__badge--financiamiento',
 }
 
 function IconLinkedin() {

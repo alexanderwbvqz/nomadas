@@ -35,6 +35,10 @@
   border-color: #6366F1;
 }
 
+.select-filtro__select--sin-icono {
+  padding-left: 12px;
+}
+
 @media (max-width: 768px) {
   .select-filtro {
     width: 100%;

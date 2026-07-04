@@ -17,14 +17,7 @@
   }
 
   .aliados__filtros {
-    flex-wrap: wrap;
-    gap: 8px;
     margin-top: 32px;
-  }
-
-  .aliados__filtros .app-btn {
-    font-size: 13px !important;
-    padding: 0 14px !important;
   }
 }
 
@@ -118,25 +111,8 @@
 
 .aliados__filtros {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
-  gap: 4px;
   margin-top: 48px;
-}
-
-.aliados__filtros .app-btn {
-  height: 36px !important;
-  padding: 0 18px !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  font-size: 14px !important;
-  border-radius: 999px !important;
-  box-shadow: none !important;
-}
-
-.aliados__filtros .app-btn--naranja {
-  box-shadow: 0 2px 10px rgba(245, 166, 35, 0.25) !important;
 }
 
 .aliados__descripcion {

@@ -2,6 +2,10 @@ export function buildMatchUrl(codigo: string) {
   return `https://somosnomadas.vercel.app/match/${codigo}`
 }
 
+export function buildEventoUrl(eventoId: string) {
+  return `https://somosnomadas.vercel.app/evento/${eventoId}/registrar`
+}
+
 export function descargarQRComoPNG(svgContainer: HTMLElement, nombre: string) {
   const svg = svgContainer.querySelector('svg')
   if (!svg) return

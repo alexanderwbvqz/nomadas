@@ -1,4 +1,4 @@
-export type TipoAliado = 'Mentores' | 'Universidad' | 'Empresas'
+export type TipoAliado = 'Mentores' | 'Organizadores' | 'Aliados Estratégicos'
 
 export interface TarjetaAliadoProps {
   logo: string

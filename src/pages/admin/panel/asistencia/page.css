@@ -1,0 +1,155 @@
+.admin-asistencia {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.admin-asistencia__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-asistencia__selector-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-asistencia__select-evento {
+  height: 40px;
+  padding: 0 14px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #0a0a0f;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  min-width: 220px;
+}
+
+.admin-asistencia__estado-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.admin-asistencia__estado-badge--activo {
+  background: #DCFCE7;
+  color: #16A34A;
+}
+
+.admin-asistencia__estado-badge--finalizado {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.admin-asistencia__acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.admin-asistencia__filtros {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-asistencia__contadores {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 400px;
+}
+
+
+.admin-asistencia__cargando {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: rgba(10, 10, 15, 0.45);
+  text-align: center;
+  padding: 40px 0;
+}
+
+.admin-asistencia__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #0a0a0f;
+  margin: 0;
+}
+
+.admin-asistencia__sin-eventos {
+  text-align: center;
+  padding: 80px 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: rgba(10, 10, 15, 0.35);
+}
+
+.admin-asistencia__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-asistencia__volver {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1.5px solid #E5E7EB;
+  background: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(10, 10, 15, 0.6);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.admin-asistencia__volver:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.admin-asistencia__evento-nombre-detalle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #111827;
+  margin: 0 0 2px;
+}
+
+.admin-asistencia__evento-fecha-detalle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #9CA3AF;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .admin-asistencia {
+    padding: 16px;
+  }
+
+  .admin-asistencia__cabecera {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

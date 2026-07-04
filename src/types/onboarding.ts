@@ -9,13 +9,20 @@ export interface ResultadoPerfil {
   busca: string[]
 }
 
+export interface RedSocial {
+  red: 'linkedin' | 'facebook' | 'instagram'
+  url: string
+}
+
 export interface OnboardingData {
   // Paso 1
   nombre: string
   ocupacion: Ocupacion | ''
+  ocupacionCategoria: Ocupacion | ''
   foto: string
   whatsapp: string
   email: string
+  redes: RedSocial[]
   // Paso 2
   pasiones: string[]
   // Paso 3
@@ -23,6 +30,8 @@ export interface OnboardingData {
   tieneIdea: TieneIdea | ''
   ideaFrase: string
   ideasFrases: string[]
+  tieneEmprendimiento: 'Sí' | 'No' | ''
+  detalleEmprendimiento: string
   // Paso 4
   superpoderes: string[]
   // Paso 5

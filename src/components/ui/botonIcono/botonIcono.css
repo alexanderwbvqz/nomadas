@@ -1,0 +1,24 @@
+.boton-icono {
+  flex-shrink: 0;
+  width: 36px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  background: transparent;
+  color: #9CA3AF;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.boton-icono--peligro:hover {
+  border-color: #EF4444;
+  color: #EF4444;
+}
+
+.boton-icono--default:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+}
