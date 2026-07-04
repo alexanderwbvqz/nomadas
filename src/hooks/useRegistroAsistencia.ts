@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getEventoPublico, registrarAsistenciaPublica } from '../api/asistencia'
-import type { TipoResultado } from '../api/asistencia'
-import type { Evento } from '../types/asistencia'
+import type { TipoResultado, Evento } from '../types/asistencia'
 
 type Estado = 'idle' | 'cargando' | TipoResultado | 'finalizado' | 'error'
 

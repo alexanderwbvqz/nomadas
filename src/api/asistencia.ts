@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import type { Evento, AsistenciaNomada } from '../types/asistencia'
+import type { Evento, AsistenciaNomada, ResultadoRegistro, TipoResultado } from '../types/asistencia'
 
 export async function getEventos(): Promise<Evento[]> {
   const { data } = await supabase
@@ -83,9 +83,6 @@ export async function getEventoPublico(id: string): Promise<Evento | null> {
   if (!data) return null
   return { id: data.id, nombre: data.nombre, fecha: data.fecha, estado: data.estado, createdAt: data.created_at }
 }
-
-export type TipoResultado = 'registrado' | 'ya_registrado' | 'por_aprobar' | 'rechazado' | 'no_encontrado'
-export type ResultadoRegistro = { tipo: TipoResultado; nombre: string }
 
 export async function registrarAsistenciaPublica(
   eventoId: string,
