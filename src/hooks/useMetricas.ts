@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
+import { getMetricas } from '../api/metricas'
 
 interface Metricas {
   nomadas: number
@@ -11,15 +11,10 @@ export function useMetricas(): Metricas {
   const [aliados, setAliados] = useState(0)
 
   useEffect(() => {
-    async function cargar() {
-      const [perfiles, aliadosRes] = await Promise.all([
-        supabase.from('perfiles_datos').select('id').eq('aprobado', true),
-        supabase.from('aliados').select('id').eq('activo', true),
-      ])
-      setNomadas(perfiles.data?.length ?? 0)
-      setAliados(aliadosRes.data?.length ?? 0)
-    }
-    cargar()
+    getMetricas().then(({ nomadas, aliados }) => {
+      setNomadas(nomadas)
+      setAliados(aliados)
+    })
   }, [])
 
   return { nomadas, aliados }

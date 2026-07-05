@@ -34,25 +34,26 @@ export default function PantallaCeoPage() {
       {/* SALA DE ESPERA */}
       {sesion.estado === 'espera' && (
         <div className="pantalla-ceo__espera">
-          <div className="pantalla-ceo__espera-contenido">
-            <h1 className="pantalla-ceo__titulo-juego">{dinamica.nombre}</h1>
+          <div className="pantalla-ceo__espera-top">
             <p className="pantalla-ceo__evento-nombre">{sesion.eventoNombre}</p>
+            <h1 className="pantalla-ceo__titulo-juego">{dinamica.nombre}</h1>
+          </div>
 
-            <div className="pantalla-ceo__qr-bloque">
+          <div className="pantalla-ceo__espera-centro">
+            <div className="pantalla-ceo__qr-glow">
               <div className="pantalla-ceo__qr-caja">
-                <QRCode value={jugadorUrl} size={220} />
-              </div>
-              <div className="pantalla-ceo__qr-info">
-                <p className="pantalla-ceo__qr-label">Escanea para jugar</p>
-                <p className="pantalla-ceo__qr-url">{jugadorUrl}</p>
+                <QRCode value={jugadorUrl} size={260} />
               </div>
             </div>
+            <p className="pantalla-ceo__qr-instruccion">Escanea para unirte</p>
+            <div className="pantalla-ceo__url-pill">{jugadorUrl}</div>
+          </div>
 
+          <div className="pantalla-ceo__espera-bottom">
             <div className="pantalla-ceo__jugadores-contador">
               <span className="pantalla-ceo__jugadores-numero">{jugadoresEnSala}</span>
               <span className="pantalla-ceo__jugadores-label">jugadores en sala</span>
             </div>
-
             <button className="pantalla-ceo__btn-iniciar" onClick={iniciarJuego}>
               Iniciar juego
             </button>

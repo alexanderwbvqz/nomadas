@@ -1,4 +1,4 @@
-import type { TipoAliado } from '../tarjetaAliado/tarjetaAliado.types'
+import type { TipoAliado } from '../../../types/admin'
 
 export interface ModalAliadoProps {
   logo: string

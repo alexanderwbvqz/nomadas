@@ -105,29 +105,6 @@
   gap: 10px;
 }
 
-.admin-asistencia__volver {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 34px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1.5px solid #E5E7EB;
-  background: #ffffff;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(10, 10, 15, 0.6);
-  cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
-  flex-shrink: 0;
-}
-
-.admin-asistencia__volver:hover {
-  border-color: #6366F1;
-  color: #6366F1;
-}
-
 .admin-asistencia__evento-nombre-detalle {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;

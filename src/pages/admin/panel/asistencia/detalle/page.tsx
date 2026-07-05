@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, QrCode, CheckSquare } from 'lucide-react'
+import { QrCode, CheckSquare } from 'lucide-react'
 import { useAsistencia } from '../../../../../hooks/useAsistencia'
 import { useInscritos } from '../../../../../hooks/useInscritos'
 import { buildEventoUrl } from '../../../../../utils/qr'
@@ -10,6 +10,7 @@ import ModalQR from '../../../../../components/ui/modalQR/modalQR'
 import ModalVerInscripcion from '../../../../../components/ui/modalVerInscripcion/modalVerInscripcion'
 import CampoInput from '../../../../../components/ui/campoInput/campoInput'
 import TablaAsistencia from '../../../../../components/ui/tablaAsistencia/tablaAsistencia'
+import BotonVolver from '../../../../../components/ui/botonVolver/botonVolver'
 import '../page.css'
 
 export default function AdminAsistenciaDetallePage() {
@@ -37,9 +38,7 @@ export default function AdminAsistenciaDetallePage() {
     <main className="admin-asistencia">
       <div className="admin-asistencia__cabecera">
         <div className="admin-asistencia__selector-wrap">
-          <button className="admin-asistencia__volver" onClick={() => navigate('/admin/panel/asistencia')}>
-            <ArrowLeft size={16} /> Eventos
-          </button>
+          <BotonVolver label="Eventos" onClick={() => navigate('/admin/panel/asistencia')} />
           <div>
             <p className="admin-asistencia__evento-nombre-detalle">{evento?.nombre}</p>
             <p className="admin-asistencia__evento-fecha-detalle">

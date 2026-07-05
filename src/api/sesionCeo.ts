@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import type { SesionCeo, EstadoSesion, ResultadoJugador } from '../types/sesionCeo'
+import type { SesionCeo, EstadoSesion, ResultadoJugador, RespuestaDetalle } from '../types/sesionCeo'
 
 export async function getSesionesCeo(): Promise<SesionCeo[]> {
   const { data } = await supabase
@@ -172,8 +172,103 @@ export async function getResultados(sesionId: string): Promise<ResultadoJugador[
   return Array.from(mapa.values()).sort((a, b) => b.puntaje - a.puntaje)
 }
 
+export async function getResultadosDetalle(sesionId: string): Promise<ResultadoJugador[]> {
+  const [{ data: jugadores }, { data: respuestas }] = await Promise.all([
+    supabase
+      .from('jugadores_ceo')
+      .select(`perfil_id, confirmado, perfiles_datos(nombre, perfil_resultado(categoria))`)
+      .eq('sesion_id', sesionId),
+    supabase
+      .from('respuestas_ceo')
+      .select('perfil_id, peso')
+      .eq('sesion_id', sesionId),
+  ])
+
+  if (!jugadores) return []
+
+  const puntajes = new Map<string, number>()
+  for (const r of respuestas ?? []) {
+    puntajes.set(r.perfil_id, (puntajes.get(r.perfil_id) ?? 0) + Number(r.peso))
+  }
+
+  return jugadores
+    .map((j) => {
+      const p = j.perfiles_datos as any
+      return {
+        perfilId: j.perfil_id,
+        nombre: p?.nombre ?? '',
+        categoria: p?.perfil_resultado?.[0]?.categoria ?? '',
+        puntaje: puntajes.get(j.perfil_id) ?? 0,
+        confirmado: j.confirmado ?? null,
+      }
+    })
+    .sort((a, b) => b.puntaje - a.puntaje)
+}
+
+export async function getRespuestasJugador(sesionId: string, perfilId: string): Promise<RespuestaDetalle[]> {
+  const { data } = await supabase
+    .from('respuestas_ceo')
+    .select(`
+      preguntas_dinamica(texto),
+      opciones_pregunta(texto)
+    `)
+    .eq('sesion_id', sesionId)
+    .eq('perfil_id', perfilId)
+
+  if (!data) return []
+
+  return data.map((r) => ({
+    preguntaTexto: (r.preguntas_dinamica as any)?.texto ?? '',
+    opcionTexto: (r.opciones_pregunta as any)?.texto ?? '',
+  }))
+}
+
+export async function confirmarJugador(sesionId: string, perfilId: string, confirmado: boolean | null): Promise<void> {
+  await supabase
+    .from('jugadores_ceo')
+    .update({ confirmado })
+    .eq('sesion_id', sesionId)
+    .eq('perfil_id', perfilId)
+}
+
 export async function enviarCorreosSesion(sesionId: string, eventoId: string, url: string): Promise<void> {
   await supabase.functions.invoke('enviar-correo', {
     body: { tipo: 'ceo_invitacion', sesionId, eventoId, url },
   })
+}
+
+export function suscribirJugadorCeo(sesionId: string, onChange: (s: any) => void): () => void {
+  const canal = supabase
+    .channel(`jugador-ceo-${sesionId}`)
+    .on('postgres_changes', {
+      event: 'UPDATE',
+      schema: 'public',
+      table: 'sesiones_ceo',
+      filter: `id=eq.${sesionId}`,
+    }, (payload) => onChange(payload.new))
+    .subscribe()
+  return () => supabase.removeChannel(canal)
+}
+
+export function suscribirPantallaCeo(
+  sesionId: string,
+  onSesionChange: (s: any) => void,
+  onJugadorNuevo: () => void,
+): () => void {
+  const canal = supabase
+    .channel(`pantalla-ceo-${sesionId}`)
+    .on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'sesiones_ceo',
+      filter: `id=eq.${sesionId}`,
+    }, (payload) => onSesionChange(payload.new))
+    .on('postgres_changes', {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'jugadores_ceo',
+      filter: `sesion_id=eq.${sesionId}`,
+    }, () => onJugadorNuevo())
+    .subscribe()
+  return () => supabase.removeChannel(canal)
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
-import { getSesionCeo, unirseComoJugador, registrarRespuesta } from '../api/sesionCeo'
+import { getSesionCeo, unirseComoJugador, registrarRespuesta, suscribirJugadorCeo } from '../api/sesionCeo'
 import { getDinamica } from '../api/dinamicas'
 import type { SesionCeo, EstadoJugador } from '../types/sesionCeo'
 import type { Dinamica } from '../types/dinamicas'
@@ -22,44 +21,19 @@ export function useJugadorCeo(sesionId: string) {
       setDinamica(d)
     })
 
-    const canal = supabase
-      .channel(`jugador-ceo-${sesionId}`)
-      .on('postgres_changes', {
-        event: 'UPDATE',
-        schema: 'public',
-        table: 'sesiones_ceo',
-        filter: `id=eq.${sesionId}`,
-      }, (payload) => {
-        const s = payload.new as any
-        setSesion((prev) => prev ? {
-          ...prev,
-          estado: s.estado,
-          preguntaActual: s.pregunta_actual,
-        } : prev)
-        if (s.estado === 'en_curso') setRespondido(false)
-        if (s.estado === 'finalizado') setEstado('finalizado')
-        if (s.estado === 'finalizando') setEstado('finalizando')
-      })
-      .subscribe()
-
-    return () => { supabase.removeChannel(canal) }
+    return suscribirJugadorCeo(sesionId, (s) => {
+      setSesion((prev) => prev ? { ...prev, estado: s.estado, preguntaActual: s.pregunta_actual } : prev)
+      if (s.estado === 'en_curso') { setEstado('en_curso'); setRespondido(false) }
+      if (s.estado === 'finalizando') setEstado('finalizando')
+      if (s.estado === 'finalizado') setEstado('finalizado')
+    })
   }, [sesionId])
-
-  useEffect(() => {
-    if (!sesion) return
-    if (estado === 'espera' && sesion.estado === 'en_curso') setEstado('en_curso')
-    if (estado === 'en_curso' && sesion.estado === 'finalizando') setEstado('finalizando')
-    if (estado === 'en_curso' && sesion.estado === 'finalizado') setEstado('finalizado')
-  }, [sesion?.estado])
 
   async function unirse() {
     if (!whatsapp.trim()) return
     setEstado('cargando')
     const resultado = await unirseComoJugador(sesionId, whatsapp.trim())
-    if (!resultado.ok) {
-      setEstado(resultado.error as EstadoJugador)
-      return
-    }
+    if (!resultado.ok) { setEstado(resultado.error as EstadoJugador); return }
     setPerfilId(resultado.perfilId ?? null)
     setEstado(sesion?.estado === 'en_curso' ? 'en_curso' : 'espera')
   }
@@ -72,16 +46,5 @@ export function useJugadorCeo(sesionId: string) {
 
   const preguntaActual = dinamica?.preguntas[sesion?.preguntaActual ?? 0] ?? null
 
-  return {
-    estado,
-    whatsapp,
-    setWhatsapp,
-    sesion,
-    dinamica,
-    preguntaActual,
-    perfilId,
-    respondido,
-    unirse,
-    responder,
-  }
+  return { estado, whatsapp, setWhatsapp, sesion, dinamica, preguntaActual, perfilId, respondido, unirse, responder }
 }

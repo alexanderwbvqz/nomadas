@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Briefcase, Zap, MessageSquare } from 'lucide-react'
+import { Briefcase, Zap, MessageSquare, Sparkles } from 'lucide-react'
 import type { MatchPerfil } from '../../../hooks/useMatchPerfil'
 import BotonExpandir from '../botonExpandir/botonExpandir'
 import './tarjetaMatch.css'
@@ -60,7 +60,7 @@ export default function TarjetaMatch({ perfil, posicion }: TarjetaMatchProps) {
       {/* Barra de afinidad */}
       <div className="tarjeta-match__barra-wrap">
         <div className="tarjeta-match__barra">
-          <div className="tarjeta-match__barra-fill" style={{ width: `${perfil.afinidad}%` }} />
+          <div className="tarjeta-match__barra-fill" style={{ '--fill': `${perfil.afinidad}%` } as React.CSSProperties} />
         </div>
       </div>
 
@@ -79,7 +79,7 @@ export default function TarjetaMatch({ perfil, posicion }: TarjetaMatchProps) {
                 <div className="tarjeta-match__dimension-barra">
                   <div
                     className="tarjeta-match__dimension-barra-fill"
-                    style={{ width: `${(d.valor / d.max) * 100}%` }}
+                    style={{ '--fill': `${(d.valor / d.max) * 100}%` } as React.CSSProperties}
                   />
                 </div>
                 <span className="tarjeta-match__dimension-valor">{d.valor}</span>
@@ -92,7 +92,8 @@ export default function TarjetaMatch({ perfil, posicion }: TarjetaMatchProps) {
         {perfil.pasiones.length > 0 && (
           <div className="tarjeta-match__seccion">
             <p className="tarjeta-match__seccion-label">
-              ✦ ¿Por qué hacen match?
+              <Sparkles size={12} />
+              ¿Por qué hacen match?
             </p>
             <ul className="tarjeta-match__lista">
               {perfil.pasiones.map((p, i) => (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { getAliadosPublicos } from '../api/aliados'
 import type { Aliado } from '../types/admin'
 
 export function useAliadosPublicos() {
@@ -7,15 +7,10 @@ export function useAliadosPublicos() {
   const [cargando, setCargando] = useState(true)
 
   useEffect(() => {
-    supabase
-      .from('aliados')
-      .select('id, logo, nombre, descripcion, tipo, linkedin, instagram, web')
-      .eq('activo', true)
-      .order('created_at', { ascending: false })
-      .then(({ data }) => {
-        if (data) setAliados(data as Aliado[])
-        setCargando(false)
-      })
+    getAliadosPublicos().then((data) => {
+      setAliados(data)
+      setCargando(false)
+    })
   }, [])
 
   return { aliados, cargando }

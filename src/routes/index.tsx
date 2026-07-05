@@ -12,6 +12,7 @@ import AdminAsistenciaPage from '../pages/admin/panel/asistencia/page'
 import AdminAsistenciaDetallePage from '../pages/admin/panel/asistencia/detalle/page'
 import AdminDinamicasPage from '../pages/admin/panel/dinamicas/page'
 import AdminCeoPage from '../pages/admin/panel/ceo/page'
+import AdminCeoDetallePage from '../pages/admin/panel/ceo/detalle/page'
 import PantallaCeoPage from '../pages/ceo/pantalla/page'
 import JugadorCeoPage from '../pages/ceo/jugador/page'
 import PostularAliadoPage from '../pages/postularAliado/page'
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       { path: 'asistencia/:eventoId', element: <AdminAsistenciaDetallePage /> },
       { path: 'dinamicas', element: <AdminDinamicasPage /> },
       { path: 'ceo', element: <AdminCeoPage /> },
+      { path: 'ceo/:sesionId', element: <AdminCeoDetallePage /> },
     ],
   },
   { path: '/ceo/pantalla/:sesionId', element: <PantallaCeoPage /> },

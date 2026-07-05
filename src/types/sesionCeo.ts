@@ -23,6 +23,12 @@ export interface ResultadoJugador {
   nombre: string
   categoria: string
   puntaje: number
+  confirmado: boolean | null
+}
+
+export interface RespuestaDetalle {
+  preguntaTexto: string
+  opcionTexto: string
 }
 
 export type EstadoJugador =

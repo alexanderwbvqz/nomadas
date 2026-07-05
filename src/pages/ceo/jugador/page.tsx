@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { Trophy, Loader2, Clock, CheckCircle, PartyPopper } from 'lucide-react'
 import { useJugadorCeo } from '../../../hooks/useJugadorCeo'
 import './page.css'
 
@@ -22,33 +23,42 @@ export default function JugadorCeoPage() {
 
   return (
     <div className="jugador-ceo">
-      {/* ENTRADA — escribir WhatsApp */}
+      {/* ENTRADA */}
       {(estado === 'idle' || estado === 'cargando' || estado in MENSAJES_ERROR) && (
         <div className="jugador-ceo__entrada">
-          <div className="jugador-ceo__logo">
-            <span>🏆</span>
+          <div className="jugador-ceo__icono-principal">
+            <Trophy size={36} strokeWidth={1.5} />
           </div>
-          <h1 className="jugador-ceo__titulo">¿Quién será el CEO?</h1>
-          <p className="jugador-ceo__subtitulo">Ingresa tu número de WhatsApp para participar</p>
+          <div className="jugador-ceo__encabezado">
+            <h1 className="jugador-ceo__titulo">¿Quién será el CEO?</h1>
+            <p className="jugador-ceo__subtitulo">Ingresa tu WhatsApp para participar</p>
+          </div>
 
           <form className="jugador-ceo__form" onSubmit={handleUnirse}>
-            <input
-              type="tel"
-              className="jugador-ceo__input"
-              placeholder="Ej: 0987654321"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-              disabled={estado === 'cargando'}
-            />
-            {MENSAJES_ERROR[estado] && (
-              <p className="jugador-ceo__error">{MENSAJES_ERROR[estado]}</p>
-            )}
+            <div className="jugador-ceo__campo">
+              <label className="jugador-ceo__label">Número de WhatsApp</label>
+              <input
+                type="tel"
+                className="jugador-ceo__input"
+                placeholder="0987654321"
+                value={whatsapp}
+                onChange={(e) => setWhatsapp(e.target.value)}
+                disabled={estado === 'cargando'}
+                autoFocus
+              />
+              {MENSAJES_ERROR[estado] && (
+                <p className="jugador-ceo__error">{MENSAJES_ERROR[estado]}</p>
+              )}
+            </div>
             <button
               type="submit"
               className="jugador-ceo__btn-entrar"
               disabled={!whatsapp.trim() || estado === 'cargando'}
             >
-              {estado === 'cargando' ? 'Verificando...' : 'Entrar al juego'}
+              {estado === 'cargando'
+                ? <><Loader2 size={18} className="jugador-ceo__spinner" /> Verificando...</>
+                : 'Entrar al juego'
+              }
             </button>
           </form>
         </div>
@@ -56,26 +66,30 @@ export default function JugadorCeoPage() {
 
       {/* SALA DE ESPERA */}
       {estado === 'espera' && (
-        <div className="jugador-ceo__espera">
-          <div className="jugador-ceo__espera-icono">⏳</div>
-          <h2 className="jugador-ceo__espera-titulo">¡Estás dentro!</h2>
-          <p className="jugador-ceo__espera-texto">El juego comenzará pronto...</p>
-          <div className="jugador-ceo__pulse" />
+        <div className="jugador-ceo__estado-pantalla">
+          <div className="jugador-ceo__estado-icono jugador-ceo__estado-icono--espera">
+            <Clock size={32} strokeWidth={1.5} />
+          </div>
+          <h2 className="jugador-ceo__estado-titulo">¡Estás dentro!</h2>
+          <p className="jugador-ceo__estado-texto">El juego comenzará en cualquier momento</p>
+          <div className="jugador-ceo__dots">
+            <span /><span /><span />
+          </div>
         </div>
       )}
 
-      {/* EN CURSO — responder pregunta */}
+      {/* EN CURSO */}
       {estado === 'en_curso' && preguntaActual && (
         <div className="jugador-ceo__juego">
-          <p className="jugador-ceo__pregunta-numero">
+          <p className="jugador-ceo__pregunta-eyebrow">
             Pregunta {(sesion?.preguntaActual ?? 0) + 1}
           </p>
           <h2 className="jugador-ceo__pregunta-texto">{preguntaActual.texto}</h2>
 
           {respondido ? (
             <div className="jugador-ceo__respondido">
-              <span className="jugador-ceo__respondido-icono">✓</span>
-              <p>¡Respuesta enviada!</p>
+              <CheckCircle size={40} strokeWidth={1.5} className="jugador-ceo__respondido-icono" />
+              <p>Respuesta enviada</p>
             </div>
           ) : (
             <div className="jugador-ceo__opciones">
@@ -96,30 +110,34 @@ export default function JugadorCeoPage() {
 
       {/* ENTRE PREGUNTAS */}
       {estado === 'en_curso' && !preguntaActual && (
-        <div className="jugador-ceo__espera">
-          <div className="jugador-ceo__espera-icono">⚡</div>
-          <h2 className="jugador-ceo__espera-titulo">¡Bien hecho!</h2>
-          <p className="jugador-ceo__espera-texto">Siguiente pregunta en un momento...</p>
+        <div className="jugador-ceo__estado-pantalla">
+          <div className="jugador-ceo__estado-icono jugador-ceo__estado-icono--espera">
+            <Clock size={32} strokeWidth={1.5} />
+          </div>
+          <h2 className="jugador-ceo__estado-titulo">Siguiente pregunta</h2>
+          <p className="jugador-ceo__estado-texto">Prepárate...</p>
         </div>
       )}
 
       {/* FINALIZANDO */}
       {estado === 'finalizando' && (
-        <div className="jugador-ceo__espera">
-          <div className="jugador-ceo__espera-icono">🎉</div>
-          <h2 className="jugador-ceo__espera-titulo">¡Terminaste!</h2>
-          <p className="jugador-ceo__espera-texto">Espera los resultados en la pantalla principal...</p>
+        <div className="jugador-ceo__estado-pantalla">
+          <div className="jugador-ceo__estado-icono jugador-ceo__estado-icono--fin">
+            <Trophy size={32} strokeWidth={1.5} />
+          </div>
+          <h2 className="jugador-ceo__estado-titulo">¡Terminaste!</h2>
+          <p className="jugador-ceo__estado-texto">Los resultados aparecerán en la pantalla principal</p>
         </div>
       )}
 
       {/* FINALIZADO */}
       {estado === 'finalizado' && (
-        <div className="jugador-ceo__gracias">
-          <div className="jugador-ceo__gracias-icono">🏆</div>
-          <h2 className="jugador-ceo__gracias-titulo">¡Gracias por participar!</h2>
-          <p className="jugador-ceo__gracias-texto">
-            Los resultados están en la pantalla principal. ¡Descubre si eres el CEO!
-          </p>
+        <div className="jugador-ceo__estado-pantalla">
+          <div className="jugador-ceo__estado-icono jugador-ceo__estado-icono--gracias">
+            <PartyPopper size={32} strokeWidth={1.5} />
+          </div>
+          <h2 className="jugador-ceo__estado-titulo">Gracias por participar</h2>
+          <p className="jugador-ceo__estado-texto">Mira la pantalla principal para ver los resultados</p>
         </div>
       )}
     </div>

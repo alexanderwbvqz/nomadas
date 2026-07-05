@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
 import type { OnboardingData, ResultadoPerfil } from '../../types/onboarding'
-import { analizarPerfil } from '../../api/perfiles'
-import { enviarCorreoRegistro } from '../../api/correos'
+import { useOnboarding } from '../../hooks/useOnboarding'
 import { useOnboardingPaso1 } from '../../hooks/useOnboardingPaso1'
 
 import { useOnboardingPaso6 } from '../../hooks/useOnboardingPaso6'
@@ -64,6 +63,7 @@ export default function OnboardingPage() {
   const [guardando, setGuardando] = useState(false)
   const [mostrarBienvenida, setMostrarBienvenida] = useState(false)
   const navigate = useNavigate()
+  const { guardar } = useOnboarding()
   const paso1 = useOnboardingPaso1()
   const paso6 = useOnboardingPaso6()
 
@@ -88,14 +88,12 @@ export default function OnboardingPage() {
 
     setGuardando(true)
 
-    const perfil = await analizarPerfil(data)
+    const perfil = await guardar(data)
 
     if (!perfil) {
       setGuardando(false)
       return
     }
-
-    enviarCorreoRegistro(data.nombre, data.email)
 
     setGuardando(false)
     setResultado(perfil)

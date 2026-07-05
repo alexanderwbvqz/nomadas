@@ -1,42 +1,61 @@
 .jugador-ceo {
   min-height: 100vh;
-  background: #0a0a1a;
+  background: #08081a;
+  background-image: radial-gradient(ellipse 100% 50% at 50% 0%, rgba(99,102,241,0.14) 0%, transparent 65%);
   color: #ffffff;
   font-family: 'Plus Jakarta Sans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px 24px;
 }
 
-/* ENTRADA */
+/* ── ENTRADA ── */
+
 .jugador-ceo__entrada {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 28px;
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
+}
+
+.jugador-ceo__icono-principal {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A5B4FC;
+}
+
+.jugador-ceo__encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   text-align: center;
 }
 
-.jugador-ceo__logo {
-  font-size: 64px;
-  line-height: 1;
-}
-
 .jugador-ceo__titulo {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   color: #ffffff;
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .jugador-ceo__subtitulo {
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
   margin: 0;
 }
+
+/* FORM */
 
 .jugador-ceo__form {
   display: flex;
@@ -45,32 +64,52 @@
   width: 100%;
 }
 
+.jugador-ceo__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jugador-ceo__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .jugador-ceo__input {
   height: 52px;
   padding: 0 18px;
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 500;
   outline: none;
-  transition: border-color 0.15s;
-  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
 }
 
 .jugador-ceo__input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.2);
 }
 
 .jugador-ceo__input:focus {
   border-color: #6366F1;
+  background: rgba(99, 102, 241, 0.07);
+}
+
+.jugador-ceo__input:disabled {
+  opacity: 0.5;
 }
 
 .jugador-ceo__error {
   font-size: 13px;
   color: #F87171;
   margin: 0;
+  padding: 0 2px;
 }
 
 .jugador-ceo__btn-entrar {
@@ -78,133 +117,188 @@
   background: #6366F1;
   color: #ffffff;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   border: none;
   border-radius: 14px;
   cursor: pointer;
-  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.35);
+  margin-top: 4px;
 }
 
 .jugador-ceo__btn-entrar:hover:not(:disabled) {
   background: #4F46E5;
+  transform: translateY(-1px);
 }
 
 .jugador-ceo__btn-entrar:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
-/* ESPERA */
-.jugador-ceo__espera {
+.jugador-ceo__spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── ESTADOS (espera, fin, gracias) ── */
+
+.jugador-ceo__estado-pantalla {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   text-align: center;
+  max-width: 340px;
 }
 
-.jugador-ceo__espera-icono {
-  font-size: 72px;
-  line-height: 1;
+.jugador-ceo__estado-icono {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
 }
 
-.jugador-ceo__espera-titulo {
-  font-size: 28px;
+.jugador-ceo__estado-icono--espera {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: #818CF8;
+}
+
+.jugador-ceo__estado-icono--fin {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: #A5B4FC;
+}
+
+.jugador-ceo__estado-icono--gracias {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #86EFAC;
+}
+
+.jugador-ceo__estado-titulo {
+  font-size: 24px;
   font-weight: 800;
   color: #ffffff;
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
-.jugador-ceo__espera-texto {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.55);
+.jugador-ceo__estado-texto {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.45);
   margin: 0;
+  line-height: 1.5;
 }
 
-.jugador-ceo__pulse {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #6366F1;
-  animation: pulse 1.5s infinite;
+.jugador-ceo__dots {
+  display: flex;
+  gap: 8px;
   margin-top: 8px;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.6; }
+.jugador-ceo__dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6366F1;
+  opacity: 0.4;
+  animation: dot-pulse 1.4s ease-in-out infinite;
 }
 
-/* JUEGO */
+.jugador-ceo__dots span:nth-child(2) { animation-delay: 0.2s; }
+.jugador-ceo__dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-pulse {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.9); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* ── JUEGO: responder ── */
+
 .jugador-ceo__juego {
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
 }
 
-.jugador-ceo__pregunta-numero {
-  font-size: 13px;
-  font-weight: 600;
+.jugador-ceo__pregunta-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
   color: #818CF8;
   text-align: center;
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .jugador-ceo__pregunta-texto {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: #ffffff;
   text-align: center;
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .jugador-ceo__opciones {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .jugador-ceo__opcion {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px 20px;
+  padding: 16px 18px;
   border: none;
   border-radius: 14px;
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #ffffff;
   text-align: left;
-  transition: transform 0.1s, opacity 0.1s;
+  transition: transform 0.1s, filter 0.1s;
 }
 
 .jugador-ceo__opcion:active {
   transform: scale(0.97);
+  filter: brightness(0.9);
 }
 
-.jugador-ceo__opcion--0 { background: #EF4444; }
-.jugador-ceo__opcion--1 { background: #3B82F6; }
-.jugador-ceo__opcion--2 { background: #22C55E; }
-.jugador-ceo__opcion--3 { background: #F59E0B; }
+.jugador-ceo__opcion--0 { background: #DC2626; }
+.jugador-ceo__opcion--1 { background: #2563EB; }
+.jugador-ceo__opcion--2 { background: #16A34A; }
+.jugador-ceo__opcion--3 { background: #D97706; }
 
 .jugador-ceo__opcion-letra {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 13px;
+  font-weight: 900;
   flex-shrink: 0;
 }
 
@@ -213,54 +307,25 @@
 }
 
 /* RESPONDIDO */
+
 .jugador-ceo__respondido {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  padding: 32px;
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  border-radius: 16px;
+  padding: 32px 24px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 18px;
 }
 
 .jugador-ceo__respondido-icono {
-  font-size: 40px;
-  color: #22C55E;
+  color: #4ADE80;
 }
 
 .jugador-ceo__respondido p {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: #86EFAC;
   margin: 0;
-}
-
-/* GRACIAS */
-.jugador-ceo__gracias {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  text-align: center;
-  max-width: 360px;
-}
-
-.jugador-ceo__gracias-icono {
-  font-size: 72px;
-  line-height: 1;
-}
-
-.jugador-ceo__gracias-titulo {
-  font-size: 32px;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0;
-}
-
-.jugador-ceo__gracias-texto {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.55);
-  margin: 0;
-  line-height: 1.5;
 }

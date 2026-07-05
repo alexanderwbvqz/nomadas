@@ -1,0 +1,99 @@
+.modal-respuestas {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.modal-respuestas__cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.modal-respuestas__eyebrow {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(10, 10, 15, 0.4);
+  margin: 0 0 4px;
+}
+
+.modal-respuestas__nombre {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a0a0f;
+  margin: 0;
+}
+
+.modal-respuestas__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.modal-respuestas__vacia {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: rgba(10, 10, 15, 0.4);
+  text-align: center;
+  padding: 24px 0;
+  margin: 0;
+}
+
+.modal-respuestas__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+}
+
+.modal-respuestas__pregunta {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(10, 10, 15, 0.6);
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.modal-respuestas__numero {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #E0E7FF;
+  color: #6366F1;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.modal-respuestas__opcion {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0a0a0f;
+  margin: 0;
+  padding-left: 28px;
+}

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { TipoAliado } from '../components/ui/tarjetaAliado/tarjetaAliado.types'
-import { supabase } from '../lib/supabase'
+import type { TipoAliado } from '../types/admin'
+import { subirLogoAliado, postularAliado } from '../api/aliados'
 
 interface FormAliado {
   nombre: string
@@ -76,23 +76,17 @@ export function usePostularAliado() {
     setSubiendoLogo(true)
     setLogoPreview(URL.createObjectURL(archivo))
 
-    const ext = archivo.name.split('.').pop()
-    const nombre = `${Date.now()}.${ext}`
+    const url = await subirLogoAliado(archivo)
 
-    const { error: uploadErr } = await supabase.storage
-      .from('aliados-logos')
-      .upload(nombre, archivo, { upsert: true })
-
-    if (uploadErr) {
+    if (!url) {
       setErrorServidor('No se pudo subir el logo. Inténtalo de nuevo.')
       setLogoPreview(null)
       setSubiendoLogo(false)
       return
     }
 
-    const { data } = supabase.storage.from('aliados-logos').getPublicUrl(nombre)
-    logoUrlRef.current = data.publicUrl
-    set('logo', data.publicUrl)
+    logoUrlRef.current = url
+    set('logo', url)
     setSubiendoLogo(false)
   }
 
@@ -112,21 +106,17 @@ export function usePostularAliado() {
     for (const campo of campos) {
       const valor = campo === 'tipo' ? form.tipo : form[campo as keyof FormAliado]
       const msg = validarCampo(campo, valor)
-      if (msg) {
-        nuevosErrores[campo] = msg
-        hayErrores = true
-      }
+      if (msg) { nuevosErrores[campo] = msg; hayErrores = true }
     }
 
     setTocados({ nombre: true, tipo: true, descripcion: true, email: true, linkedin: true, instagram: true, web: true })
     setErrores(nuevosErrores)
-
     if (hayErrores) return
 
     setEnviando(true)
     setErrorServidor(null)
 
-    const { error: err } = await supabase.from('aliados').insert({
+    const { ok } = await postularAliado({
       nombre: form.nombre.trim(),
       logo: logoUrlRef.current || null,
       tipo: form.tipo,
@@ -135,10 +125,9 @@ export function usePostularAliado() {
       linkedin: form.linkedin.trim() || null,
       instagram: form.instagram.trim() || null,
       web: form.web.trim() || null,
-      activo: false,
     })
 
-    if (err) {
+    if (!ok) {
       setErrorServidor('Hubo un problema al enviar. Inténtalo de nuevo.')
       setEnviando(false)
       return
@@ -152,20 +141,8 @@ export function usePostularAliado() {
   }
 
   return {
-    form,
-    errores,
-    tocados,
-    logoPreview,
-    subiendoLogo,
-    enviado,
-    enviando,
-    errorServidor,
-    set,
-    handleBlur,
-    handleTipoClick,
-    handleLogoChange,
-    quitarLogo,
-    handleSubmit,
-    volverAliados,
+    form, errores, tocados, logoPreview, subiendoLogo,
+    enviado, enviando, errorServidor,
+    set, handleBlur, handleTipoClick, handleLogoChange, quitarLogo, handleSubmit, volverAliados,
   }
 }

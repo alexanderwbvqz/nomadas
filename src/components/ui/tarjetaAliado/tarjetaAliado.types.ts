@@ -1,4 +1,4 @@
-export type TipoAliado = 'Mentores' | 'Organizadores' | 'Aliados Estratégicos'
+import type { TipoAliado } from '../../../types/admin'
 
 export interface TarjetaAliadoProps {
   logo: string

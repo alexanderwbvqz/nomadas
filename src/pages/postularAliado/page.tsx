@@ -3,7 +3,7 @@ import { ImagePlus, X, Loader } from 'lucide-react'
 import CampoInput from '../../components/ui/campoInput/campoInput'
 import AppButton from '../../components/ui/boton/boton'
 import ModalConfirmacion from '../../components/ui/modalConfirmacion/modalConfirmacion'
-import type { TipoAliado } from '../../components/ui/tarjetaAliado/tarjetaAliado.types'
+import type { TipoAliado } from '../../types/admin'
 import { usePostularAliado } from '../../hooks/usePostularAliado'
 import './page.css'
 

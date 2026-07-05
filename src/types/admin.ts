@@ -1,5 +1,6 @@
-import type { TipoAliado } from '../components/ui/tarjetaAliado/tarjetaAliado.types'
 import type { RedSocial } from './onboarding'
+
+export type TipoAliado = 'Mentores' | 'Organizadores' | 'Aliados Estratégicos'
 
 export type EstadoInscrito = 'por_aprobar' | 'aprobado' | 'rechazado'
 

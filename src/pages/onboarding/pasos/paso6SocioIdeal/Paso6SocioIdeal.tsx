@@ -70,7 +70,7 @@ export default function Paso6SocioIdeal({ data, onChange }: Props) {
       </div>
 
       <div className="paso6__seccion">
-        <p className="paso__pregunta">¿Cuánto tiempo podrías dedicar a un emprendimiento?</p>
+        <p className="paso__pregunta">¿Cuánto tiempo podrías dedicar a la semana?</p>
         <div className="paso__badges">
           {DISPONIBILIDADES.map((d) => (
             <BadgeSeleccionable

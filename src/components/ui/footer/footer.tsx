@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom'
-import { FOOTER_LINKS } from './footer.types'
+import type { FooterLink } from './footer.types'
 import './footer.css'
+
+const FOOTER_LINKS: FooterLink[] = [
+  { label: 'Privacidad', href: '/privacidad' },
+  { label: 'Términos', href: '/terminos' },
+  { label: 'Soporte', href: '/soporte' },
+  { label: 'Contacto', href: 'https://wa.me/51973356545' },
+]
 
 export default function Footer() {
   return (

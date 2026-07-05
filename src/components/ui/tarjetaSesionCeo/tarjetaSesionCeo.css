@@ -1,8 +1,7 @@
 .tarjeta-sesion-ceo {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  flex-direction: column;
+  gap: 10px;
   padding: 16px 20px;
   background: #ffffff;
   border: 1px solid #E5E7EB;
@@ -13,6 +12,13 @@
 .tarjeta-sesion-ceo:hover {
   border-color: #6366F1;
   box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08);
+}
+
+.tarjeta-sesion-ceo__principal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .tarjeta-sesion-ceo__info {
@@ -75,3 +81,45 @@
 .tarjeta-sesion-ceo__estado--en_curso   { background: #DCFCE7; color: #16A34A; }
 .tarjeta-sesion-ceo__estado--finalizando { background: #FEF9C3; color: #CA8A04; }
 .tarjeta-sesion-ceo__estado--finalizado { background: #F3F4F6; color: #6B7280; }
+
+.tarjeta-sesion-ceo__enlaces {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 2px;
+}
+
+.tarjeta-sesion-ceo__enlace {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6366F1;
+  text-decoration: none;
+}
+
+.tarjeta-sesion-ceo__enlace:hover {
+  text-decoration: underline;
+}
+
+.tarjeta-sesion-ceo__btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(10, 10, 15, 0.6);
+  background: none;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.tarjeta-sesion-ceo__btn:hover:not(:disabled) {
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.tarjeta-sesion-ceo__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

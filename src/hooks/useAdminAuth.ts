@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { getSession, loginConEmail, logout, onAuthStateChange } from '../api/auth'
 import type { Session } from '@supabase/supabase-js'
 
 export function useAdminAuth() {
@@ -7,25 +7,16 @@ export function useAdminAuth() {
   const [cargando, setCargando] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session)
+    getSession().then((s) => {
+      setSession(s)
       setCargando(false)
     })
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => listener.subscription.unsubscribe()
+    return onAuthStateChange((s) => setSession(s))
   }, [])
 
   async function login(email: string, password: string) {
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    return error
-  }
-
-  async function logout() {
-    await supabase.auth.signOut()
+    return loginConEmail(email, password)
   }
 
   return { session, cargando, login, logout }

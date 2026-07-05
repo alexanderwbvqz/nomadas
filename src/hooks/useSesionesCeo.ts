@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { getSesionesCeo, crearSesionCeo, eliminarSesionCeo } from '../api/sesionCeo'
+import { getSesionesCeo, crearSesionCeo, eliminarSesionCeo, enviarCorreosSesion } from '../api/sesionCeo'
+import { buildJugadorCeoUrl } from '../utils/qr'
 import type { SesionCeo } from '../types/sesionCeo'
 
 export function useSesionesCeo() {
   const [sesiones, setSesiones] = useState<SesionCeo[]>([])
   const [cargando, setCargando] = useState(true)
+  const [enviando, setEnviando] = useState<string | null>(null)
 
   useEffect(() => {
     getSesionesCeo().then((data) => {
@@ -24,5 +26,11 @@ export function useSesionesCeo() {
     setSesiones((prev) => prev.filter((s) => s.id !== id))
   }
 
-  return { sesiones, cargando, crear, eliminar }
+  async function enviarCorreos(sesion: SesionCeo) {
+    setEnviando(sesion.id)
+    await enviarCorreosSesion(sesion.id, sesion.eventoId, buildJugadorCeoUrl(sesion.id))
+    setEnviando(null)
+  }
+
+  return { sesiones, cargando, crear, eliminar, enviarCorreos, enviando }
 }

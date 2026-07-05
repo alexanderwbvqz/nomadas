@@ -2,8 +2,13 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import AppButton from '../boton/boton'
 import './barraNavegacion.css'
-import type { MobileMenuProps, HamburgerIconProps } from './barraNavegacion.types'
-import { NAV_LINKS } from './barraNavegacion.types'
+import type { MobileMenuProps, HamburgerIconProps, NavItem } from './barraNavegacion.types'
+
+const NAV_LINKS: NavItem[] = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Nómadas', href: '/nomadas' },
+  { label: 'Aliados', href: '/aliados' },
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
