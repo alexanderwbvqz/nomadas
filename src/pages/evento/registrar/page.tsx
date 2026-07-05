@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { CheckCircle, UserCheck } from 'lucide-react'
 import { useRegistroAsistencia } from '../../../hooks/useRegistroAsistencia'
 import CampoInput from '../../../components/ui/campoInput/campoInput'

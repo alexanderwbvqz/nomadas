@@ -164,7 +164,7 @@ export async function getResultados(sesionId: string): Promise<ResultadoJugador[
     const categoria = p?.perfil_resultado?.[0]?.categoria ?? ''
 
     if (!mapa.has(perfilId)) {
-      mapa.set(perfilId, { perfilId, nombre, categoria, puntaje: 0 })
+      mapa.set(perfilId, { perfilId, nombre, categoria, puntaje: 0, confirmado: null })
     }
     mapa.get(perfilId)!.puntaje += Number(r.peso)
   }

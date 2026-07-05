@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import type { Evento, AsistenciaNomada, ResultadoRegistro, TipoResultado } from '../types/asistencia'
+import type { Evento, AsistenciaNomada, ResultadoRegistro } from '../types/asistencia'
 
 export async function getEventos(): Promise<Evento[]> {
   const { data } = await supabase
