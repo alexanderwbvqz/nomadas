@@ -1,0 +1,77 @@
+.tarjeta-sesion-ceo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.tarjeta-sesion-ceo:hover {
+  border-color: #6366F1;
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08);
+}
+
+.tarjeta-sesion-ceo__info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tarjeta-sesion-ceo__icono {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #FEF9C3;
+  color: #CA8A04;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tarjeta-sesion-ceo__nombre {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+  margin: 0 0 3px;
+}
+
+.tarjeta-sesion-ceo__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #9CA3AF;
+}
+
+.tarjeta-sesion-ceo__meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tarjeta-sesion-ceo__acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.tarjeta-sesion-ceo__estado {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.tarjeta-sesion-ceo__estado--espera     { background: #EEF2FF; color: #6366F1; }
+.tarjeta-sesion-ceo__estado--en_curso   { background: #DCFCE7; color: #16A34A; }
+.tarjeta-sesion-ceo__estado--finalizando { background: #FEF9C3; color: #CA8A04; }
+.tarjeta-sesion-ceo__estado--finalizado { background: #F3F4F6; color: #6B7280; }

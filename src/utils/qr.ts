@@ -6,6 +6,14 @@ export function buildEventoUrl(eventoId: string) {
   return `https://somosnomadas.vercel.app/evento/${eventoId}/registrar`
 }
 
+export function buildJugadorCeoUrl(sesionId: string) {
+  return `${window.location.origin}/ceo/jugador/${sesionId}`
+}
+
+export function buildPantallaCeoUrl(sesionId: string) {
+  return `${window.location.origin}/ceo/pantalla/${sesionId}`
+}
+
 export function descargarQRComoPNG(svgContainer: HTMLElement, nombre: string) {
   const svg = svgContainer.querySelector('svg')
   if (!svg) return

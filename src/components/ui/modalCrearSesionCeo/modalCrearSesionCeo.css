@@ -1,0 +1,61 @@
+.modal-crear-sesion-ceo {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-crear-sesion-ceo__titulo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #0a0a0f;
+  margin: 0;
+}
+
+.modal-crear-sesion-ceo__campos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-crear-sesion-ceo__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-crear-sesion-ceo__label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(10, 10, 15, 0.65);
+}
+
+.modal-crear-sesion-ceo__select {
+  height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #0a0a0f;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.modal-crear-sesion-ceo__select:focus {
+  border-color: #6366F1;
+}
+
+.modal-crear-sesion-ceo__acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}

@@ -38,6 +38,44 @@ export async function getDinamicas(): Promise<Dinamica[]> {
   }))
 }
 
+export async function getDinamica(id: string): Promise<Dinamica | null> {
+  const { data: d } = await supabase
+    .from('dinamicas')
+    .select(`
+      id, nombre, tiempo_respuesta, tiempo_pausa, created_at,
+      preguntas_dinamica (
+        id, texto, orden,
+        opciones_pregunta (id, texto, peso)
+      )
+    `)
+    .eq('id', id)
+    .single()
+
+  if (!d) return null
+
+  return {
+    id: d.id,
+    nombre: d.nombre,
+    tiempoRespuesta: d.tiempo_respuesta,
+    tiempoPausa: d.tiempo_pausa,
+    createdAt: d.created_at,
+    preguntas: (d.preguntas_dinamica as any[])
+      .sort((a, b) => a.orden - b.orden)
+      .map((p) => ({
+        id: p.id,
+        dinamicaId: d.id,
+        texto: p.texto,
+        orden: p.orden,
+        opciones: (p.opciones_pregunta as any[]).map((o) => ({
+          id: o.id,
+          preguntaId: p.id,
+          texto: o.texto,
+          peso: o.peso as PesoOpcion,
+        })),
+      })),
+  }
+}
+
 export async function crearDinamica(form: DinamicaForm): Promise<void> {
   const { data: dinamica } = await supabase
     .from('dinamicas')

@@ -11,6 +11,9 @@ import AdminAliadosPage from '../pages/admin/panel/aliados/page'
 import AdminAsistenciaPage from '../pages/admin/panel/asistencia/page'
 import AdminAsistenciaDetallePage from '../pages/admin/panel/asistencia/detalle/page'
 import AdminDinamicasPage from '../pages/admin/panel/dinamicas/page'
+import AdminCeoPage from '../pages/admin/panel/ceo/page'
+import PantallaCeoPage from '../pages/ceo/pantalla/page'
+import JugadorCeoPage from '../pages/ceo/jugador/page'
 import PostularAliadoPage from '../pages/postularAliado/page'
 import RegistrarAsistenciaPage from '../pages/evento/registrar/page'
 import MatchPage from '../pages/match/page'
@@ -37,8 +40,11 @@ const router = createBrowserRouter([
       { path: 'asistencia', element: <AdminAsistenciaPage /> },
       { path: 'asistencia/:eventoId', element: <AdminAsistenciaDetallePage /> },
       { path: 'dinamicas', element: <AdminDinamicasPage /> },
+      { path: 'ceo', element: <AdminCeoPage /> },
     ],
   },
+  { path: '/ceo/pantalla/:sesionId', element: <PantallaCeoPage /> },
+  { path: '/ceo/jugador/:sesionId', element: <JugadorCeoPage /> },
   { path: '*', element: <NotFoundPage /> },
 ])
 
