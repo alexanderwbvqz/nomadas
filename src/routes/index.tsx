@@ -10,6 +10,7 @@ import AdminCofundadoresPage from '../pages/admin/panel/cofundadores/page'
 import AdminAliadosPage from '../pages/admin/panel/aliados/page'
 import AdminAsistenciaPage from '../pages/admin/panel/asistencia/page'
 import AdminAsistenciaDetallePage from '../pages/admin/panel/asistencia/detalle/page'
+import AdminDinamicasPage from '../pages/admin/panel/dinamicas/page'
 import PostularAliadoPage from '../pages/postularAliado/page'
 import RegistrarAsistenciaPage from '../pages/evento/registrar/page'
 import MatchPage from '../pages/match/page'
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: 'aliados', element: <AdminAliadosPage /> },
       { path: 'asistencia', element: <AdminAsistenciaPage /> },
       { path: 'asistencia/:eventoId', element: <AdminAsistenciaDetallePage /> },
+      { path: 'dinamicas', element: <AdminDinamicasPage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },

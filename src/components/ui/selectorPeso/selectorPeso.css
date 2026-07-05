@@ -1,0 +1,47 @@
+.selector-peso {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.selector-peso__label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.selector-peso__opciones {
+  display: flex;
+  gap: 6px;
+}
+
+.selector-peso__btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #D1D5DB;
+  background: #F9FAFB;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.selector-peso__btn:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
+.selector-peso__btn--activo {
+  background: #4F46E5;
+  border-color: #4F46E5;
+  color: #ffffff;
+}
+
+.selector-peso__hint {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  color: #9CA3AF;
+}
