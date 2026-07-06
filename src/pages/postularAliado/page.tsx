@@ -22,7 +22,7 @@ export default function PostularAliadoPage() {
       {enviado && (
         <ModalConfirmacion
           titulo="¡Postulación enviada!"
-          mensaje="Revisaremos tu información y nos pondremos en contacto contigo pronto. Una vez aprobada, tu aliado estará visible en la sección Aliados de la plataforma."
+          mensaje={<>Hemos recibido tu postulación como aliado y ahora iniciaremos el proceso de revisión. En un plazo máximo de 24 horas validaremos la información enviada. Una vez aprobada, tu aliado estará visible en la sección Aliados de la plataforma. <strong>Te enviamos un correo de confirmación a tu email.</strong> Si no lo ves, revisa tu carpeta de spam.</>}
           onAceptar={volverAliados}
         />
       )}

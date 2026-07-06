@@ -4,7 +4,7 @@ import { createClient } from 'jsr:@supabase/supabase-js@2'
 const FROM = '"Nómadas" <nomadas.comunidad@gmail.com>'
 const PLATFORM_URL = 'https://somosnomadas.vercel.app'
 
-type TipoCorreo = 'registro' | 'aprobado' | 'rechazado' | 'ceo_invitacion'
+type TipoCorreo = 'registro' | 'aprobado' | 'rechazado' | 'ceo_invitacion' | 'aliado_registro'
 
 interface CorreoPayload {
   tipo: TipoCorreo
@@ -54,6 +54,20 @@ function htmlRegistro(nombre: string): string {
     <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:8px;padding:0 16px;">
       <tbody>
         ${fila('Nombre', nombre)}
+        ${fila('Estado', 'En revisión')}
+        ${fila('Tiempo estimado', 'Máximo 24 horas')}
+      </tbody>
+    </table>
+  `)
+}
+
+function htmlAliadoRegistro(nombre: string): string {
+  return htmlBase(`
+    <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hemos recibido tu postulación como Aliado</p>
+    <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Estamos revisando tu información. Te notificaremos cuando hayamos tomado una decisión.</p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:8px;padding:0 16px;">
+      <tbody>
+        ${fila('Aliado', nombre)}
         ${fila('Estado', 'En revisión')}
         ${fila('Tiempo estimado', 'Máximo 24 horas')}
       </tbody>
@@ -130,10 +144,11 @@ function htmlCeoInvitacion(url: string): string {
 }
 
 const ASUNTOS: Record<TipoCorreo, string> = {
-  registro:       'Tu registro en Nómadas está en revisión',
-  aprobado:       '¡Tu perfil en Nómadas fue aprobado!',
-  rechazado:      'Sobre tu registro en Nómadas',
-  ceo_invitacion: 'Invitación al CEO Quiz — Nómadas',
+  registro:        'Tu registro en Nómadas está en revisión',
+  aprobado:        '¡Tu perfil en Nómadas fue aprobado!',
+  rechazado:       'Sobre tu registro en Nómadas',
+  ceo_invitacion:  'Invitación al CEO Quiz — Nómadas',
+  aliado_registro: 'Tu postulación como aliado está en revisión',
 }
 
 async function enviar(to: string, subject: string, html: string): Promise<void> {
@@ -203,9 +218,10 @@ Deno.serve(async (req) => {
       }
 
       const htmlMap: Record<string, string> = {
-        registro:  htmlRegistro(nombre),
-        aprobado:  htmlAprobado(nombre),
-        rechazado: htmlRechazado(nombre, motivo),
+        registro:        htmlRegistro(nombre),
+        aprobado:        htmlAprobado(nombre),
+        rechazado:       htmlRechazado(nombre, motivo),
+        aliado_registro: htmlAliadoRegistro(nombre),
       }
 
       await enviar(email, ASUNTOS[tipo], htmlMap[tipo])

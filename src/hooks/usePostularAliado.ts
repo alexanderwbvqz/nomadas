@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { TipoAliado } from '../types/admin'
 import { subirLogoAliado, postularAliado } from '../api/aliados'
+import { enviarCorreoAliadoRegistro } from '../api/correos'
 
 interface FormAliado {
   nombre: string
@@ -133,6 +134,7 @@ export function usePostularAliado() {
       return
     }
 
+    enviarCorreoAliadoRegistro(form.nombre.trim(), form.email.trim())
     setEnviado(true)
   }
 

@@ -17,3 +17,9 @@ export async function enviarCorreoRechazado(nombre: string, email: string, motiv
     body: { tipo: 'rechazado', nombre, email, motivo },
   })
 }
+
+export async function enviarCorreoAliadoRegistro(nombre: string, email: string): Promise<void> {
+  await supabase.functions.invoke('enviar-correo', {
+    body: { tipo: 'aliado_registro', nombre, email },
+  })
+}
