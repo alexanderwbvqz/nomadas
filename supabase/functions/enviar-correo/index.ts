@@ -1,159 +1,170 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
+import { createClient } from 'jsr:@supabase/supabase-js@2'
 
-const RESEND_URL = 'https://api.resend.com/emails'
-const FROM = 'Nómadas <onboarding@resend.dev>'
+const FROM = '"Nómadas" <nomadas.comunidad@gmail.com>'
 const PLATFORM_URL = 'https://somosnomadas.vercel.app'
 
-type TipoCorreo = 'registro' | 'aprobado' | 'rechazado'
+type TipoCorreo = 'registro' | 'aprobado' | 'rechazado' | 'ceo_invitacion'
 
 interface CorreoPayload {
   tipo: TipoCorreo
-  nombre: string
-  email: string
+  nombre?: string
+  email?: string
   motivo?: string
+  sesionId?: string
+  eventoId?: string
+  url?: string
 }
 
 function htmlRegistro(nombre: string): string {
   return `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
+<html><head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
     <tr><td align="center">
       <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
-        <tr>
-          <td style="background:#6366F1;padding:32px 40px;">
-            <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:40px;">
-            <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hola, ${nombre} 👋</p>
-            <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Tu registro en Nómadas fue recibido correctamente.</p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#F0FDF4;border-radius:12px;margin-bottom:24px;">
-              <tr>
-                <td style="padding:20px 24px;">
-                  <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
-                  <p style="margin:0;font-size:15px;color:#15803D;font-weight:600;">En revisión ⏳</p>
-                </td>
-              </tr>
-            </table>
-            <p style="margin:0 0 16px;font-size:14px;color:#374151;line-height:1.7;">Tu información está siendo verificada por nuestro equipo. En un plazo máximo de <strong>24 horas</strong> recibirás otro correo con el resultado.</p>
-            <p style="margin:0;font-size:14px;color:#374151;line-height:1.7;">Mientras tanto, si tienes alguna duda puedes responder a este correo.</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
-            <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
-          </td>
-        </tr>
+        <tr><td style="background:#6366F1;padding:32px 40px;">
+          <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
+        </td></tr>
+        <tr><td style="padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hola, ${nombre}</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Tu registro en Nómadas fue recibido correctamente.</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#F0FDF4;border-radius:12px;margin-bottom:24px;">
+            <tr><td style="padding:20px 24px;">
+              <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
+              <p style="margin:0;font-size:15px;color:#15803D;font-weight:600;">En revisión</p>
+            </td></tr>
+          </table>
+          <p style="margin:0 0 16px;font-size:14px;color:#374151;line-height:1.7;">Tu información está siendo verificada. En un plazo máximo de <strong>24 horas</strong> recibirás otro correo con el resultado.</p>
+        </td></tr>
+        <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
+          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
+        </td></tr>
       </table>
     </td></tr>
   </table>
-</body>
-</html>`
+</body></html>`
 }
 
 function htmlAprobado(nombre: string): string {
   return `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
+<html><head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
     <tr><td align="center">
       <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
-        <tr>
-          <td style="background:#6366F1;padding:32px 40px;">
-            <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:40px;">
-            <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">¡Bienvenido, ${nombre}! 🎉</p>
-            <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Tu perfil ha sido <strong>aprobado</strong>. Ya eres parte de la comunidad Nómadas.</p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#F0FDF4;border-radius:12px;margin-bottom:28px;">
-              <tr>
-                <td style="padding:20px 24px;">
-                  <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
-                  <p style="margin:0;font-size:15px;color:#15803D;font-weight:600;">Aprobado ✅</p>
-                </td>
-              </tr>
-            </table>
-            <p style="margin:0 0 28px;font-size:14px;color:#374151;line-height:1.7;">Tu perfil ya está visible en la plataforma. Ahora otros cofundadores pueden encontrarte, conocer tu historia y conectar contigo para construir la próxima gran startup.</p>
-            <table cellpadding="0" cellspacing="0">
-              <tr>
-                <td style="background:#6366F1;border-radius:999px;padding:14px 32px;">
-                  <a href="${PLATFORM_URL}/nomadas" style="color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;">Ver mi perfil →</a>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
-            <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
-          </td>
-        </tr>
+        <tr><td style="background:#6366F1;padding:32px 40px;">
+          <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
+        </td></tr>
+        <tr><td style="padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">¡Bienvenido, ${nombre}!</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Tu perfil ha sido <strong>aprobado</strong>. Ya eres parte de la comunidad Nómadas.</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#F0FDF4;border-radius:12px;margin-bottom:28px;">
+            <tr><td style="padding:20px 24px;">
+              <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
+              <p style="margin:0;font-size:15px;color:#15803D;font-weight:600;">Aprobado</p>
+            </td></tr>
+          </table>
+          <p style="margin:0 0 28px;font-size:14px;color:#374151;line-height:1.7;">Tu perfil ya está visible en la plataforma. Otros cofundadores pueden encontrarte y conectar contigo.</p>
+          <table cellpadding="0" cellspacing="0">
+            <tr><td style="background:#6366F1;border-radius:999px;padding:14px 32px;">
+              <a href="${PLATFORM_URL}/nomadas" style="color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;">Ver mi perfil</a>
+            </td></tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
+          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
+        </td></tr>
       </table>
     </td></tr>
   </table>
-</body>
-</html>`
+</body></html>`
 }
 
 function htmlRechazado(nombre: string, motivo?: string): string {
   return `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
+<html><head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
     <tr><td align="center">
       <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
-        <tr>
-          <td style="background:#6366F1;padding:32px 40px;">
-            <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:40px;">
-            <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hola, ${nombre}</p>
-            <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Luego de revisar tu registro, hemos tomado la siguiente decisión:</p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFF7F7;border-radius:12px;margin-bottom:24px;">
-              <tr>
-                <td style="padding:20px 24px;">
-                  <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#991B1B;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
-                  <p style="margin:0;font-size:15px;color:#DC2626;font-weight:600;">No aprobado</p>
-                </td>
-              </tr>
-            </table>
-            ${motivo ? `
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#F9FAFB;border-left:3px solid #D1D5DB;border-radius:0 8px 8px 0;margin-bottom:24px;">
-              <tr>
-                <td style="padding:16px 20px;">
-                  <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;">Motivo</p>
-                  <p style="margin:0;font-size:14px;color:#374151;line-height:1.6;">${motivo}</p>
-                </td>
-              </tr>
-            </table>` : ''}
-            <p style="margin:0;font-size:14px;color:#374151;line-height:1.7;">Si consideras que hay un error o quieres más información, puedes responder directamente a este correo.</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
-            <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
-          </td>
-        </tr>
+        <tr><td style="background:#6366F1;padding:32px 40px;">
+          <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
+        </td></tr>
+        <tr><td style="padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hola, ${nombre}</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Luego de revisar tu registro, hemos tomado la siguiente decisión:</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFF7F7;border-radius:12px;margin-bottom:24px;">
+            <tr><td style="padding:20px 24px;">
+              <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#991B1B;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
+              <p style="margin:0;font-size:15px;color:#DC2626;font-weight:600;">No aprobado</p>
+            </td></tr>
+          </table>
+          ${motivo ? `<table width="100%" cellpadding="0" cellspacing="0" style="background:#F9FAFB;border-left:3px solid #D1D5DB;border-radius:0 8px 8px 0;margin-bottom:24px;">
+            <tr><td style="padding:16px 20px;">
+              <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;">Motivo</p>
+              <p style="margin:0;font-size:14px;color:#374151;line-height:1.6;">${motivo}</p>
+            </td></tr>
+          </table>` : ''}
+          <p style="margin:0;font-size:14px;color:#374151;line-height:1.7;">Si consideras que hay un error, puedes responder directamente a este correo.</p>
+        </td></tr>
+        <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
+          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
+        </td></tr>
       </table>
     </td></tr>
   </table>
-</body>
-</html>`
+</body></html>`
+}
+
+function htmlCeoInvitacion(url: string): string {
+  return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
+        <tr><td style="background:#6366F1;padding:32px 40px;">
+          <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
+        </td></tr>
+        <tr><td style="padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">CEO Quiz</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Estás invitado a participar en el CEO Quiz. Ingresa desde tu celular usando el siguiente enlace:</p>
+          <table cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <tr><td style="background:#6366F1;border-radius:999px;padding:14px 32px;">
+              <a href="${url}" style="color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;">Unirme al juego</a>
+            </td></tr>
+          </table>
+          <p style="margin:0;font-size:12px;color:#9CA3AF;word-break:break-all;">${url}</p>
+        </td></tr>
+        <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
+          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`
 }
 
 const ASUNTOS: Record<TipoCorreo, string> = {
-  registro:  'Tu registro en Nómadas está en revisión',
-  aprobado:  '¡Tu perfil en Nómadas fue aprobado!',
-  rechazado: 'Sobre tu registro en Nómadas',
+  registro:       'Tu registro en Nómadas está en revisión',
+  aprobado:       '¡Tu perfil en Nómadas fue aprobado!',
+  rechazado:      'Sobre tu registro en Nómadas',
+  ceo_invitacion: 'Invitación al CEO Quiz — Nómadas',
+}
+
+async function enviar(to: string, subject: string, html: string): Promise<void> {
+  const nodemailer = await import('npm:nodemailer')
+  const transport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: Deno.env.get('GMAIL_USER')!,
+      pass: Deno.env.get('GMAIL_APP_PASSWORD')!,
+    },
+  })
+  await transport.sendMail({ from: FROM, to, subject, html })
 }
 
 Deno.serve(async (req) => {
@@ -171,34 +182,53 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: 'Body inválido' }), { status: 400, headers: corsHeaders })
   }
 
-  const { tipo, nombre, email, motivo } = payload
-  if (!tipo || !nombre || !email) {
-    return new Response(JSON.stringify({ error: 'Faltan campos' }), { status: 400, headers: corsHeaders })
+  const { tipo } = payload
+  if (!tipo) {
+    return new Response(JSON.stringify({ error: 'Falta tipo' }), { status: 400, headers: corsHeaders })
   }
 
-  const htmlMap: Record<TipoCorreo, string> = {
-    registro:  htmlRegistro(nombre),
-    aprobado:  htmlAprobado(nombre),
-    rechazado: htmlRechazado(nombre, motivo),
-  }
+  try {
+    if (tipo === 'ceo_invitacion') {
+      const { eventoId, url } = payload
+      if (!eventoId || !url) {
+        return new Response(JSON.stringify({ error: 'Faltan eventoId o url' }), { status: 400, headers: corsHeaders })
+      }
 
-  const resendRes = await fetch(RESEND_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${Deno.env.get('RESEND_API_KEY')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: FROM,
-      to: [email],
-      subject: ASUNTOS[tipo],
-      html: htmlMap[tipo],
-    }),
-  })
+      const supabase = createClient(
+        Deno.env.get('SUPABASE_URL')!,
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+      )
 
-  if (!resendRes.ok) {
-    const err = await resendRes.text()
-    return new Response(JSON.stringify({ error: 'Error enviando correo', detail: err }), {
+      const { data: asistencias } = await supabase
+        .from('asistencias')
+        .select('perfiles_datos(email, nombre)')
+        .eq('evento_id', eventoId)
+
+      if (asistencias) {
+        await Promise.all(
+          asistencias.map((a: any) => {
+            const email = a.perfiles_datos?.email
+            if (!email) return Promise.resolve()
+            return enviar(email, ASUNTOS.ceo_invitacion, htmlCeoInvitacion(url))
+          })
+        )
+      }
+    } else {
+      const { nombre, email, motivo } = payload
+      if (!nombre || !email) {
+        return new Response(JSON.stringify({ error: 'Faltan campos' }), { status: 400, headers: corsHeaders })
+      }
+
+      const htmlMap: Record<string, string> = {
+        registro:  htmlRegistro(nombre),
+        aprobado:  htmlAprobado(nombre),
+        rechazado: htmlRechazado(nombre, motivo),
+      }
+
+      await enviar(email, ASUNTOS[tipo], htmlMap[tipo])
+    }
+  } catch (err) {
+    return new Response(JSON.stringify({ error: 'Error enviando correo', detail: String(err) }), {
       status: 500,
       headers: corsHeaders,
     })
