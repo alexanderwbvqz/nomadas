@@ -22,23 +22,38 @@ function htmlRegistro(nombre: string): string {
 <body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
     <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
-        <tr><td style="background:#6366F1;padding:32px 40px;">
-          <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
+      <table width="520" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;border:1px solid #E5E7EB;">
+        <tr><td align="center" style="padding:40px 40px 24px;">
+          <img src="https://somosnomadas.vercel.app/logo_nomadas.jpeg" width="56" height="56" alt="Nómadas" style="border-radius:12px;display:block;" />
         </td></tr>
-        <tr><td style="padding:40px;">
-          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hola, ${nombre}</p>
-          <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Tu registro en Nómadas fue recibido correctamente.</p>
-          <table width="100%" cellpadding="0" cellspacing="0" style="background:#F0FDF4;border-radius:12px;margin-bottom:24px;">
-            <tr><td style="padding:20px 24px;">
-              <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
-              <p style="margin:0;font-size:15px;color:#15803D;font-weight:600;">En revisión</p>
-            </td></tr>
+        <tr><td style="padding:0 40px 16px;">
+          <p style="margin:0 0 12px;font-size:22px;font-weight:700;color:#111827;text-align:center;">Hemos recibido tu registro</p>
+          <p style="margin:0;font-size:15px;color:#6B7280;line-height:1.6;text-align:center;">Estamos revisando tu información. Te avisaremos cuando esté listo.</p>
+        </td></tr>
+        <tr><td style="padding:16px 40px 32px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;">
+            <tr>
+              <td style="padding:14px 20px;border-bottom:1px solid #F3F4F6;">
+                <span style="font-size:13px;color:#9CA3AF;">Nombre</span><br/>
+                <span style="font-size:14px;font-weight:600;color:#111827;">${nombre}</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:14px 20px;border-bottom:1px solid #F3F4F6;">
+                <span style="font-size:13px;color:#9CA3AF;">Estado</span><br/>
+                <span style="font-size:14px;font-weight:600;color:#111827;">En revisión</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:14px 20px;">
+                <span style="font-size:13px;color:#9CA3AF;">Tiempo estimado</span><br/>
+                <span style="font-size:14px;font-weight:600;color:#111827;">Máximo 24 horas</span>
+              </td>
+            </tr>
           </table>
-          <p style="margin:0 0 16px;font-size:14px;color:#374151;line-height:1.7;">Tu información está siendo verificada. En un plazo máximo de <strong>24 horas</strong> recibirás otro correo con el resultado.</p>
         </td></tr>
         <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
-          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
+          <p style="margin:0;font-size:12px;color:#9CA3AF;text-align:center;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
         </td></tr>
       </table>
     </td></tr>
