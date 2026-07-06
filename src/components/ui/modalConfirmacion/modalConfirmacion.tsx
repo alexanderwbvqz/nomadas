@@ -1,11 +1,12 @@
 import { PartyPopper } from 'lucide-react'
+import type { ReactNode } from 'react'
 import AppButton from '../boton/boton'
 import Overlay from '../overlay/overlay'
 import './modalConfirmacion.css'
 
 interface ModalConfirmacionProps {
   titulo: string
-  mensaje: string
+  mensaje: ReactNode
   onAceptar: () => void
 }
 

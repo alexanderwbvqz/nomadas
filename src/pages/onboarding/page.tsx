@@ -185,7 +185,7 @@ export default function OnboardingPage() {
       {mostrarBienvenida && (
         <ModalConfirmacion
           titulo="¡Todo listo!"
-          mensaje="Hemos recibido tu registro y ahora iniciaremos el proceso de revisión. En un plazo máximo de 24 horas validaremos la información enviada. Una vez aprobada, tu perfil estará disponible en la sección Nómadas, donde otros cofundadores podrán conocerte y conectar contigo para formar la próxima gran startup. Te enviamos un correo de confirmación a tu email."
+          mensaje={<>Hemos recibido tu registro y ahora iniciaremos el proceso de revisión. En un plazo máximo de 24 horas validaremos la información enviada. Una vez aprobada, tu perfil estará disponible en la sección Nómadas, donde otros cofundadores podrán conocerte y conectar contigo para formar la próxima gran startup. <strong>Te enviamos un correo de confirmación a tu email.</strong> Si no lo ves, revisa tu carpeta de spam.</>}
           onAceptar={() => navigate('/')}
         />
       )}
