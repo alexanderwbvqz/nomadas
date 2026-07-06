@@ -79,9 +79,14 @@
 
 .paso1__red-fila {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   margin-bottom: 10px;
+}
+
+.paso1__red-fila .select-filtro {
+  width: 110px;
+  flex-shrink: 0;
 }
 
 .paso1__red-select {
@@ -91,6 +96,7 @@
 
 .paso1__red-input {
   flex: 1;
+  min-width: 0;
 }
 
 
