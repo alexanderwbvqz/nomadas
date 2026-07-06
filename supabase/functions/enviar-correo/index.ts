@@ -16,49 +16,49 @@ interface CorreoPayload {
   url?: string
 }
 
-function htmlRegistro(nombre: string): string {
+function fila(label: string, valor: string): string {
+  return `<tr>
+    <td style="padding:12px 0;border-bottom:1px solid #F3F4F6;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="140" style="font-size:13px;color:#9CA3AF;vertical-align:top;">${label}</td>
+          <td style="font-size:13px;font-weight:600;color:#111827;">${valor}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>`
+}
+
+function htmlBase(contenido: string): string {
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
-    <tr><td align="center">
-      <table width="520" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;border:1px solid #E5E7EB;">
-        <tr><td align="center" style="padding:40px 40px 24px;">
-          <img src="https://somosnomadas.vercel.app/logo_nomadas.jpeg" width="56" height="56" alt="Nómadas" style="border-radius:12px;display:block;" />
-        </td></tr>
-        <tr><td style="padding:0 40px 16px;">
-          <p style="margin:0 0 12px;font-size:22px;font-weight:700;color:#111827;text-align:center;">Hemos recibido tu registro</p>
-          <p style="margin:0;font-size:15px;color:#6B7280;line-height:1.6;text-align:center;">Estamos revisando tu información. Te avisaremos cuando esté listo.</p>
-        </td></tr>
-        <tr><td style="padding:16px 40px 32px;">
-          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;">
-            <tr>
-              <td style="padding:14px 20px;border-bottom:1px solid #F3F4F6;">
-                <span style="font-size:13px;color:#9CA3AF;">Nombre</span><br/>
-                <span style="font-size:14px;font-weight:600;color:#111827;">${nombre}</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:14px 20px;border-bottom:1px solid #F3F4F6;">
-                <span style="font-size:13px;color:#9CA3AF;">Estado</span><br/>
-                <span style="font-size:14px;font-weight:600;color:#111827;">En revisión</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:14px 20px;">
-                <span style="font-size:13px;color:#9CA3AF;">Tiempo estimado</span><br/>
-                <span style="font-size:14px;font-weight:600;color:#111827;">Máximo 24 horas</span>
-              </td>
-            </tr>
-          </table>
-        </td></tr>
-        <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
-          <p style="margin:0;font-size:12px;color:#9CA3AF;text-align:center;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
+<body style="margin:0;padding:0;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;padding:40px 24px;">
+    <tr><td>
+      <img src="https://somosnomadas.vercel.app/logo_nomadas.jpeg" width="48" height="48" alt="Nómadas" style="border-radius:10px;display:block;margin-bottom:28px;" />
+      ${contenido}
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:40px;border-top:1px dashed #E5E7EB;">
+        <tr><td style="padding-top:20px;">
+          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
         </td></tr>
       </table>
     </td></tr>
   </table>
 </body></html>`
+}
+
+function htmlRegistro(nombre: string): string {
+  return htmlBase(`
+    <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hemos recibido tu registro</p>
+    <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Estamos revisando tu información. Te notificaremos cuando hayamos tomado una decisión.</p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:8px;padding:0 16px;">
+      <tbody>
+        ${fila('Nombre', nombre)}
+        ${fila('Estado', 'En revisión')}
+        ${fila('Tiempo estimado', 'Máximo 24 horas')}
+      </tbody>
+    </table>
+  `)
 }
 
 function htmlAprobado(nombre: string): string {
