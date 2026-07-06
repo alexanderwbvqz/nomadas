@@ -62,74 +62,42 @@ function htmlRegistro(nombre: string): string {
 }
 
 function htmlAprobado(nombre: string): string {
-  return `<!DOCTYPE html>
-<html><head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
-    <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
-        <tr><td style="background:#6366F1;padding:32px 40px;">
-          <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
-        </td></tr>
-        <tr><td style="padding:40px;">
-          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">¡Bienvenido, ${nombre}!</p>
-          <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Tu perfil ha sido <strong>aprobado</strong>. Ya eres parte de la comunidad Nómadas.</p>
-          <table width="100%" cellpadding="0" cellspacing="0" style="background:#F0FDF4;border-radius:12px;margin-bottom:28px;">
-            <tr><td style="padding:20px 24px;">
-              <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
-              <p style="margin:0;font-size:15px;color:#15803D;font-weight:600;">Aprobado</p>
-            </td></tr>
-          </table>
-          <p style="margin:0 0 28px;font-size:14px;color:#374151;line-height:1.7;">Tu perfil ya está visible en la plataforma. Otros cofundadores pueden encontrarte y conectar contigo.</p>
-          <table cellpadding="0" cellspacing="0">
-            <tr><td style="background:#6366F1;border-radius:999px;padding:14px 32px;">
-              <a href="${PLATFORM_URL}/nomadas" style="color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;">Ver mi perfil</a>
-            </td></tr>
-          </table>
-        </td></tr>
-        <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
-          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table>
-</body></html>`
+  return htmlBase(`
+    <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">¡Bienvenido, ${nombre}!</p>
+    <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Tu perfil ha sido aprobado. Ya eres parte de la comunidad Nómadas.</p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:8px;padding:0 16px;">
+      <tbody>
+        ${fila('Nombre', nombre)}
+        ${fila('Estado', 'Aprobado')}
+        ${fila('Siguiente paso', 'Tu perfil ya es visible para otros cofundadores')}
+      </tbody>
+    </table>
+    <table cellpadding="0" cellspacing="0" style="margin-top:28px;">
+      <tr><td style="background:#111827;border-radius:6px;padding:12px 28px;">
+        <a href="${PLATFORM_URL}/nomadas" style="color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;">Ver comunidad</a>
+      </td></tr>
+    </table>
+  `)
 }
 
 function htmlRechazado(nombre: string, motivo?: string): string {
-  return `<!DOCTYPE html>
-<html><head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;background:#F9FAFB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
-    <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
-        <tr><td style="background:#6366F1;padding:32px 40px;">
-          <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">NÓMADAS</p>
-        </td></tr>
-        <tr><td style="padding:40px;">
-          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hola, ${nombre}</p>
-          <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Luego de revisar tu registro, hemos tomado la siguiente decisión:</p>
-          <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFF7F7;border-radius:12px;margin-bottom:24px;">
-            <tr><td style="padding:20px 24px;">
-              <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#991B1B;text-transform:uppercase;letter-spacing:0.05em;">Estado</p>
-              <p style="margin:0;font-size:15px;color:#DC2626;font-weight:600;">No aprobado</p>
-            </td></tr>
-          </table>
-          ${motivo ? `<table width="100%" cellpadding="0" cellspacing="0" style="background:#F9FAFB;border-left:3px solid #D1D5DB;border-radius:0 8px 8px 0;margin-bottom:24px;">
-            <tr><td style="padding:16px 20px;">
-              <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;">Motivo</p>
-              <p style="margin:0;font-size:14px;color:#374151;line-height:1.6;">${motivo}</p>
-            </td></tr>
-          </table>` : ''}
-          <p style="margin:0;font-size:14px;color:#374151;line-height:1.7;">Si consideras que hay un error, puedes responder directamente a este correo.</p>
-        </td></tr>
-        <tr><td style="padding:20px 40px;border-top:1px solid #F3F4F6;">
-          <p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Nómadas — Conectando cofundadores</p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table>
-</body></html>`
+  return htmlBase(`
+    <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#111827;">Hola, ${nombre}</p>
+    <p style="margin:0 0 24px;font-size:15px;color:#6B7280;line-height:1.6;">Luego de revisar tu registro, hemos tomado la siguiente decisión.</p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:8px;padding:0 16px;">
+      <tbody>
+        ${fila('Nombre', nombre)}
+        ${fila('Estado', 'No aprobado')}
+        ${motivo ? fila('Motivo', motivo) : ''}
+      </tbody>
+    </table>
+    <p style="margin:28px 0 16px;font-size:14px;color:#6B7280;line-height:1.7;">Si consideras que hay un error, puedes responder directamente a este correo.</p>
+    <table cellpadding="0" cellspacing="0">
+      <tr><td style="background:#111827;border-radius:6px;padding:12px 28px;">
+        <a href="mailto:nomadas.comunidad@gmail.com" style="color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;">Contactar equipo</a>
+      </td></tr>
+    </table>
+  `)
 }
 
 function htmlCeoInvitacion(url: string): string {
